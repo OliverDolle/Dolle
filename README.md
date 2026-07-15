@@ -16,8 +16,8 @@ Sections today:
 ## Quickstart (Claude Code)
 
 ```
-# 1. Add this repo as a plugin marketplace
-/plugin marketplace add OliverDolle/Dolle      # or a local path to this folder
+# 1. Add the GitHub repo as a plugin marketplace (works on any machine)
+/plugin marketplace add OliverDolle/Dolle
 
 # 2. Install the plugin
 /plugin install devkit@dolle
