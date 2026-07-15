@@ -61,12 +61,46 @@ the project is, one doc per major section, and a README index that links each do
 what it covers. Includes README and per-section templates plus maintenance rules. This repo's
 own docs follow it.
 
+## Section: UI/UX design — `/ui-ux-design`
+
+`packs/ui-ux-design/SKILL.md` · 1 skill
+
+A method for designing distinctive web UI/UX on top of the **Dolle-MCP** server (sibling repo,
+registered in Claude Code as `dolle-mcp`). It uses that server's tools first — `list_templates`
+/ `get_template_source` / `screenshot_template` for the 19 offline templates, `find_palettes` /
+`color_palettes` / `color_contrast` / `color_gradients` for color, `segment_svg` /
+`trace_image_to_svg` for animatable SVG — and runs a **design brief** before building: asking
+the user for any unspecified direction (menu bar, page count, single-document vs separate API
+entry points, colors/palette, animation, images/SVG, page structure). It builds on the
+`frontend-design` skill and steers away from the AI-default looks (no purple/violet by default).
+
+Usage: `/ui-ux-design` (loads the section) or `/ui-ux-design <what you're designing>` (loads +
+runs the brief).
+
+## Section: Web performance — `/web-performance`
+
+`packs/web-performance/SKILL.md` · 1 skill
+
+A measure-first method for making pages fast against **Core Web Vitals**: the three metrics and
+their 75th-percentile thresholds (LCP ≤ 2.5 s, CLS ≤ 0.1, INP ≤ 200 ms), how to measure in the
+lab (throttled Lighthouse) and the field (`web-vitals` / CrUX), a per-metric fix playbook
+(LCP → images/fonts/TTFB, CLS → reserve space, INP → unblock the main thread), and JS/image/
+font/third-party budgets to hold in CI.
+
+Usage: `/web-performance` (loads the section) or `/web-performance <page or metric>` (loads +
+starts from a baseline).
+
 ## How the sections relate
 
 - Within agent-development, LangChain and LangGraph compose — LangChain components run inside
   LangGraph orchestration; the `combining-langchain-and-langgraph` skill ties them together.
 - Subagent-driven development is orthogonal and applies to any task, including building the
   agent-development code or writing docs.
+- UI/UX design depends on the external Dolle-MCP server for its tools, and layers on the
+  `frontend-design` skill for design craft.
+- Web performance pairs with UI/UX design: the motion rules the design section enforces
+  (`transform`/`opacity`, reduced-motion) are the same ones that protect the CLS and INP metrics.
+  The `web-designer` subagent executes the UI/UX design loop; performance is checked after.
 
 ## Related
 

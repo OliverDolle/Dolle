@@ -1,6 +1,6 @@
 ---
 name: catalog
-description: Catalog of devkit's development skills — building agents and workflows with LangChain and LangGraph, subagent-driven development, documentation, and scaffolding templates. Consult this on such tasks to find and read the right devkit guidance automatically, instead of the user loading a section by hand.
+description: Catalog of devkit's development skills — building agents and workflows with LangChain and LangGraph, subagent-driven development, documentation, UI/UX design (via the Dolle-MCP server), web performance (Core Web Vitals), and scaffolding templates. Consult this on such tasks to find and read the right devkit guidance automatically, instead of the user loading a section by hand.
 ---
 
 # devkit skill catalog
@@ -38,6 +38,18 @@ Section index: `${CLAUDE_PLUGIN_ROOT}/packs/agent-development/INDEX.md`
 | --- | --- |
 | `${CLAUDE_PLUGIN_ROOT}/packs/documentation/SKILL.md` | Creating or updating project documentation (short README + linked per-section docs + code map). |
 
+## UI/UX design
+
+| Read this file | When the task is… |
+| --- | --- |
+| `${CLAUDE_PLUGIN_ROOT}/packs/ui-ux-design/SKILL.md` | Designing or reshaping a web page/site — drives the `dolle-mcp` MCP tools (templates, curated palettes, WCAG contrast, gradients, SVG segmentation/tracing, screenshots) and runs a design brief first. Layers on the `frontend-design` skill. |
+
+## Web performance
+
+| Read this file | When the task is… |
+| --- | --- |
+| `${CLAUDE_PLUGIN_ROOT}/packs/web-performance/SKILL.md` | Making a page fast — Core Web Vitals (LCP, CLS, INP), measuring lab + field, the per-metric fix playbook, and JS/image/font/third-party budgets. |
+
 ## Scaffolding templates
 
 Runnable starters live under `${CLAUDE_PLUGIN_ROOT}/packs/agent-development/templates/`
@@ -50,4 +62,5 @@ into the target, replace placeholders, and adapt it to the task.
 If `${CLAUDE_PLUGIN_ROOT}` isn't expanded in your environment, the files are in this plugin's
 directory (the same install dir this skill was loaded from) — locate them with Glob
 (e.g. `**/dolle/devkit/**/packs/**/SKILL.md`), or invoke the matching loader skill instead:
-`devkit:agent-development`, `devkit:subagents`, `devkit:docs`, or `devkit:scaffold`.
+`devkit:agent-development`, `devkit:subagents`, `devkit:docs`, `devkit:ui-ux-design`,
+`devkit:web-performance`, or `devkit:scaffold`.

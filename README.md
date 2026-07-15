@@ -12,6 +12,11 @@ Sections today:
   how to combine them, workflow design, and a troubleshooting log (5 skills).
 - **Subagent-driven development** — a methodology for decomposing work across subagents.
 - **Documentation** — a short-README-plus-linked-docs method.
+- **UI/UX design** — distinctive web design driven by the [Dolle-MCP](https://github.com/OliverDolle/Dolle-MCP)
+  server (templates, curated color palettes, WCAG contrast, SVG, screenshots), starting with a
+  design brief and building on the `frontend-design` skill.
+- **Web performance** — making pages fast against Core Web Vitals (LCP, CLS, INP): measure-first,
+  a per-metric fix playbook, and budgets.
 
 ## Quickstart (Claude Code)
 
@@ -53,13 +58,13 @@ The table below is generated from each doc's `description` frontmatter by
 
 ## What's in the box
 
-- **3 skill sections** (`plugins/devkit/packs/`) holding **7 skills** — loaded only via their
+- **5 skill sections** (`plugins/devkit/packs/`) holding **9 skills** — loaded only via their
   command.
-- **5 commands** (`plugins/devkit/commands/`) — `/devkit` (menu), one loader per section, and
+- **7 commands** (`plugins/devkit/commands/`) — `/devkit` (menu), one loader per section, and
   `/scaffold`.
 - **1 index skill** (`plugins/devkit/skills/catalog/`) — auto-loaded so Claude can find and read
   the right section itself, without you running a loader command.
-- **2 subagents** (`plugins/devkit/agents/`) — `agent-developer`, `doc-writer`.
+- **3 subagents** (`plugins/devkit/agents/`) — `agent-developer`, `doc-writer`, `web-designer`.
 - **2 hooks** (`plugins/devkit/hooks/`) — a session-start reminder and a topic-aware section
   suggester.
 - **Starter templates** (`plugins/devkit/packs/agent-development/templates/`) — runnable

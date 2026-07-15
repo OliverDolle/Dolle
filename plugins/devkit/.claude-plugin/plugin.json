@@ -1,7 +1,7 @@
 {
   "name": "devkit",
-  "description": "Command-gated skill packs, agents, and hooks for AI-assisted development: subagent-driven development, LangChain agents, LangGraph workflows, and a documentation methodology. Packs live in packs/ and are exposed on demand via loader commands so they never bloat startup context.",
-  "version": "0.3.0",
+  "description": "Command-gated skill packs, agents, and hooks for AI-assisted development: subagent-driven development, LangChain agents, LangGraph workflows, a documentation methodology, UI/UX design driven by the Dolle-MCP server, and web performance (Core Web Vitals). Packs live in packs/ and are exposed on demand via loader commands so they never bloat startup context.",
+  "version": "0.5.0",
   "author": {
     "name": "OliverDolle"
   },
@@ -13,6 +13,11 @@
     "documentation",
     "workflow",
     "skills",
-    "subagents"
+    "subagents",
+    "ui-ux",
+    "design",
+    "mcp",
+    "performance",
+    "web-vitals"
   ]
 }

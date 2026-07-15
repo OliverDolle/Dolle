@@ -9,9 +9,9 @@ section is a group of related skills exposed by one command.
 context until the user explicitly loads one.
 
 If the user passed an argument that clearly names a section (`agent-development`, `subagents`,
-or `docs`), skip the menu and run that section's loader (follow the behavior in the
-corresponding loader command: read the section's `INDEX.md` if it has one, then the relevant
-`SKILL.md` files under `${CLAUDE_PLUGIN_ROOT}/packs/`).
+`docs`, `ui-ux-design`, or `web-performance`), skip the menu and run that section's loader
+(follow the behavior in the corresponding loader command: read the section's `INDEX.md` if it has
+one, then the relevant `SKILL.md` files under `${CLAUDE_PLUGIN_ROOT}/packs/`).
 
 Otherwise, present this menu to the user verbatim (adjust formatting only):
 
@@ -24,6 +24,8 @@ Otherwise, present this menu to the user verbatim (adjust formatting only):
 | `/agent-development` | Agent development | Building agents & workflows with LangChain + LangGraph together — plus combining them, workflow design, and a troubleshooting log. (5 skills) |
 | `/subagents` | Subagent-driven development | A methodology for decomposing work and orchestrating subagents (explore → plan → implement → verify). |
 | `/docs` | Documentation | A method for writing a short README that links to per-section docs so the project is easy to navigate. |
+| `/ui-ux-design` | UI/UX design | Distinctive web design driven by the Dolle-MCP server (templates, color palettes, WCAG contrast, SVG, screenshots), starting with a short design brief. Builds on the `frontend-design` skill. |
+| `/web-performance` | Web performance | Making pages fast against Core Web Vitals (LCP, CLS, INP) — measure-first workflow, per-metric fix playbook, and budgets. |
 
 Each loader also accepts an optional task, e.g.
 `/agent-development build an agent that queries Postgres`. `/agent-development` also accepts a
@@ -36,7 +38,8 @@ Automatic loading: you don't have to load a section by hand — Claude can find 
 right one itself via the always-available `devkit:catalog` skill. The commands above are the
 manual way to force a specific section into context.
 
-Related subagents you can dispatch: `agent-developer`, `doc-writer`.
+Related subagents you can dispatch: `agent-developer`, `doc-writer`, `web-designer` (runs the
+Dolle-MCP-driven build/verify loop from a settled design spec).
 
 ---
 

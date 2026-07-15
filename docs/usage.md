@@ -37,6 +37,8 @@ start immediately:
 | `/agent-development` | Agent development — LangChain + LangGraph, combining them, workflow design, troubleshooting |
 | `/subagents` | Subagent-driven development methodology |
 | `/docs` | The documentation method |
+| `/ui-ux-design` | UI/UX design via the Dolle-MCP server (templates, palettes, contrast, SVG, screenshots) |
+| `/web-performance` | Web performance — Core Web Vitals (LCP, CLS, INP), measuring, fixes, budgets |
 
 Examples:
 
@@ -69,11 +71,13 @@ the catalog's one-line description is ever loaded up front.
 
 ## Subagents
 
-Two subagents ship with devkit and can be dispatched for larger jobs:
+Three subagents ship with devkit and can be dispatched for larger jobs:
 
 - **`agent-developer`** — designs and builds LangChain + LangGraph agents/workflows, and
   debugs them against the troubleshooting log.
 - **`doc-writer`** — creates/updates documentation following the documentation method.
+- **`web-designer`** — takes a settled design spec and runs the Dolle-MCP-driven build/verify
+  loop (templates, palettes, screenshots) off the main thread.
 
 Ask naturally ("use the agent-developer subagent to build the ingestion workflow") or let
 Claude pick them based on their descriptions. They read their section automatically, so you

@@ -23,8 +23,8 @@ street index — it names subsystems and their locations, not individual functio
 `/plugins/devkit/commands/` — one Markdown file per slash command.
 
 - `devkit.md` — the menu that lists sections without loading them.
-- `agent-development.md`, `subagents.md`, `docs.md` — section loaders that read pack content
-  into context on demand.
+- `agent-development.md`, `subagents.md`, `docs.md`, `ui-ux-design.md` — section loaders that
+  read pack content into context on demand.
 - `scaffold.md` — copies a bundled template into the workspace and adapts it.
 
 ## Index skill (auto-loaded)
@@ -43,6 +43,10 @@ Claude can load the right guidance on its own without a manual loader command.
   (`langgraph-workflow`, `langchain-agent`) that `/scaffold` copies and adapts.
 - `subagent-driven-development/SKILL.md` — single-skill section.
 - `documentation/SKILL.md` — single-skill section; its `assets/` holds the doc-index templates.
+- `ui-ux-design/SKILL.md` — single-skill section; web design driven by the external Dolle-MCP
+  server, layered on the `frontend-design` skill.
+- `web-performance/SKILL.md` — single-skill section; Core Web Vitals (LCP/CLS/INP), measuring,
+  the per-metric fix playbook, and budgets.
 
 ## Subagents
 
@@ -50,6 +54,8 @@ Claude can load the right guidance on its own without a manual loader command.
 
 - `agent-developer.md` — builds LangChain + LangGraph agents/workflows.
 - `doc-writer.md` — writes/updates docs using the documentation method.
+- `web-designer.md` — runs the Dolle-MCP-driven build/verify loop from a settled design spec;
+  granted the `mcp__dolle-mcp__*` tools plus the file tools.
 
 ## Hooks
 
