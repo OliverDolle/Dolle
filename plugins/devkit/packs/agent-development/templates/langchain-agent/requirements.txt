@@ -1,0 +1,4 @@
+# Confirm current versions against the release notes before pinning for production.
+langchain>=0.3
+langchain-openai>=0.2
+python-dotenv>=1.0

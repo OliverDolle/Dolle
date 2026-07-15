@@ -1,0 +1,87 @@
+#!/usr/bin/env node
+// devkit UserPromptSubmit hook.
+// If the user's prompt mentions a topic that a devkit pack covers, inject a short,
+// one-line hint suggesting the matching loader command. It prints NOTHING when no
+// topic matches, so it is silent on unrelated prompts.
+//
+// This is the second half of the lazy-loading UX: packs are not auto-loaded, but
+// the hook nudges you toward the right one exactly when it is relevant.
+//
+// The script never blocks a prompt: any error results in no output and a clean exit.
+
+import { readFileSync } from "node:fs";
+
+function readStdin() {
+  try {
+    return readFileSync(0, "utf8");
+  } catch {
+    return "";
+  }
+}
+
+function main() {
+  const raw = readStdin();
+  if (!raw) return;
+
+  let prompt = "";
+  try {
+    prompt = String(JSON.parse(raw).prompt || "").toLowerCase();
+  } catch {
+    return;
+  }
+  if (!prompt) return;
+
+  const packs = [
+    {
+      label: "agent development (/agent-development)",
+      keys: [
+        "langchain",
+        "langgraph",
+        "stategraph",
+        "state graph",
+        "create_react_agent",
+        "react agent",
+        "tool-calling",
+        "tool calling",
+        "build an agent",
+        "ai agent",
+        "agent workflow",
+        "checkpointer",
+      ],
+    },
+    {
+      label: "subagent-driven development (/subagents)",
+      keys: ["subagent", "sub-agent", "sub agent", "orchestrate agents", "fan out agents", "fan-out"],
+    },
+    {
+      label: "documentation (/docs)",
+      keys: ["documentation", "document the", "write docs", "readme", "doc index"],
+    },
+  ];
+
+  const hits = packs
+    .filter((p) => p.keys.some((k) => prompt.includes(k)))
+    .map((p) => p.label);
+
+  if (hits.length === 0) return;
+
+  const context =
+    "devkit hint: your request relates to these skill section(s): " +
+    hits.join(", ") +
+    ". If you have not loaded the relevant section yet, run its command (or /devkit) to pull in focused guidance.";
+
+  process.stdout.write(
+    JSON.stringify({
+      hookSpecificOutput: {
+        hookEventName: "UserPromptSubmit",
+        additionalContext: context,
+      },
+    })
+  );
+}
+
+try {
+  main();
+} catch {
+  // Never block the user's prompt on a hook failure.
+}

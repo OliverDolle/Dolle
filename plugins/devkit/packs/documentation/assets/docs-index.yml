@@ -1,0 +1,58 @@
+name: Docs Index
+
+# Keeps the README documentation index in sync with each doc's `description` frontmatter.
+# Runs the generator and, if the index changed, commits the updated README back to the branch.
+
+on:
+  push:
+    paths:
+      - "docs/**"
+      - "README.md"
+      - "scripts/generate-doc-index.mjs"
+      - ".github/workflows/docs-index.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-doc-index:
+    runs-on: ubuntu-latest
+    # Don't react to the bot's own sync commit (belt-and-suspenders with [skip ci]).
+    if: github.actor != 'github-actions[bot]'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Regenerate README doc index
+        run: node scripts/generate-doc-index.mjs
+
+      - name: Commit the updated index if it changed
+        run: |
+          if [ -n "$(git status --porcelain README.md)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add README.md
+            git commit -m "docs: sync README doc index [skip ci]"
+            git push
+          else
+            echo "README doc index already up to date."
+          fi
+
+# For pull requests from forks (where the token is read-only and a push would fail), validate
+# instead of committing by running the generator in check mode:
+#
+#   on:
+#     pull_request:
+#       paths: ["docs/**", "README.md"]
+#   jobs:
+#     check:
+#       runs-on: ubuntu-latest
+#       steps:
+#         - uses: actions/checkout@v4
+#         - uses: actions/setup-node@v4
+#           with: { node-version: 20 }
+#         - run: node scripts/generate-doc-index.mjs --check

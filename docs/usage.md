@@ -1,0 +1,91 @@
+---
+title: Usage
+description: >-
+  Day-to-day use of devkit: the /devkit menu, loading skill sections on demand, dispatching the
+  bundled subagents, and what the two hooks do. Explains why loading is command-gated and how it
+  works identically in the CLI and the desktop app.
+order: 20
+---
+
+# Usage
+
+> Day-to-day use of devkit: the menu, loading sections, dispatching subagents, and the hooks —
+> in both the CLI and the desktop app.
+
+## Overview
+
+devkit's defining behavior: **skill sections are not loaded until you ask for them.** At startup
+you only get lightweight command names. When you run a loader command, that section's guidance
+is read into the current session and applied. This keeps context small and relevant.
+
+## The menu
+
+```
+/devkit
+```
+
+Shows every section and the command that loads it. Showing the menu loads *no* section content.
+You can also jump straight in: `/devkit agent-development`.
+
+## Loading a section
+
+Each section has a loader command. Run it alone to load the guidance, or pass a task to load and
+start immediately:
+
+| Command | Loads |
+| --- | --- |
+| `/agent-development` | Agent development — LangChain + LangGraph, combining them, workflow design, troubleshooting |
+| `/subagents` | Subagent-driven development methodology |
+| `/docs` | The documentation method |
+
+Examples:
+
+```
+/agent-development                                   # load the section (index + core skills)
+/agent-development build an agent that queries Postgres
+/agent-development workflow-design                   # focus one skill in the section
+/docs document this project
+```
+
+`/agent-development` is deliberately broad: LangChain and LangGraph are used together, so the
+loader pulls in both (plus how to combine them) rather than forcing you to pick. It reads the
+section index first, then the skills relevant to your task.
+
+If a command name collides with another plugin, use the namespaced form, e.g.
+`/devkit:agent-development`.
+
+## Subagents
+
+Two subagents ship with devkit and can be dispatched for larger jobs:
+
+- **`agent-developer`** — designs and builds LangChain + LangGraph agents/workflows, and
+  debugs them against the troubleshooting log.
+- **`doc-writer`** — creates/updates documentation following the documentation method.
+
+Ask naturally ("use the agent-developer subagent to build the ingestion workflow") or let
+Claude pick them based on their descriptions. They read their section automatically, so you
+don't have to load it first.
+
+## Hooks
+
+Two hooks make the lazy-loading system discoverable without adding noise:
+
+- **SessionStart** — injects a one-line reminder that `/devkit` exists and sections load on
+  demand.
+- **UserPromptSubmit** — if your prompt mentions a section's topic (e.g. "langgraph"), it adds
+  a short hint suggesting the matching loader. It stays silent on unrelated prompts.
+
+Both are Node scripts under `plugins/devkit/hooks/scripts/`, so they behave the same on
+Windows, macOS, and Linux. To disable them, remove the entries from
+`plugins/devkit/hooks/hooks.json`.
+
+## Desktop vs. CLI
+
+There is no functional difference. Commands, subagents, and hooks work identically; the desktop
+app just gives you a graphical command menu instead of typing `/`-commands into a terminal.
+
+## Related
+
+- [Skill sections](skill-packs.md) — what each section teaches.
+- [Architecture](architecture.md) — why loading is command-gated.
+- [Extending](extending.md) — add your own skills and sections.
