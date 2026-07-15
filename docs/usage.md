@@ -54,6 +54,19 @@ section index first, then the skills relevant to your task.
 If a command name collides with another plugin, use the namespaced form, e.g.
 `/devkit:agent-development`.
 
+## Automatic loading (the catalog skill)
+
+You don't have to load a section by hand. devkit ships one lightweight, always-available skill —
+`devkit:catalog` — whose description sits in context at startup (the pack content does not). It
+is a map of every section and the exact skill file to read for a given task. When your request
+matches, Claude consults it and reads the relevant `SKILL.md`(s) on its own — e.g. ask to
+"build a LangGraph workflow" and it can pull the agent-development guidance without you running
+`/devkit:agent-development`.
+
+The loader commands remain the **manual** override: use them to force a specific section into
+context regardless of what Claude infers. Both paths keep heavy content out of startup — only
+the catalog's one-line description is ever loaded up front.
+
 ## Subagents
 
 Two subagents ship with devkit and can be dispatched for larger jobs:

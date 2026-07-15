@@ -32,6 +32,10 @@ skill to focus, e.g. `/agent-development workflow-design`.
 Other commands: `/scaffold` — start a project/component from a bundled template (e.g. a
 LangGraph or LangChain starter) and adapt it to your task.
 
+Automatic loading: you don't have to load a section by hand — Claude can find and read the
+right one itself via the always-available `devkit:catalog` skill. The commands above are the
+manual way to force a specific section into context.
+
 Related subagents you can dispatch: `agent-developer`, `doc-writer`.
 
 ---

@@ -32,6 +32,8 @@ Dolle/
         │   └── plugin.json      # plugin manifest (name: "devkit")
         ├── commands/            # /devkit menu + one loader per section
         ├── agents/              # subagents: agent-developer, doc-writer
+        ├── skills/              # auto-loaded index skill (catalog) — the ONLY thing scanned
+        │   └── catalog/SKILL.md # maps tasks -> which pack file Claude should read
         ├── packs/               # the skill sections — NOT auto-loaded
         │   ├── agent-development/
         │   │   ├── INDEX.md               # section catalog (multi-skill section)
@@ -70,13 +72,23 @@ many skills that metadata adds up, and every skill becomes a candidate the model
 devkit deliberately puts its knowledge in **`packs/`** — a directory Claude Code does **not**
 scan. The result:
 
-- At startup, only the lightweight **commands** (and the two agent descriptions) are known.
-- No section content — and not even skill metadata — sits in context until you act.
+- At startup, only the lightweight **commands**, the **agent descriptions**, and **one index
+  skill** (`skills/catalog`) are known.
+- No section content — no pack `SKILL.md` — sits in context until it is read.
 - A **loader command** reads the section's `INDEX.md` and/or `SKILL.md` files via
   `${CLAUDE_PLUGIN_ROOT}` only when you run it.
 
 This is the "call a command to expose a section of skills" model, like UI/UX-style pro-max
 plugins: a thin menu up front, deep guidance pulled in on demand.
+
+### The catalog skill: model-driven loading
+
+`skills/catalog/SKILL.md` is the single exception that is auto-discovered. Only its short
+`description` loads at startup (a few lines); its body — a map of task → which pack file to
+read — loads when the skill is invoked, and the packs themselves load only when Claude reads
+them. This lets **Claude** find and pull the right section on its own when a task matches,
+rather than requiring the user to run a loader. The loader commands remain the manual override.
+The heavy content still stays out of startup context either way.
 
 ## Request flow
 

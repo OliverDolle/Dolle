@@ -27,6 +27,12 @@ street index — it names subsystems and their locations, not individual functio
   into context on demand.
 - `scaffold.md` — copies a bundled template into the workspace and adapts it.
 
+## Index skill (auto-loaded)
+
+`/plugins/devkit/skills/catalog/SKILL.md` — the only skill Claude Code auto-discovers. Its
+description loads at startup; its body maps each task to the pack file Claude should read, so
+Claude can load the right guidance on its own without a manual loader command.
+
 ## Skill sections (the knowledge)
 
 `/plugins/devkit/packs/` — command-gated skill content, **not** auto-loaded at startup.

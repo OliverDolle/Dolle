@@ -57,6 +57,8 @@ The table below is generated from each doc's `description` frontmatter by
   command.
 - **5 commands** (`plugins/devkit/commands/`) — `/devkit` (menu), one loader per section, and
   `/scaffold`.
+- **1 index skill** (`plugins/devkit/skills/catalog/`) — auto-loaded so Claude can find and read
+  the right section itself, without you running a loader command.
 - **2 subagents** (`plugins/devkit/agents/`) — `agent-developer`, `doc-writer`.
 - **2 hooks** (`plugins/devkit/hooks/`) — a session-start reminder and a topic-aware section
   suggester.
