@@ -1,0 +1,13 @@
+{
+  "name": "dolle-devkit",
+  "version": "0.3.0",
+  "description": "Dolle devkit — shared dev tooling. Exposes the documentation doc-index generator as a bin so any repo can run it with npx (no copied script).",
+  "type": "module",
+  "private": true,
+  "bin": {
+    "devkit-doc-index": "scripts/generate-doc-index.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

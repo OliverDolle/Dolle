@@ -30,10 +30,12 @@ How you work:
 - Start by reading the codebase to understand what actually exists — don't document
   aspirations. Use Grep/Glob/Read to map the real structure; reference directories in the code
   map and `path:line` where a precise pointer helps.
-- **Set up the automation if it's missing:** copy
-  `${CLAUDE_PLUGIN_ROOT}/packs/documentation/assets/generate-doc-index.mjs` to
-  `<repo>/scripts/` and `${CLAUDE_PLUGIN_ROOT}/packs/documentation/assets/docs-index.yml` to
-  `<repo>/.github/workflows/`, and ensure the README has the `DOC-INDEX` markers.
+- **Set up the automation if it's missing:** prefer the reusable workflow — copy
+  `${CLAUDE_PLUGIN_ROOT}/packs/documentation/assets/docs-index.caller.yml` to
+  `<repo>/.github/workflows/docs-index.yml` (no script copy needed). For a standalone repo that
+  must not depend on devkit, instead copy `generate-doc-index.mjs` to `<repo>/scripts/` and
+  `docs-index.yml` to `<repo>/.github/workflows/`. Either way, ensure the README has the
+  `DOC-INDEX` markers.
 - Keep the section list small and honest; a section earns a doc only when it has enough to
   stand alone.
 - Match the tone and formatting of existing docs rather than inventing a new style.

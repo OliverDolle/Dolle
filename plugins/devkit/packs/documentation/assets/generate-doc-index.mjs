@@ -23,11 +23,12 @@
 //   <!-- DOC-INDEX:END -->
 
 import { readFileSync, writeFileSync, readdirSync, statSync } from "node:fs";
-import { join, relative, sep, posix, basename, dirname } from "node:path";
-import { fileURLToPath } from "node:url";
+import { join, relative, resolve, sep, posix, basename } from "node:path";
 
-const SCRIPT_DIR = dirname(fileURLToPath(import.meta.url));
-const ROOT = join(SCRIPT_DIR, ".."); // this script lives in <repo>/scripts/
+// Repo to operate on: DOC_INDEX_ROOT when set (the reusable CI workflow sets it, since there the
+// generator is fetched from another repo), otherwise the current working directory. Run the
+// script from your repo root for the default to be correct.
+const ROOT = process.env.DOC_INDEX_ROOT ? resolve(process.env.DOC_INDEX_ROOT) : process.cwd();
 const DOCS_DIR = join(ROOT, "docs");
 const README = join(ROOT, "README.md");
 const START = "<!-- DOC-INDEX:START -->";

@@ -65,6 +65,10 @@ Claude can load the right guidance on its own without a manual loader command.
   frontmatter, and rewrites the README index between the `DOC-INDEX` markers.
 - `/.github/workflows/docs-index.yml` — GitHub Action that runs the generator and commits the
   synced README.
+- `/.github/workflows/docs-index.reusable.yml` — the same, exposed as a reusable workflow so
+  other repos adopt it with a one-line caller (see the documentation skill).
+- `/package.json` — exposes the generator as a `bin` so any repo can run it via
+  `npx github:OliverDolle/Dolle`.
 - `/docs/` — the per-section docs themselves (including this file).
 
 ## Related

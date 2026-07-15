@@ -1,7 +1,7 @@
 {
   "name": "devkit",
   "description": "Command-gated skill packs, agents, and hooks for AI-assisted development: subagent-driven development, LangChain agents, LangGraph workflows, and a documentation methodology. Packs live in packs/ and are exposed on demand via loader commands so they never bloat startup context.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": {
     "name": "OliverDolle"
   },

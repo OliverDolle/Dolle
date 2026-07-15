@@ -1,0 +1,22 @@
+# Caller workflow — copy to a repo as .github/workflows/docs-index.yml.
+# Delegates to the reusable Docs Index workflow in devkit, so THIS repo keeps no generator
+# script of its own. Requirements in this repo: a README with the DOC-INDEX markers and a
+# `description` in each docs/*.md frontmatter.
+name: Docs Index
+
+on:
+  push:
+    paths:
+      - "docs/**"
+      - "README.md"
+  workflow_dispatch:
+
+jobs:
+  docs-index:
+    # Pin @main to a tag or SHA once devkit cuts releases (e.g. @v0.3.0).
+    uses: OliverDolle/Dolle/.github/workflows/docs-index.reusable.yml@main
+    permissions:
+      contents: write
+    # For pull requests (or to disable auto-commit) pass check mode:
+    # with:
+    #   mode: check

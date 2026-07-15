@@ -1,0 +1,75 @@
+name: Docs Index (reusable)
+
+# Reusable workflow: keeps a repo's README documentation index in sync with each doc's
+# `description` frontmatter. Call it from any repo with a tiny caller workflow:
+#
+#   jobs:
+#     docs-index:
+#       uses: OliverDolle/Dolle/.github/workflows/docs-index.reusable.yml@main
+#       permissions:
+#         contents: write
+#
+# The generator is fetched from OliverDolle/Dolle at run time, so caller repos keep no copy of
+# the script. The caller repo only needs a README with the DOC-INDEX markers and a `description`
+# in each docs/*.md frontmatter.
+
+on:
+  workflow_call:
+    inputs:
+      mode:
+        description: "generate (commit synced README) or check (fail if out of date)"
+        type: string
+        default: generate
+      node-version:
+        type: string
+        default: "20"
+      devkit-ref:
+        description: "Git ref of OliverDolle/Dolle to fetch the generator from"
+        type: string
+        default: main
+
+jobs:
+  docs-index:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Check out the calling repository
+        uses: actions/checkout@v4
+
+      - name: Fetch the doc-index generator from devkit
+        uses: actions/checkout@v4
+        with:
+          repository: OliverDolle/Dolle
+          ref: ${{ inputs.devkit-ref }}
+          path: .devkit-doc-index
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version }}
+
+      - name: Generate or check the doc index
+        env:
+          # Operate on the calling repo (checked out at the workspace root), not on the
+          # fetched devkit checkout.
+          DOC_INDEX_ROOT: ${{ github.workspace }}
+        run: |
+          SCRIPT=.devkit-doc-index/scripts/generate-doc-index.mjs
+          if [ "${{ inputs.mode }}" = "check" ]; then
+            node "$SCRIPT" --check
+          else
+            node "$SCRIPT"
+          fi
+
+      - name: Commit the synced index (generate mode only)
+        if: ${{ inputs.mode != 'check' }}
+        run: |
+          if [ -n "$(git status --porcelain README.md)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add README.md
+            git commit -m "docs: sync README doc index [skip ci]"
+            git push
+          else
+            echo "README doc index already up to date."
+          fi

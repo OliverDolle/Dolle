@@ -66,17 +66,29 @@ A script scans `docs/`, reads each `description`, and rewrites the table between
 one row per doc, `| [Title](path) | description |`, sorted by `order` then title. A GitHub
 Action runs it automatically so the index is never stale.
 
-**Reusable assets** (copy these into the target repo — they are committed there, since the
-Action runs in that repo, not in the plugin):
+### Setting up the automation
 
-- `${CLAUDE_PLUGIN_ROOT}/packs/documentation/assets/generate-doc-index.mjs`
-  → copy to `<repo>/scripts/generate-doc-index.mjs`
-- `${CLAUDE_PLUGIN_ROOT}/packs/documentation/assets/docs-index.yml`
-  → copy to `<repo>/.github/workflows/docs-index.yml`
+Two ways to wire up the GitHub Action; both regenerate the index on push.
 
-Run it locally any time with `node scripts/generate-doc-index.mjs` (or `--check` in CI to fail
-when the index is out of date). This repository itself uses this exact setup — see its
-`scripts/` and `.github/workflows/` for a live reference.
+**Option A — reference the reusable workflow (recommended when you control several repos).**
+The repo keeps no generator script. Copy
+`${CLAUDE_PLUGIN_ROOT}/packs/documentation/assets/docs-index.caller.yml` to
+`<repo>/.github/workflows/docs-index.yml`. It calls the reusable workflow in devkit
+(`OliverDolle/Dolle/.github/workflows/docs-index.reusable.yml@main`), which fetches the
+generator at run time. Pin `@main` to a tag/SHA for stability. Regenerate locally with
+`npx github:OliverDolle/Dolle` from the repo root.
+
+**Option B — copy the script + Action in (self-contained / portable).**
+For a repo that must not depend on the devkit repo. Copy:
+- `${CLAUDE_PLUGIN_ROOT}/packs/documentation/assets/generate-doc-index.mjs` → `<repo>/scripts/`
+- `${CLAUDE_PLUGIN_ROOT}/packs/documentation/assets/docs-index.yml` → `<repo>/.github/workflows/`
+
+Regenerate locally with `node scripts/generate-doc-index.mjs` (`--check` in CI to fail when out
+of date).
+
+Either way, the README needs the DOC-INDEX markers and each doc a `description`. The devkit repo
+itself uses Option B as a live reference and hosts the reusable workflow at
+`.github/workflows/docs-index.reusable.yml`.
 
 ## The code map
 
@@ -190,7 +202,8 @@ order: <n>
 
 - [ ] README opens with a one-paragraph "what is this project" and a quickstart.
 - [ ] README index lives between `DOC-INDEX` markers and is generated (not hand-edited).
-- [ ] The generator script and GitHub Action are installed in the repo.
+- [ ] The doc-index Action is set up — the reusable caller workflow (Option A) or the copied
+      script + Action (Option B).
 - [ ] Every doc has a 2-3 sentence `description` in its frontmatter.
 - [ ] A `docs/code-map.md` maps the large subsystems to their locations.
 - [ ] The code map covers big entities only — no line-level detail.
