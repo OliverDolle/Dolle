@@ -43,10 +43,14 @@ The surface you will actually use (call `list_templates` and read the server's o
 
 | Tool (`mcp__dolle-mcp__…`) | Use it to |
 | --- | --- |
-| `list_templates()` | **Start here.** Discover the 19 offline, theme-driven templates (id, theme, category, components) so you propose from what exists, not from memory. |
+| `list_templates()` | **Start here.** Discover the 32 offline, theme-driven templates (id, theme, category, components) so you propose from what exists, not from memory. |
 | `get_template_source(id)` | Pull the real HTML/CSS/JS for a template to adapt — buttons, navbars, typography, charts, business pages, effects. |
+| `list_segments(id)` | List a catalog template's **individually-copyable pieces** (id/title/group only) — grab one button/nav/chart/shape/grid/text-effect instead of a whole page. |
+| `get_segment(id, seg)` | Return **one** self-contained snippet (`html`/`css`/`js` + a combined `code`) — far less to read than the full page. |
 | `screenshot_template(id, width?, height?, dark?)` | **See** a template as pixels before recommending it, and screenshot your own result to self-critique. |
-| `open_preview(id?)` / `start_preview()` / `preview_url(id)` | Open the live gallery (and `/palettes`) in the user's browser — the friendliest way to show a non-technical client the options. |
+| `open_preview(id?, seg?)` / `start_preview(port?)` / `preview_url(id)` | Open the live gallery (and `/palettes`) in the user's browser — the friendliest way to show a non-technical client the options; pass `seg` to jump to one component. |
+| `deeplink(id, seg?)` | Build a shareable URL that scrolls to a specific component and **blinks it green** — use it to confirm exactly which piece you mean. |
+| `restart_preview(port?)` | Relaunch the preview on **another port** when the default (4321) is already taken (e.g. another running instance); `start_preview` also auto-falls-back to a free port. |
 | `color_palettes(colors, size?)` | Harmony palettes **around 1–3 seed colors** (complementary, analogous, triadic, blend, …) with ready `gradient_css`. |
 | `find_palettes(colors?, limit?)` | Search the **curated** 3-/4-color palette catalog nearest a seed — or browse with no seed for ideas. |
 | `color_info(color)` | Any color in hex/rgb/hsl/hsv/oklch + nearest name + `best_text`. |
@@ -56,12 +60,17 @@ The surface you will actually use (call `list_templates` and read the server's o
 | `trace_image_to_svg(image_path, max_colors?, name?)` | Trace a raster logo/image to a segmented, animatable SVG. |
 | `screenshot_preview(url, …)` | Screenshot any live preview URL (e.g. a generated SVG) so you can see the animated result. |
 
-The template catalog spans: **starters** (`aurora-light/dark`), **components**
-(`buttons`, `text-effects`, `typography`, `navbars`), **data/3D** (`charts`, `threed-css`,
-`threed-webgl`), **motion & SVG** (`parallax`, `motion`, `svg-segments`, `svg-page`),
-**effects/backgrounds** (`glitch`, `bg-transitions`, `mechanics`), and **business pages**
-(`biz-saas`, `biz-agency`, `biz-corporate`). Read the source of the ones that fit rather than
-reinventing components — then adapt them to the brief's palette and voice.
+The template catalog (32 templates) spans: **starters** (`aurora-light/dark`), **components**
+(`buttons`, `text-effects`, `kinetic-text`, `typography`, `navbars`), **data & 3D** (`charts`,
+`charts-lab`, `diagrams`, `threed-css`, `threed-webgl`, `scroll-3d`, `gallery-wheel`), **motion &
+SVG** (`parallax`, `motion`, `svg-segments`, `svg-page`, `scroll-effects`, `gallery-scroll`),
+**effects & backgrounds** (`glitch`, `bg-transitions`, `mechanics`, `shapes`, `interactive`),
+**layout & grids** (`grids`), and **business pages** (`biz-saas`, `biz-agency`, `biz-corporate`,
+`biz-luxury`, `biz-launch`, `biz-restaurant`). Read the source of the ones that fit — and for the
+**catalog** templates (`buttons`, `text-effects`, `kinetic-text`, `navbars`, `typography`,
+`charts-lab`, `diagrams`, `scroll-effects`, `shapes`, `gallery-wheel`, `gallery-scroll`,
+`interactive`, `grids`) prefer `list_segments` + `get_segment` to pull one piece — rather than
+reinventing components, then adapt them to the brief's palette and voice.
 
 ## Step 1 — Run the design brief (ask before you build)
 
@@ -75,8 +84,9 @@ Cover these axes:
 
 1. **Design type / mood.** What is this page and who is it for? What feeling — editorial,
    corporate/B2B, playful, cyber/technical, calm-minimal, maximalist? Map their answer to a
-   starting template via `list_templates` (e.g. B2B → `biz-corporate`, SaaS landing →
-   `biz-saas`, agency/portfolio → `biz-agency`, cyber → `glitch`). If they have no idea,
+   starting template via `list_templates` (e.g. B2B → `biz-corporate`, SaaS / AI launch →
+   `biz-saas` / `biz-launch`, agency/portfolio → `biz-agency`, luxury brand → `biz-luxury`,
+   restaurant/hospitality → `biz-restaurant`, cyber → `glitch`). If they have no idea,
    `open_preview()` so they can browse the gallery and point.
 
 2. **Menu bar / navigation (if the page needs one).** Does it need nav at all? If so, which
@@ -112,7 +122,12 @@ Cover these axes:
    than "some animations": scroll-reveal & parallax (`parallax`), a reusable entrance/hover/
    loader catalog (`motion`), section-to-section **background transitions** (`bg-transitions`),
    **web mechanics** — sticky theme-switch, bento, marquee, count-up, scroll progress, magnetic
-   cursor, scrollytelling (`mechanics`), text animations (`text-effects`), or cyber glitch
+   cursor, scrollytelling (`mechanics`), text animations (`text-effects`), kinetic / 3D / scroll-
+   scrubbed / path text (`kinetic-text`), advanced scroll mechanics — variable speed, horizontal,
+   motion-blur, snap, scrub (`scroll-effects`), scroll-driven galleries & media transitions —
+   arched/coverflow/cylinder wheels, shuffle, depth reel, full-bleed reveal, visibility-gated
+   video (`gallery-wheel`, `gallery-scroll`), pointer-interactive canvases — water ripple, ASCII
+   reveal, particle shatter, cursor followers (`interactive`), or cyber glitch
    (`glitch`). They can also ask for something not in the library — build it, but hold it to the
    same bar. Whatever is chosen: animate only `transform`/`opacity`, gate everything behind
    `prefers-reduced-motion`, and no-op pointer effects on touch. Prefer one orchestrated moment
@@ -126,12 +141,13 @@ Cover these axes:
    - If they have none, decide with them whether the design leans on type/color/layout instead
      (often stronger than stock imagery).
 
-8. **Page structure.** How is content organized — heavy on **containers/cards** (bento grids,
-   feature cards, stat tiles, pricing tiers — see the business templates and `mechanics` bento)
-   or on **long-form text sections** (editorial, multi-column, article, sticky-aside — see the
-   `typography` template)? Read the relevant template source to see the structural options the
-   library already supports, and propose a concrete section skeleton (hero → … → footer) before
-   writing code.
+8. **Page structure & layout.** How is content organized — heavy on **containers/cards** (bento
+   grids, feature cards, stat tiles, pricing tiers — see the business templates, `mechanics`
+   bento, and the **`grids`** layout catalog: auto-fit, masonry, bento, justified, mosaic, areas,
+   subgrid, plus warped / sidewall / isometric / radial / hex) or on **long-form text sections**
+   (editorial, multi-column, article, sticky-aside — see the `typography` template)? Read the
+   relevant template source to see the structural options the library already supports, and
+   propose a concrete section skeleton (hero → … → footer) before writing code.
 
 If content/charts are involved, also read `guide://chart-libraries` (default: **ECharts**,
 vendored, colors resolved from CSS custom properties) before picking a charting approach.

@@ -26,8 +26,10 @@ Steps:
      browser tab open.
 
    Use the base URL the tool **returns** — do not hardcode the port. It reflects `DOLLE_MCP_PORT`
-   if the user set it (default `http://127.0.0.1:4321/`). If the call fails because the server
-   can't launch, surface the error and the `uv`-on-PATH note from step 1.
+   if the user set it (default `http://127.0.0.1:4321/`). If the default port is already taken
+   (e.g. another instance is running it), the server auto-falls-back to a free port — and
+   `restart_preview(port?)` can move a running one — so always trust the returned URL. If the call
+   fails because the server can't launch, surface the error and the `uv`-on-PATH note from step 1.
 
 3. **Report the URL, prominently** — a short, copyable block:
    - **Gallery:** the returned base URL (e.g. `http://127.0.0.1:4321/`)
