@@ -31,8 +31,11 @@ Each loader also accepts an optional task, e.g.
 `/agent-development build an agent that queries Postgres`. `/agent-development` also accepts a
 skill to focus, e.g. `/agent-development workflow-design`.
 
-Other commands: `/scaffold` — start a project/component from a bundled template (e.g. a
-LangGraph or LangChain starter) and adapt it to your task.
+Other commands:
+- `/scaffold` — start a project/component from a bundled template (e.g. a LangGraph or LangChain
+  starter) and adapt it to your task.
+- `/mcp-preview-server` — start the bundled Dolle-MCP live preview server (if needed) and print
+  its gallery URL, so you don't have to remember or ask for it.
 
 Automatic loading: you don't have to load a section by hand — Claude can find and read the
 right one itself via the always-available `devkit:catalog` skill. The commands above are the

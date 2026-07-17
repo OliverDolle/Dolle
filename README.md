@@ -3,8 +3,9 @@
 **devkit** is a Claude Code plugin of *command-gated skill sections* for AI-assisted
 development. Instead of loading every skill into context at startup, a **section** (a group of
 related skills) stays dormant until you run its command — so your context stays lean and you
-pull in focused guidance only when you need it. It ships with skill sections, subagents, and
-hooks, and is distributed as a plugin marketplace so a whole team can install it.
+pull in focused guidance only when you need it. It ships with skill sections, subagents, hooks,
+and a **bundled [Dolle-MCP](https://github.com/OliverDolle/Dolle-MCP) server**, and is
+distributed as a plugin marketplace so a whole team can install it.
 
 Sections today:
 
@@ -35,6 +36,32 @@ Sections today:
 Nothing from a section is in context until you call its command. Run `/devkit` any time for the
 menu.
 
+Installing the plugin also **registers the bundled Dolle-MCP server automatically** — confirm
+with `/mcp` (look for `dolle-mcp`, connected) and run `/mcp-preview-server` to open its live
+preview. This needs [`uv`](https://docs.astral.sh/uv/) on your PATH (see below).
+
+## Bundled MCP server (Dolle-MCP)
+
+devkit bundles the **[Dolle-MCP](https://github.com/OliverDolle/Dolle-MCP)** server — an MCP
+server that serves a library of UI themes/templates (components, charts, parallax/scroll, CSS &
+WebGL 3D, motion, SVG animation) plus color-palette, WCAG-contrast, SVG-tracing, and screenshot
+tools. It powers the **UI/UX design** section and the `web-designer` subagent.
+
+Because it's bundled (`plugins/devkit/.mcp.json`), it **registers automatically when the plugin
+is enabled** — no separate `claude mcp add`, and no extra approval prompt. Verify with `/mcp`
+(look for `dolle-mcp`, connected).
+
+- **Prerequisite:** [`uv`](https://docs.astral.sh/uv/) on your PATH — the server launches via
+  `uvx --from git+https://github.com/OliverDolle/Dolle-MCP dolle-mcp`, fetched and run on demand
+  (no clone, no build). For the screenshot tools, run `uvx playwright install chromium` once.
+- **Live preview:** run **`/mcp-preview-server`** any time to start the preview gallery and get
+  its URL (pass a template id, e.g. `/mcp-preview-server charts`, to open it deep-linked).
+- **After updates:** a running MCP server doesn't hot-reload — reconnect it in `/mcp`.
+- **Reference:** setup and troubleshooting in
+  [Installation → Bundled MCP server](docs/installation.md#bundled-mcp-server-dolle-mcp); the
+  full tool/template reference lives in the
+  [Dolle-MCP repo](https://github.com/OliverDolle/Dolle-MCP).
+
 ## Documentation
 
 The table below is generated from each doc's `description` frontmatter by
@@ -60,8 +87,11 @@ The table below is generated from each doc's `description` frontmatter by
 
 - **5 skill sections** (`plugins/devkit/packs/`) holding **9 skills** — loaded only via their
   command.
-- **7 commands** (`plugins/devkit/commands/`) — `/devkit` (menu), one loader per section, and
-  `/scaffold`.
+- **8 commands** (`plugins/devkit/commands/`) — `/devkit` (menu), one loader per section,
+  `/scaffold`, and `/mcp-preview-server`.
+- **1 bundled MCP server** (`plugins/devkit/.mcp.json`) — [Dolle-MCP](https://github.com/OliverDolle/Dolle-MCP)
+  registers automatically when the plugin is enabled (no manual `claude mcp add`); it powers the
+  UI/UX design section and `/mcp-preview-server`.
 - **1 index skill** (`plugins/devkit/skills/catalog/`) — auto-loaded so Claude can find and read
   the right section itself, without you running a loader command.
 - **3 subagents** (`plugins/devkit/agents/`) — `agent-developer`, `doc-writer`, `web-designer`.
@@ -76,6 +106,9 @@ The table below is generated from each doc's `description` frontmatter by
 
 - **Claude Code** for the full plugin experience.
 - **Node.js** for the hooks (already required by Claude Code itself).
+- **[`uv`](https://docs.astral.sh/uv/)** on your PATH for the bundled Dolle-MCP server (and
+  `uvx playwright install chromium` once, for its screenshot tools). See
+  [Installation](docs/installation.md#bundled-mcp-server-dolle-mcp).
 - Other agents (Codex, Cursor, …) can use the skills as portable Markdown — see
   [Cross-platform](docs/cross-platform.md).
 

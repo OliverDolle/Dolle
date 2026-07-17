@@ -30,7 +30,8 @@ Dolle/
     └── devkit/
         ├── .claude-plugin/
         │   └── plugin.json      # plugin manifest (name: "devkit")
-        ├── commands/            # /devkit menu + one loader per section
+        ├── .mcp.json            # bundled Dolle-MCP server (auto-registers on enable)
+        ├── commands/            # /devkit menu + loaders + /scaffold + /mcp-preview-server
         ├── agents/              # subagents: agent-developer, doc-writer
         ├── skills/              # auto-loaded index skill (catalog) — the ONLY thing scanned
         │   └── catalog/SKILL.md # maps tasks -> which pack file Claude should read

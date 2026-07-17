@@ -66,7 +66,9 @@ own docs follow it.
 `packs/ui-ux-design/SKILL.md` · 1 skill
 
 A method for designing distinctive web UI/UX on top of the **Dolle-MCP** server (sibling repo,
-registered in Claude Code as `dolle-mcp`). It uses that server's tools first — `list_templates`
+registered in Claude Code as `dolle-mcp` — **bundled with this plugin**, so it auto-registers on
+install; see [Installation](installation.md#bundled-mcp-server-dolle-mcp)). It uses that server's
+tools first — `list_templates`
 / `get_template_source` / `screenshot_template` for the 19 offline templates, `find_palettes` /
 `color_palettes` / `color_contrast` / `color_gradients` for color, `segment_svg` /
 `trace_image_to_svg` for animatable SVG — and runs a **design brief** before building: asking

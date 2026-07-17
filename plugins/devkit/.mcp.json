@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "dolle-mcp": {
+      "command": "uvx",
+      "args": ["--from", "git+https://github.com/OliverDolle/Dolle-MCP", "dolle-mcp"]
+    }
+  }
+}

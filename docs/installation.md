@@ -23,6 +23,9 @@ install (and later update) the plugin from it.
 - Claude Code installed and working.
 - Node.js on your PATH (Claude Code requires it; devkit's hooks use it).
 - Access to this repository — either the GitHub repo or a local clone.
+- [`uv`](https://docs.astral.sh/uv/) on your PATH — only needed for the bundled **Dolle-MCP**
+  server (see below). For its screenshot tools, also run once per machine:
+  `uvx playwright install chromium`.
 
 ## CLI
 
@@ -60,6 +63,27 @@ The desktop app (macOS/Windows) uses the same plugin system:
 
 Everything after installation — commands, subagents, hooks — behaves identically in the CLI
 and the desktop app.
+
+## Bundled MCP server (Dolle-MCP)
+
+The UI/UX design section is driven by the **[Dolle-MCP](https://github.com/OliverDolle/Dolle-MCP)**
+server. devkit **bundles** it — `plugins/devkit/.mcp.json` registers `dolle-mcp` automatically
+when the plugin is enabled, so there is **no manual `claude mcp add` step and no separate
+approval prompt**. Confirm it with:
+
+```
+/mcp        # dolle-mcp should be listed as connected
+```
+
+Notes:
+
+- The server launches via `uvx --from git+https://github.com/OliverDolle/Dolle-MCP dolle-mcp`,
+  so [`uv`](https://docs.astral.sh/uv/) must be on your PATH (see the prerequisites above). No
+  clone or build — `uvx` fetches and runs it on demand.
+- Use `/mcp-preview-server` to start the live preview gallery and print its URL.
+- If `/mcp` shows it disconnected after an update, reconnect it there (a running MCP server does
+  not hot-reload). To rebuild from the latest commit, the standalone form accepts `--refresh`.
+- You can still add it standalone (without the plugin) — see the Dolle-MCP README.
 
 ## Updating
 

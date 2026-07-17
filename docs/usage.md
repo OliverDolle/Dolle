@@ -56,6 +56,18 @@ section index first, then the skills relevant to your task.
 If a command name collides with another plugin, use the namespaced form, e.g.
 `/devkit:agent-development`.
 
+## Other commands
+
+Beyond the section loaders and `/devkit` menu:
+
+| Command | Does |
+| --- | --- |
+| `/scaffold` | Start a project/component from a bundled template (e.g. a LangGraph or LangChain starter) and adapt it to your task. |
+| `/mcp-preview-server` | Start the bundled Dolle-MCP live preview server (if it isn't running) and print its gallery URL — so you don't have to remember it or ask each time. Optionally pass a template id (e.g. `/mcp-preview-server charts`) to open it in the browser. |
+
+`/mcp-preview-server` relies on the **Dolle-MCP** server, which devkit bundles and registers
+automatically (see [Installation](installation.md#bundled-mcp-server-dolle-mcp)).
+
 ## Automatic loading (the catalog skill)
 
 You don't have to load a section by hand. devkit ships one lightweight, always-available skill —
