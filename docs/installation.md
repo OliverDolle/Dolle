@@ -77,13 +77,26 @@ approval prompt**. Confirm it with:
 
 Notes:
 
-- The server launches via `uvx --from git+https://github.com/OliverDolle/Dolle-MCP dolle-mcp`,
-  so [`uv`](https://docs.astral.sh/uv/) must be on your PATH (see the prerequisites above). No
-  clone or build — `uvx` fetches and runs it on demand.
+- The server launches via `uvx --from git+https://github.com/OliverDolle/Dolle-MCP@<tag> dolle-mcp`,
+  **pinned to a version tag**, so [`uv`](https://docs.astral.sh/uv/) must be on your PATH (see
+  the prerequisites above). No clone or build — `uvx` fetches and runs the pinned build on demand.
 - Use `/mcp-preview-server` to start the live preview gallery and print its URL.
 - If `/mcp` shows it disconnected after an update, reconnect it there (a running MCP server does
-  not hot-reload). To rebuild from the latest commit, the standalone form accepts `--refresh`.
+  not hot-reload).
 - You can still add it standalone (without the plugin) — see the Dolle-MCP README.
+
+### How server updates flow (version pinning)
+
+The bundled server is **pinned to a Dolle-MCP release tag** in `plugins/devkit/.mcp.json`, so
+the two repos update in lockstep and reproducibly:
+
+- **You get a new server build only when the plugin ships a new pin.** Because the pinned tag
+  travels inside the plugin, `/plugin update devkit@dolle` is what delivers a server upgrade —
+  and changing the tag busts `uvx`'s cache automatically (no `--refresh` needed). Pinning also
+  means everyone on a given plugin version runs the *same* server build.
+- **To release a new server version** (maintainers): tag Dolle-MCP `vX.Y.Z`, then bump the pin
+  in `.mcp.json` to `@vX.Y.Z` and release the plugin. Full steps live in the Dolle-MCP repo's
+  `CLAUDE.md` (“Releasing & how the devkit plugin consumes this server”).
 
 ## Updating
 

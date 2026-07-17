@@ -5,14 +5,14 @@
   },
   "metadata": {
     "description": "Dolle developer toolkit — command-gated skill packs, agents, and hooks for AI-assisted development.",
-    "version": "0.6.0"
+    "version": "0.6.1"
   },
   "plugins": [
     {
       "name": "devkit",
       "source": "./plugins/devkit",
       "description": "Command-gated skill packs for subagent-driven development, LangChain agents, LangGraph workflows, documentation, UI/UX design (via the bundled Dolle-MCP server), and web performance. Packs load only when you call their command, keeping startup context minimal.",
-      "version": "0.6.0",
+      "version": "0.6.1",
       "author": {
         "name": "OliverDolle"
       },

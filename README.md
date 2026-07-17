@@ -114,5 +114,5 @@ The table below is generated from each doc's `description` frontmatter by
 
 ## License
 
-No license file is included yet — add one before sharing publicly if you want to set reuse
-terms.
+[MIT](LICENSE) © 2026 Oliver Nielsen. The bundled [Dolle-MCP](https://github.com/OliverDolle/Dolle-MCP)
+server is MIT-licensed under its own repository.
