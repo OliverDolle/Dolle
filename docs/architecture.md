@@ -6,6 +6,9 @@ description: >-
   and why the hooks are Node scripts.
 order: 50
 ---
+<!-- BACK-TO-README:START -->
+[← Back to README](../README.md)
+<!-- BACK-TO-README:END -->
 
 # Architecture
 
@@ -32,7 +35,7 @@ Dolle/
         │   └── plugin.json      # plugin manifest (name: "devkit")
         ├── .mcp.json            # bundled Dolle-MCP server (auto-registers on enable)
         ├── commands/            # /devkit menu + loaders + /scaffold + /mcp-preview-server
-        ├── agents/              # subagents: agent-developer, doc-writer
+        ├── agents/              # subagents: agent-developer, doc-writer, web-designer
         ├── skills/              # auto-loaded index skill (catalog) — the ONLY thing scanned
         │   └── catalog/SKILL.md # maps tasks -> which pack file Claude should read
         ├── packs/               # the skill sections — NOT auto-loaded
@@ -44,9 +47,16 @@ Dolle/
         │   │   ├── workflow-design/SKILL.md
         │   │   └── troubleshooting/SKILL.md
         │   ├── subagent-driven-development/SKILL.md   # single-skill section
-        │   └── documentation/
-        │       ├── SKILL.md                           # single-skill section
-        │       └── assets/                            # doc-index templates to copy per repo
+        │   ├── documentation/
+        │   │   ├── SKILL.md                           # single-skill section
+        │   │   └── assets/                            # doc-index templates to copy per repo
+        │   ├── ui-ux-design/SKILL.md                  # single-skill section
+        │   ├── web-performance/SKILL.md               # single-skill section
+        │   ├── ui-design/SKILL.md                     # single-skill section
+        │   ├── containerization/SKILL.md              # single-skill section
+        │   ├── kubernetes/SKILL.md                    # single-skill section
+        │   ├── cloud-infrastructure/SKILL.md          # single-skill section
+        │   └── prompt-enhancement/SKILL.md            # single-skill section
         └── hooks/
             ├── hooks.json       # SessionStart + UserPromptSubmit
             └── scripts/*.mjs    # Node hook scripts (cross-platform)

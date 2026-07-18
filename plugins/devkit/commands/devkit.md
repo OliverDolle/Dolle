@@ -9,7 +9,8 @@ section is a group of related skills exposed by one command.
 context until the user explicitly loads one.
 
 If the user passed an argument that clearly names a section (`agent-development`, `subagents`,
-`docs`, `ui-ux-design`, or `web-performance`), skip the menu and run that section's loader
+`docs`, `ui-ux-design`, `web-performance`, `ui-design`, `containerization`, `kubernetes`,
+`cloud-infrastructure`, or `prompt-enhancement`), skip the menu and run that section's loader
 (follow the behavior in the corresponding loader command: read the section's `INDEX.md` if it has
 one, then the relevant `SKILL.md` files under `${CLAUDE_PLUGIN_ROOT}/packs/`).
 
@@ -26,6 +27,11 @@ Otherwise, present this menu to the user verbatim (adjust formatting only):
 | `/docs` | Documentation | A method for writing a short README that links to per-section docs so the project is easy to navigate. |
 | `/ui-ux-design` | UI/UX design | Distinctive web design driven by the Dolle-MCP server (templates, color palettes, WCAG contrast, SVG, screenshots), starting with a short design brief. Builds on the `frontend-design` skill. |
 | `/web-performance` | Web performance | Making pages fast against Core Web Vitals (LCP, CLS, INP) — measure-first workflow, per-metric fix playbook, and budgets. |
+| `/ui-design` | UI design (fundamentals) | Tool-agnostic craft of great UI — hierarchy, spacing/type scales, semantic color & WCAG contrast, component & content states, forms, feedback, accessibility, and a review checklist. |
+| `/containerization` | Containerization | Docker & Compose done right — multi-stage builds, small non-root images, layer caching, `.dockerignore`, healthchecks, and an image size/security checklist. |
+| `/kubernetes` | Kubernetes | Deploying & configuring on K8s — Deployments/Services/Ingress, config/secrets, resources, probes, autoscaling, safe rollouts, Kustomize/Helm, and pod debugging. |
+| `/cloud-infrastructure` | Cloud infrastructure | CI/CD pipelines, Terraform/IaC, choosing a cloud compute target, OIDC auth, secrets across environments, and observability. |
+| `/prompt-enhancement` | Prompt enhancement | Turning a vague request into a precise prompt — diagnose the gaps, clarify with **AskUserQuestion**, then sharpen and restate before doing the work. |
 
 Each loader also accepts an optional task, e.g.
 `/agent-development build an agent that queries Postgres`. `/agent-development` also accepts a

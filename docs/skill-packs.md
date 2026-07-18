@@ -6,6 +6,9 @@ description: >-
   sections, and how the sections relate.
 order: 30
 ---
+<!-- BACK-TO-README:START -->
+[← Back to README](../README.md)
+<!-- BACK-TO-README:END -->
 
 # Skill sections
 
@@ -92,6 +95,75 @@ font/third-party budgets to hold in CI.
 Usage: `/web-performance` (loads the section) or `/web-performance <page or metric>` (loads +
 starts from a baseline).
 
+## Section: UI design (fundamentals) — `/ui-design`
+
+`packs/ui-design/SKILL.md` · 1 skill
+
+The **tool-agnostic** craft of great UI, applicable in any tool or stack: visual hierarchy (one
+primary action per view), a single spacing scale and a small type scale, semantic color roles with
+WCAG **AA** contrast (meaning never by color alone), the full set of component states
+(hover/focus/active/disabled/loading), the four content states (empty/loading/error/overflow), form
+and feedback design, responsive layout, microcopy, accessibility, and a review checklist. It sits
+under the other two design pieces: `frontend-design` owns aesthetic *direction*, `ui-ux-design` owns
+the Dolle-MCP *build workflow*, and this owns the *interface craft* beneath both.
+
+Usage: `/ui-design` (loads the section) or `/ui-design <screen/component to design or review>`.
+
+## Section: Containerization — `/containerization`
+
+`packs/containerization/SKILL.md` · 1 skill
+
+Docker & Compose done right: multi-stage builds (ship the artifact, not the toolchain), small
+pinned non-root base images, layer-cache ordering (deps before source), BuildKit cache/secret
+mounts, `.dockerignore`, exec-form entrypoints and healthchecks, secrets at runtime (never in
+`ENV`/`ARG`/layers), Compose for local multi-service dev, and a size/security verification checklist
+(dive, Trivy/Scout). Feeds directly into the kubernetes section.
+
+Usage: `/containerization` (loads the section) or `/containerization <what you're containerizing>`.
+
+## Section: Kubernetes — `/kubernetes`
+
+`packs/kubernetes/SKILL.md` · 1 skill
+
+Deploying and configuring services on K8s: choosing the controller (Deployment by default), a
+production-grade Deployment (resource requests/limits, distinct liveness/readiness/startup probes,
+non-root security context, digest-pinned image), config via ConfigMaps and Secrets (and why base64
+Secrets aren't encryption), exposing with Services/Ingress/Gateway API + cert-manager, autoscaling
+(HPA) and availability (PDB, topology spread), safe rollouts, packaging with Kustomize or Helm, and
+a debug playbook for the common pod failures.
+
+Usage: `/kubernetes` (loads the section) or `/kubernetes <what you're deploying or the failure>`.
+
+## Section: Cloud infrastructure — `/cloud-infrastructure`
+
+`packs/cloud-infrastructure/SKILL.md` · 1 skill
+
+CI/CD, Infrastructure-as-Code, and cloud platforms: the twelve-factor deploy baseline, choosing the
+most-managed compute target that fits (serverless/containers/PaaS before a cluster), Terraform/
+OpenTofu with remote locked encrypted state and per-environment isolation, a pipeline that builds
+once and promotes the same digest through gated environments, short-lived OIDC cloud auth (no
+long-lived keys), managed secret stores, deployment strategies (rolling/blue-green/canary), and
+observability (logs/metrics/OpenTelemetry traces) with SLO-based alerting.
+
+Usage: `/cloud-infrastructure` (loads the section) or `/cloud-infrastructure <platform/pipeline/IaC
+task>`.
+
+## Section: Prompt enhancement — `/prompt-enhancement`
+
+`packs/prompt-enhancement/SKILL.md` · 1 skill
+
+A method for turning a vague or underspecified request into a precise, high-yield prompt *before*
+doing the work: diagnosing what the prompt is missing (goal, context, scope, constraints, success
+criteria, output format, examples), classifying each gap as inferable / assumable / blocking,
+deciding ask-vs-assume by whether the answer would change what you do next, clarifying the blocking
+gaps with the **AskUserQuestion** tool (2–4 tappable options, recommended first, batched, with
+previews for artifacts to compare), then sharpening the request into a structured prompt and
+restating it cheaply before expensive work. Cross-cutting — it applies to any task, and pairs with
+the AskUserQuestion-driven briefs used by `ui-ux-design`, `subagents`, and `deep-research`.
+
+Usage: `/prompt-enhancement` (loads the section) or `/prompt-enhancement <a rough request to
+enhance>`.
+
 ## How the sections relate
 
 - Within agent-development, LangChain and LangGraph compose — LangChain components run inside
@@ -103,6 +175,17 @@ starts from a baseline).
 - Web performance pairs with UI/UX design: the motion rules the design section enforces
   (`transform`/`opacity`, reduced-motion) are the same ones that protect the CLS and INP metrics.
   The `web-designer` subagent executes the UI/UX design loop; performance is checked after.
+- The three design sections layer: `frontend-design` (aesthetic direction) → **UI design**
+  (interface craft: hierarchy, states, forms, accessibility) → **UI/UX design** (build it on the
+  Dolle-MCP server). Web performance backstops all three.
+- The three platform sections form a delivery chain: **Containerization** builds the image (its
+  non-root user, `HEALTHCHECK`, and `SIGTERM` handling are exactly what **Kubernetes** probes and
+  graceful termination depend on), and **Cloud infrastructure** provisions the target and ships it
+  through CI/CD — with Kubernetes as one compute option among serverless/containers/PaaS.
+- **Prompt enhancement** is cross-cutting: it applies before any of the above. The clarify-first
+  discipline it teaches (AskUserQuestion, ask-vs-assume, restate before building) is the same one
+  the `ui-ux-design` design brief, the `subagents` self-contained brief, and `deep-research` scope
+  narrowing already rely on — this section names the method they share.
 
 ## Related
 

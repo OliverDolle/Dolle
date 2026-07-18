@@ -1,6 +1,6 @@
 ---
 name: catalog
-description: Catalog of devkit's development skills — building agents and workflows with LangChain and LangGraph, subagent-driven development, documentation, UI/UX design (via the Dolle-MCP server), web performance (Core Web Vitals), and scaffolding templates. Consult this on such tasks to find and read the right devkit guidance automatically, instead of the user loading a section by hand.
+description: Catalog of devkit's development skills — building agents and workflows with LangChain and LangGraph, subagent-driven development, documentation, UI/UX design (via the Dolle-MCP server), web performance (Core Web Vitals), prompt enhancement (clarify with AskUserQuestion, then sharpen), and scaffolding templates. Consult this on such tasks to find and read the right devkit guidance automatically, instead of the user loading a section by hand.
 ---
 
 # devkit skill catalog
@@ -50,6 +50,36 @@ Section index: `${CLAUDE_PLUGIN_ROOT}/packs/agent-development/INDEX.md`
 | --- | --- |
 | `${CLAUDE_PLUGIN_ROOT}/packs/web-performance/SKILL.md` | Making a page fast — Core Web Vitals (LCP, CLS, INP), measuring lab + field, the per-metric fix playbook, and JS/image/font/third-party budgets. |
 
+## UI design (fundamentals)
+
+| Read this file | When the task is… |
+| --- | --- |
+| `${CLAUDE_PLUGIN_ROOT}/packs/ui-design/SKILL.md` | Designing or reviewing the *craft* of a UI (tool-agnostic) — visual hierarchy, spacing/type scales, semantic color + WCAG contrast, the full set of component states, forms, feedback, responsive layout, accessibility, and a review checklist. Complements `ui-ux-design` (build workflow) and `frontend-design` (aesthetic direction). |
+
+## Containerization
+
+| Read this file | When the task is… |
+| --- | --- |
+| `${CLAUDE_PLUGIN_ROOT}/packs/containerization/SKILL.md` | Writing/fixing a Dockerfile or Compose stack — multi-stage builds, small non-root images, layer-cache ordering, `.dockerignore`, healthchecks, secrets handling, and image size/security. |
+
+## Kubernetes
+
+| Read this file | When the task is… |
+| --- | --- |
+| `${CLAUDE_PLUGIN_ROOT}/packs/kubernetes/SKILL.md` | Deploying/configuring on K8s — Deployments/Services/Ingress, ConfigMaps & Secrets, resource requests/limits, liveness/readiness/startup probes, HPA, safe rollouts, security context, and Kustomize/Helm; debugging a pod that won't run. |
+
+## Cloud infrastructure (CI/CD, IaC & platforms)
+
+| Read this file | When the task is… |
+| --- | --- |
+| `${CLAUDE_PLUGIN_ROOT}/packs/cloud-infrastructure/SKILL.md` | Building a CI/CD pipeline, authoring Terraform/IaC, choosing a cloud compute target (serverless/containers/PaaS/K8s), OIDC cloud auth, managing secrets/config across environments, or adding observability. |
+
+## Prompt enhancement
+
+| Read this file | When the task is… |
+| --- | --- |
+| `${CLAUDE_PLUGIN_ROOT}/packs/prompt-enhancement/SKILL.md` | Turning a vague or underspecified request into a precise prompt — diagnosing missing goal/context/constraints/success-criteria, deciding when to ask vs. assume, clarifying with **AskUserQuestion**, and restating a sharpened prompt before doing the work. |
+
 ## Scaffolding templates
 
 Runnable starters live under `${CLAUDE_PLUGIN_ROOT}/packs/agent-development/templates/`
@@ -63,4 +93,5 @@ If `${CLAUDE_PLUGIN_ROOT}` isn't expanded in your environment, the files are in 
 directory (the same install dir this skill was loaded from) — locate them with Glob
 (e.g. `**/dolle/devkit/**/packs/**/SKILL.md`), or invoke the matching loader skill instead:
 `devkit:agent-development`, `devkit:subagents`, `devkit:docs`, `devkit:ui-ux-design`,
-`devkit:web-performance`, or `devkit:scaffold`.
+`devkit:web-performance`, `devkit:ui-design`, `devkit:containerization`, `devkit:kubernetes`,
+`devkit:cloud-infrastructure`, `devkit:prompt-enhancement`, or `devkit:scaffold`.

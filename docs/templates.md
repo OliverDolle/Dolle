@@ -6,6 +6,9 @@ description: >-
   copy-and-adapt flow works, and how to add your own.
 order: 35
 ---
+<!-- BACK-TO-README:START -->
+[← Back to README](../README.md)
+<!-- BACK-TO-README:END -->
 
 # Templates & scaffolding
 

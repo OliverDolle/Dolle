@@ -66,6 +66,19 @@ A script scans `docs/`, reads each `description`, and rewrites the table between
 one row per doc, `| [Title](path) | description |`, sorted by `order` then title. A GitHub
 Action runs it automatically so the index is never stale.
 
+The same script also injects a **"Back to README"** link at the top of every `docs/*.md` (just
+after the frontmatter), wrapped in `BACK-TO-README` markers so it stays idempotent and its
+target is recomputed relative to each doc's location:
+
+```markdown
+<!-- BACK-TO-README:START -->
+[← Back to README](../README.md)
+<!-- BACK-TO-README:END -->
+```
+
+Never hand-edit between those markers — the generator overwrites the block. The Action commits
+both the synced README index and the doc back-links.
+
 ### Setting up the automation
 
 Two ways to wire up the GitHub Action; both regenerate the index on push.

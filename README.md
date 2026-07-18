@@ -18,6 +18,15 @@ Sections today:
   design brief and building on the `frontend-design` skill.
 - **Web performance** — making pages fast against Core Web Vitals (LCP, CLS, INP): measure-first,
   a per-metric fix playbook, and budgets.
+- **UI design (fundamentals)** — the tool-agnostic craft of great UI: hierarchy, spacing/type
+  scales, semantic color + WCAG contrast, component & content states, forms, feedback,
+  accessibility, and a review checklist.
+- **Containerization** — Docker & Compose done right: multi-stage builds, small non-root images,
+  layer caching, `.dockerignore`, healthchecks, and an image size/security checklist.
+- **Kubernetes** — deploying & configuring on K8s: Deployments/Services/Ingress, config/secrets,
+  resources, probes, autoscaling, safe rollouts, Kustomize/Helm, and pod debugging.
+- **Cloud infrastructure** — CI/CD pipelines, Terraform/IaC, choosing a cloud compute target, OIDC
+  auth, secrets across environments, and observability.
 
 ## Quickstart (Claude Code)
 
@@ -85,9 +94,9 @@ The table below is generated from each doc's `description` frontmatter by
 
 ## What's in the box
 
-- **5 skill sections** (`plugins/devkit/packs/`) holding **9 skills** — loaded only via their
+- **10 skill sections** (`plugins/devkit/packs/`) holding **14 skills** — loaded only via their
   command.
-- **8 commands** (`plugins/devkit/commands/`) — `/devkit` (menu), one loader per section,
+- **13 commands** (`plugins/devkit/commands/`) — `/devkit` (menu), one loader per section,
   `/scaffold`, and `/mcp-preview-server`.
 - **1 bundled MCP server** (`plugins/devkit/.mcp.json`) — [Dolle-MCP](https://github.com/OliverDolle/Dolle-MCP)
   registers automatically when the plugin is enabled (no manual `claude mcp add`); it powers the

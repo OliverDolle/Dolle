@@ -6,9 +6,13 @@
 // linking each doc and pasting its description. This keeps the README index in sync with the
 // docs automatically (run by the "Docs Index" GitHub Action).
 //
+// It also inserts a "Back to README" link at the top of every doc (just after the
+// frontmatter), wrapped in BACK-TO-README markers so it stays idempotent and the link target
+// is recomputed relative to each doc's location.
+//
 // Usage:
-//   node scripts/generate-doc-index.mjs           # rewrite README.md in place
-//   node scripts/generate-doc-index.mjs --check   # exit 1 if README.md is out of date (CI)
+//   node scripts/generate-doc-index.mjs           # rewrite README.md + doc back-links in place
+//   node scripts/generate-doc-index.mjs --check   # exit 1 if anything is out of date (CI)
 //
 // Doc frontmatter convention (2-3 sentence description):
 //   ---
@@ -23,7 +27,7 @@
 //   <!-- DOC-INDEX:END -->
 
 import { readFileSync, writeFileSync, readdirSync, statSync } from "node:fs";
-import { join, relative, resolve, sep, posix, basename } from "node:path";
+import { join, relative, resolve, sep, posix, basename, dirname } from "node:path";
 
 // Repo to operate on: DOC_INDEX_ROOT when set (the reusable CI workflow sets it, since there the
 // generator is fetched from another repo), otherwise the current working directory. Run the
@@ -33,6 +37,9 @@ const DOCS_DIR = join(ROOT, "docs");
 const README = join(ROOT, "README.md");
 const START = "<!-- DOC-INDEX:START -->";
 const END = "<!-- DOC-INDEX:END -->";
+const BACK_START = "<!-- BACK-TO-README:START -->";
+const BACK_END = "<!-- BACK-TO-README:END -->";
+const BACK_LABEL = "← Back to README"; // "← Back to README"
 const CHECK = process.argv.includes("--check");
 
 function walk(dir) {
@@ -89,6 +96,38 @@ function toIndexRow(entry) {
   return `| [${entry.title}](${entry.rel}) | ${desc} |`;
 }
 
+// The README-relative link target for a given doc, in posix form (docs/foo.md -> ../README.md).
+function readmeLinkFrom(filePath) {
+  const rel = relative(dirname(filePath), README).split(sep).join(posix.sep);
+  return rel || "README.md";
+}
+
+// Ensure a marker-wrapped "Back to README" block sits at the top of a doc (after any
+// frontmatter). Returns the updated text, or null if the file already matches.
+function ensureBackLink(filePath, text) {
+  const eol = text.includes("\r\n") ? "\r\n" : "\n";
+  const block = `${BACK_START}${eol}[${BACK_LABEL}](${readmeLinkFrom(filePath)})${eol}${BACK_END}`;
+
+  // Strip any existing block (and the blank line(s) that followed it) so we can re-insert fresh.
+  const stripRe = new RegExp(`${BACK_START}[\\s\\S]*?${BACK_END}(?:\\r?\\n)*`);
+  const stripped = text.replace(stripRe, "");
+
+  // Find the insertion point: immediately after the frontmatter, else at the very top.
+  let insertAt = 0;
+  if (stripped.startsWith("---")) {
+    const close = stripped.indexOf("\n---", 3);
+    if (close !== -1) {
+      const nl = stripped.indexOf("\n", close + 4);
+      insertAt = nl === -1 ? stripped.length : nl + 1;
+    }
+  }
+
+  const head = stripped.slice(0, insertAt);
+  const body = stripped.slice(insertAt).replace(/^(?:\r?\n)+/, ""); // drop leading blank lines
+  const next = head + block + eol + eol + body;
+  return next === text ? null : next;
+}
+
 function main() {
   const files = walk(DOCS_DIR).sort();
   const entries = files.map((f) => {
@@ -122,18 +161,31 @@ function main() {
     console.error(`error: README.md must contain the ${START} and ${END} markers.`);
     process.exit(2);
   }
-  const next = readme.slice(0, si + START.length) + "\n\n" + table + "\n\n" + readme.slice(ei);
+  const nextReadme = readme.slice(0, si + START.length) + "\n\n" + table + "\n\n" + readme.slice(ei);
+  const readmeChanged = nextReadme !== readme;
 
-  if (next === readme) {
-    console.log(`Doc index is up to date (${entries.length} docs).`);
+  // Back-to-README link at the top of each doc.
+  const docUpdates = [];
+  for (const f of files) {
+    const updated = ensureBackLink(f, readFileSync(f, "utf8"));
+    if (updated !== null) docUpdates.push([f, updated]);
+  }
+
+  if (CHECK) {
+    if (readmeChanged || docUpdates.length) {
+      console.error("Docs are OUT OF DATE. Run: node scripts/generate-doc-index.mjs");
+      process.exit(1);
+    }
+    console.log(`Docs up to date (${entries.length} docs).`);
     return;
   }
-  if (CHECK) {
-    console.error("Doc index is OUT OF DATE. Run: node scripts/generate-doc-index.mjs");
-    process.exit(1);
-  }
-  writeFileSync(README, next);
-  console.log(`Doc index updated (${entries.length} docs).`);
+
+  if (readmeChanged) writeFileSync(README, nextReadme);
+  for (const [f, updated] of docUpdates) writeFileSync(f, updated);
+
+  const idx = readmeChanged ? "index updated" : "index up to date";
+  const links = docUpdates.length ? `back-links updated in ${docUpdates.length} doc(s)` : "back-links up to date";
+  console.log(`Doc ${idx}; ${links} (${entries.length} docs).`);
 }
 
 main();

@@ -6,6 +6,9 @@ description: >-
   works identically in the CLI and the desktop app.
 order: 20
 ---
+<!-- BACK-TO-README:START -->
+[← Back to README](../README.md)
+<!-- BACK-TO-README:END -->
 
 # Usage
 
@@ -39,6 +42,11 @@ start immediately:
 | `/docs` | The documentation method |
 | `/ui-ux-design` | UI/UX design via the Dolle-MCP server (templates, palettes, contrast, SVG, screenshots) |
 | `/web-performance` | Web performance — Core Web Vitals (LCP, CLS, INP), measuring, fixes, budgets |
+| `/ui-design` | UI design fundamentals — hierarchy, spacing/type scales, semantic color & contrast, component/content states, forms, a11y, review checklist |
+| `/containerization` | Docker & Compose — multi-stage builds, small non-root images, layer caching, healthchecks, size/security checklist |
+| `/kubernetes` | Kubernetes — Deployments/Services/Ingress, config/secrets, resources, probes, autoscaling, safe rollouts, Kustomize/Helm |
+| `/cloud-infrastructure` | CI/CD, Terraform/IaC, cloud compute targets, OIDC auth, secrets, observability |
+| `/prompt-enhancement` | Turn a vague request into a precise prompt — diagnose gaps, clarify with AskUserQuestion, sharpen and restate |
 
 Examples:
 

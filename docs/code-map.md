@@ -6,6 +6,9 @@ description: >-
   not line-level details.
 order: 40
 ---
+<!-- BACK-TO-README:START -->
+[← Back to README](../README.md)
+<!-- BACK-TO-README:END -->
 
 # Code map
 
@@ -23,9 +26,11 @@ street index — it names subsystems and their locations, not individual functio
 `/plugins/devkit/commands/` — one Markdown file per slash command.
 
 - `devkit.md` — the menu that lists sections without loading them.
-- `agent-development.md`, `subagents.md`, `docs.md`, `ui-ux-design.md` — section loaders that
-  read pack content into context on demand.
+- `agent-development.md`, `subagents.md`, `docs.md`, `ui-ux-design.md`, `web-performance.md`,
+  `ui-design.md`, `containerization.md`, `kubernetes.md`, `cloud-infrastructure.md`,
+  `prompt-enhancement.md` — section loaders that read pack content into context on demand.
 - `scaffold.md` — copies a bundled template into the workspace and adapts it.
+- `mcp-preview-server.md` — starts the bundled Dolle-MCP preview server and prints its URL.
 
 ## Index skill (auto-loaded)
 
@@ -47,6 +52,16 @@ Claude can load the right guidance on its own without a manual loader command.
   server, layered on the `frontend-design` skill.
 - `web-performance/SKILL.md` — single-skill section; Core Web Vitals (LCP/CLS/INP), measuring,
   the per-metric fix playbook, and budgets.
+- `ui-design/SKILL.md` — single-skill section; tool-agnostic UI craft (hierarchy, spacing/type
+  scales, semantic color + contrast, component/content states, forms, accessibility, checklist).
+- `containerization/SKILL.md` — single-skill section; Docker & Compose (multi-stage builds, small
+  non-root images, layer caching, healthchecks, size/security).
+- `kubernetes/SKILL.md` — single-skill section; K8s workloads, config/secrets, resources, probes,
+  autoscaling, rollouts, and Kustomize/Helm.
+- `cloud-infrastructure/SKILL.md` — single-skill section; CI/CD, Terraform/IaC, cloud compute
+  targets, OIDC auth, secrets, and observability.
+- `prompt-enhancement/SKILL.md` — single-skill section; turning a vague request into a precise
+  prompt (diagnose gaps, ask-vs-assume, clarify with AskUserQuestion, sharpen and restate).
 
 ## Subagents
 

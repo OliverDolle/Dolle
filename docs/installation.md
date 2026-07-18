@@ -6,6 +6,9 @@ description: >-
   it for a whole team.
 order: 10
 ---
+<!-- BACK-TO-README:START -->
+[← Back to README](../README.md)
+<!-- BACK-TO-README:END -->
 
 # Installation
 

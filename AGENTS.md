@@ -23,6 +23,29 @@ Orchestrating subagents / decomposing large tasks.
 
 **Documentation** — `plugins/devkit/packs/documentation/SKILL.md`. Writing or updating docs.
 
+**UI/UX design** — `plugins/devkit/packs/ui-ux-design/SKILL.md`. Building/reshaping a web page
+on the Dolle-MCP server (needs that server; layers on the `frontend-design` skill).
+
+**Web performance** — `plugins/devkit/packs/web-performance/SKILL.md`. Core Web Vitals
+(LCP/CLS/INP), measuring, per-metric fixes, budgets.
+
+**UI design (fundamentals)** — `plugins/devkit/packs/ui-design/SKILL.md`. Tool-agnostic UI craft:
+hierarchy, spacing/type scales, semantic color + contrast, component/content states, forms,
+accessibility, review checklist.
+
+**Containerization** — `plugins/devkit/packs/containerization/SKILL.md`. Docker & Compose:
+multi-stage builds, small non-root images, layer caching, healthchecks, size/security.
+
+**Kubernetes** — `plugins/devkit/packs/kubernetes/SKILL.md`. K8s workloads, config/secrets,
+resources, probes, autoscaling, rollouts, Kustomize/Helm, pod debugging.
+
+**Cloud infrastructure** — `plugins/devkit/packs/cloud-infrastructure/SKILL.md`. CI/CD,
+Terraform/IaC, cloud compute targets, OIDC auth, secrets, observability.
+
+**Prompt enhancement** — `plugins/devkit/packs/prompt-enhancement/SKILL.md`. Turn a vague request
+into a precise prompt: diagnose gaps, decide ask-vs-assume, clarify with AskUserQuestion, sharpen
+and restate before doing the work.
+
 Load a skill only when the current task matches it — don't read everything up front.
 
 ## Conventions for changes in this repo
