@@ -27,8 +27,9 @@ street index — it names subsystems and their locations, not individual functio
 
 - `devkit.md` — the menu that lists sections without loading them.
 - `agent-development.md`, `subagents.md`, `docs.md`, `ui-ux-design.md`, `web-performance.md`,
-  `ui-design.md`, `containerization.md`, `kubernetes.md`, `cloud-infrastructure.md`,
-  `prompt-enhancement.md` — section loaders that read pack content into context on demand.
+  `ui-design.md`, `gui-design.md`, `containerization.md`, `kubernetes.md`,
+  `cloud-infrastructure.md`, `prompt-enhancement.md` — section loaders that read pack content into
+  context on demand.
 - `scaffold.md` — copies a bundled template into the workspace and adapts it.
 - `mcp-preview-server.md` — starts the bundled Dolle-MCP preview server and prints its URL.
 
@@ -52,8 +53,13 @@ Claude can load the right guidance on its own without a manual loader command.
   server, layered on the `frontend-design` skill.
 - `web-performance/SKILL.md` — single-skill section; Core Web Vitals (LCP/CLS/INP), measuring,
   the per-metric fix playbook, and budgets.
-- `ui-design/SKILL.md` — single-skill section; tool-agnostic UI craft (hierarchy, spacing/type
-  scales, semantic color + contrast, component/content states, forms, accessibility, checklist).
+- `ui-design/` — multi-skill section: `INDEX.md` plus `fundamentals/SKILL.md` (tool-agnostic UI
+  craft — hierarchy, spacing/type scales, semantic color + contrast, component/content states,
+  forms, accessibility, checklist) and `design-systems/SKILL.md` (tokens, theming, component
+  library, dev handoff).
+- `gui-design/SKILL.md` — single-skill section; native/desktop GUI design (platform HIG, window/
+  menu/toolbar structure, keyboard model, resizable layout, HiDPI, native feel, responsive UI
+  thread, desktop accessibility), Qt as the worked example.
 - `containerization/SKILL.md` — single-skill section; Docker & Compose (multi-stage builds, small
   non-root images, layer caching, healthchecks, size/security).
 - `kubernetes/SKILL.md` — single-skill section; K8s workloads, config/secrets, resources, probes,

@@ -1,6 +1,6 @@
 ---
 name: catalog
-description: "Consult BEFORE building UI, writing a Dockerfile or Kubernetes manifest, designing a LangChain/LangGraph agent, optimizing web performance, documenting a project, or scaffolding — do not work from memory when a devkit section covers the task. Maps the request to the right section (agent development, subagent-driven dev, documentation, UI/UX and UI-craft design, web performance, containerization, Kubernetes, cloud infra, prompt enhancement, scaffolding) and names the exact file to read."
+description: "Consult BEFORE building UI (web or native/desktop), writing a Dockerfile or Kubernetes manifest, designing a LangChain/LangGraph agent, optimizing web performance, documenting a project, or scaffolding — do not work from memory when a devkit section covers the task. Maps the request to the right section (agent development, subagent-driven dev, documentation, UI/UX web design, UI-craft & design systems, native/desktop GUI design, web performance, containerization, Kubernetes, cloud infra, prompt enhancement, scaffolding) and names the exact file to read."
 ---
 
 # devkit skill catalog
@@ -51,11 +51,23 @@ Section index: `${CLAUDE_PLUGIN_ROOT}/packs/agent-development/INDEX.md`
 | --- | --- |
 | `${CLAUDE_PLUGIN_ROOT}/packs/web-performance/SKILL.md` | Making a page fast — Core Web Vitals (LCP, CLS, INP), measuring lab + field, the per-metric fix playbook, and JS/image/font/third-party budgets. |
 
-## UI design (fundamentals)
+## UI design — craft (fundamentals + design systems)
+
+Section index: `${CLAUDE_PLUGIN_ROOT}/packs/ui-design/INDEX.md`
 
 | Read this file | When the task is… |
 | --- | --- |
-| `${CLAUDE_PLUGIN_ROOT}/packs/ui-design/SKILL.md` | Designing or reviewing the *craft* of a UI (tool-agnostic) — visual hierarchy, spacing/type scales, semantic color + WCAG contrast, the full set of component states, forms, feedback, responsive layout, accessibility, and a review checklist. Complements `ui-ux-design` (build workflow) and `frontend-design` (aesthetic direction). |
+| `${CLAUDE_PLUGIN_ROOT}/packs/ui-design/fundamentals/SKILL.md` | Designing or reviewing the *craft* of a single UI (tool-agnostic) — visual hierarchy, spacing/type scales, semantic color + WCAG contrast, the full set of component states, the four content states, forms, feedback, responsive layout, accessibility, and a review checklist. |
+| `${CLAUDE_PLUGIN_ROOT}/packs/ui-design/design-systems/SKILL.md` | Making that craft *repeatable* across a product — design tokens (primitive → semantic → component tiers), building the color/type/spacing/elevation/motion scales into tokens, theming (light/dark, multi-brand), a component library (variants × states), governance, and the token-based design-to-dev handoff. Read when the work outlives one screen. |
+
+Complements `ui-ux-design` (Dolle-MCP build workflow), `gui-design` (native/desktop), and
+`frontend-design` (aesthetic direction).
+
+## GUI design — native & desktop
+
+| Read this file | When the task is… |
+| --- | --- |
+| `${CLAUDE_PLUGIN_ROOT}/packs/gui-design/SKILL.md` | Designing/reviewing a native desktop app (Qt, GTK, WinUI, wxWidgets) — the platform HIG (Apple/Windows/GNOME), window & app structure (menu bar, toolbar, status bar, dialogs, SDI/MDI), menus & the command model, the desktop keyboard model (mnemonics, accelerators, default/cancel), resizable layout via layout managers, HiDPI & system fonts, native feel + OS dark mode, keeping the UI thread responsive (undo/redo, unsaved-changes), and desktop accessibility via the platform a11y API. Sits on top of the UI-design craft skills. |
 
 ## Containerization
 
@@ -94,5 +106,6 @@ If `${CLAUDE_PLUGIN_ROOT}` isn't expanded in your environment, the files are in 
 directory (the same install dir this skill was loaded from) — locate them with Glob
 (e.g. `**/dolle/devkit/**/packs/**/SKILL.md`), or invoke the matching loader skill instead:
 `devkit:agent-development`, `devkit:subagents`, `devkit:docs`, `devkit:ui-ux-design`,
-`devkit:web-performance`, `devkit:ui-design`, `devkit:containerization`, `devkit:kubernetes`,
-`devkit:cloud-infrastructure`, `devkit:prompt-enhancement`, or `devkit:scaffold`.
+`devkit:web-performance`, `devkit:ui-design`, `devkit:gui-design`, `devkit:containerization`,
+`devkit:kubernetes`, `devkit:cloud-infrastructure`, `devkit:prompt-enhancement`, or
+`devkit:scaffold`.

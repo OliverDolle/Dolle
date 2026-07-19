@@ -1,12 +1,13 @@
 ---
-name: ui-design
+name: fundamentals
 description: >-
   The craft rules for designing great user interfaces — tool-agnostic fundamentals that make a UI
   clear, usable, and trustworthy. Load when designing a screen/component/flow and you want to get
   hierarchy, spacing, type, color, states, forms, and accessibility right (not the build tooling).
   Covers a spacing/type scale, visual hierarchy, semantic color, the full set of component states,
   form and feedback design, responsive layout, microcopy, and a review checklist. Complements the
-  Dolle-MCP-driven ui-ux-design section and the frontend-design skill.
+  sibling design-systems skill (foundations that scale this across a product), the Dolle-MCP-driven
+  ui-ux-design section, and the frontend-design skill.
 ---
 
 # Designing great UI (fundamentals)
@@ -182,10 +183,16 @@ Not a phase — a constraint you design within from the start:
 
 ## Related
 
+- **`design-systems` (sibling in this section)** — once these rules are settled for one screen,
+  that skill makes them *repeatable*: design tokens, a component library, theming, and dev handoff
+  so the whole product stays consistent. Use this skill to get one screen right; use that one to
+  scale it.
 - `frontend-design:frontend-design` — aesthetic direction and distinctiveness (avoiding the
   templated/AI-default look). Use it for *what it should feel like*; use this for *how to make it
   work*.
 - `devkit:ui-ux-design` — executes this craft on the **Dolle-MCP** server (templates, curated
   palettes, `color_contrast`, SVG, screenshots) and runs a design brief first.
+- `devkit:gui-design` — the same craft for **native/desktop GUIs** (Qt, GTK, platform HIG): window
+  chrome, menus, keyboard model, HiDPI, and native accessibility.
 - `devkit:web-performance` — the CLS/INP rules (reserve space, compositor-only motion) are the same
   ones in §5/§8/§9 here.

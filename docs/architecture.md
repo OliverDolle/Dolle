@@ -52,7 +52,11 @@ Dolle/
         │   │   └── assets/                            # doc-index templates to copy per repo
         │   ├── ui-ux-design/SKILL.md                  # single-skill section
         │   ├── web-performance/SKILL.md               # single-skill section
-        │   ├── ui-design/SKILL.md                     # single-skill section
+        │   ├── ui-design/                             # multi-skill section
+        │   │   ├── INDEX.md                           # section catalog
+        │   │   ├── fundamentals/SKILL.md
+        │   │   └── design-systems/SKILL.md
+        │   ├── gui-design/SKILL.md                    # single-skill section (native/desktop)
         │   ├── containerization/SKILL.md              # single-skill section
         │   ├── kubernetes/SKILL.md                    # single-skill section
         │   ├── cloud-infrastructure/SKILL.md          # single-skill section

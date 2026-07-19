@@ -42,7 +42,8 @@ start immediately:
 | `/docs` | The documentation method |
 | `/ui-ux-design` | UI/UX design via the Dolle-MCP server (templates, palettes, contrast, SVG, screenshots) |
 | `/web-performance` | Web performance — Core Web Vitals (LCP, CLS, INP), measuring, fixes, budgets |
-| `/ui-design` | UI design fundamentals — hierarchy, spacing/type scales, semantic color & contrast, component/content states, forms, a11y, review checklist |
+| `/ui-design` | UI design craft (2 skills) — *fundamentals* (hierarchy, spacing/type scales, semantic color & contrast, component/content states, forms, a11y, checklist) and *design-systems* (tokens, theming, component library, dev handoff) |
+| `/gui-design` | GUI design (native/desktop) — platform HIG, window/menu/toolbar structure, keyboard model, resizable layout, HiDPI, native feel & OS dark mode, responsive UI thread, desktop a11y; Qt as the worked example |
 | `/containerization` | Docker & Compose — multi-stage builds, small non-root images, layer caching, healthchecks, size/security checklist |
 | `/kubernetes` | Kubernetes — Deployments/Services/Ingress, config/secrets, resources, probes, autoscaling, safe rollouts, Kustomize/Helm |
 | `/cloud-infrastructure` | CI/CD, Terraform/IaC, cloud compute targets, OIDC auth, secrets, observability |
