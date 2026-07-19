@@ -1,5 +1,5 @@
 ---
-description: Load the agent-development skill section — LangChain + LangGraph, combining them, workflow design, and a troubleshooting log.
+description: "Use when building or debugging an AI agent or LLM workflow with LangChain and/or LangGraph — BEFORE writing agent code. Loads tool-using agents, stateful LangGraph workflows, how to combine them, workflow design, and a troubleshooting log. Triggers: 'build an agent', 'langchain', 'langgraph', 'stateful workflow', 'tool-calling agent', 'add memory/checkpointer'."
 argument-hint: "[optional task, or a skill to focus e.g. 'workflow-design']"
 ---
 

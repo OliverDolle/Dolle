@@ -1,5 +1,5 @@
 ---
-description: Load the ui-design skill — the tool-agnostic craft of great UI (hierarchy, spacing/type scales, semantic color & contrast, component states, forms, feedback, responsive, accessibility) plus a review checklist.
+description: "Use when designing or reviewing the craft of any screen, component, or flow — BEFORE finalizing a UI. Tool-agnostic fundamentals: visual hierarchy, spacing/type scales, semantic color and WCAG contrast, every component and content state, forms, feedback, responsive layout, accessibility, plus a review checklist. Triggers: 'design this screen', 'review my UI', 'improve the layout', 'fix the spacing', 'form design'."
 argument-hint: "[optional: the screen/component/flow you're designing, or a UI to review]"
 ---
 

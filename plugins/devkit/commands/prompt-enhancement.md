@@ -1,5 +1,5 @@
 ---
-description: Load the prompt-enhancement skill — turn a vague request into a precise prompt: diagnose the gaps, clarify with AskUserQuestion, then sharpen and restate before doing the work.
+description: "Use when a request is vague, underspecified, or could be read several ways — BEFORE doing the work. Diagnose the missing goal/context/constraints/success-criteria, clarify the blocking gaps with AskUserQuestion, then restate a sharpened prompt. Triggers: 'help me write a prompt', 'this is vague', 'scope this task', 'what should I ask', 'refine my request'."
 argument-hint: "[optional: a rough request to enhance, or a task to scope]"
 ---
 

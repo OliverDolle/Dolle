@@ -1,5 +1,5 @@
 ---
-description: Load the subagent-driven development skill pack (methodology for orchestrating subagents).
+description: "Use when a task is large enough to split across subagents — decomposing work and orchestrating explore, plan, implement, verify instead of doing it all in one context. Use BEFORE starting a big multi-part build or investigation. Triggers: 'break this down', 'use subagents', 'parallelize this', 'orchestrate agents', 'this is a big task'."
 argument-hint: "[optional task to start on]"
 ---
 
