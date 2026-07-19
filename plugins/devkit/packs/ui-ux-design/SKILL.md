@@ -189,6 +189,11 @@ change — never hardcode).
   Choose from the subject or the curated catalog.
 - **Accessibility is not optional:** WCAG AA contrast, visible focus, reduced-motion, touch
   no-ops, semantic structure.
+- **SVG icons, never system emoji.** Don't drop OS emoji (🎉, ✅, 🚀) into markup as icons — they
+  render differently per platform, can't be styled to the palette, and are screen-reader noise. Use
+  SVG icons (inline or from the library) that inherit `currentColor`; label icon-only controls and
+  `aria-hidden` decorative ones. Emoji only in real user content, never in chrome. See
+  `devkit:ui-design` §12.
 - **Motion is compositor-only** (`transform`/`opacity`) and always reversible under
   `prefers-reduced-motion`.
 - **Spend boldness once.** One signature element; keep everything around it quiet.

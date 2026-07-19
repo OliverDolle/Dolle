@@ -50,7 +50,9 @@ whole point of this agent; report it rather than hand-rolling everything from me
    foreground/background pair through `color_contrast` and hit **AA minimum** (AAA for body where
    feasible). Confirm responsive down to mobile, visible keyboard focus, and reduced-motion
    honored (motion is `transform`/`opacity` only, freezes to a rich static state, never leaves
-   reveal content hidden; pointer effects no-op on touch).
+   reveal content hidden; pointer effects no-op on touch). **Use SVG icons, never system emoji** as
+   UI icons (chrome, buttons, status) — they render inconsistently per platform, can't be themed,
+   and are screen-reader noise; label icon-only controls and `aria-hidden` decorative ones.
 
 ## What you return
 

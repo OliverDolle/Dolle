@@ -167,6 +167,26 @@ Not a phase — a constraint you design within from the start:
   (`aria-label`); associate errors with fields (`aria-describedby`).
 - Respect user settings: reduced motion, text zoom to 200%, dark mode.
 
+## 12 — Icons: SVG, never system emoji
+
+**Never use system/OS emoji (🎉, ✅, 🚀) as UI icons — use SVG icons.** Emoji are a tempting
+shortcut and always the wrong call in a real interface:
+
+- **They render differently on every OS, browser, and version** — the same glyph is a different
+  picture on Windows, macOS, Android, and iOS, so the UI is off-brand and inconsistent by
+  definition, and you can't control how it looks.
+- **They can't be styled** — no `currentColor`, stroke weight, size, or state (hover/disabled) that
+  matches the rest of the UI; they ignore your type and color system.
+- **They're an accessibility hazard** — screen readers announce the full Unicode name ("party
+  popper"), which is noise, and their meaning is culturally ambiguous.
+
+Use **SVG icons from one consistent set** instead (one grid, one stroke weight — see the
+`design-systems` icon-set rule). SVG scales crisply at any DPI, inherits color via `currentColor`,
+and can be sized and themed with the rest of the system. Give icon-only controls an accessible label
+(`aria-label` / equivalent) and mark decorative icons `aria-hidden` (§5, §11). The one acceptable
+place for an emoji is genuine user *content* (a message someone typed), never chrome, buttons,
+status, or headings.
+
 ## Review checklist (run before calling a UI done)
 
 - [ ] One clear primary action per view; hierarchy guides the eye.
@@ -178,6 +198,8 @@ Not a phase — a constraint you design within from the start:
 - [ ] Forms: one column, real labels, specific inline validation, input preserved on error.
 - [ ] Every action gives feedback ≤100ms; modals used sparingly.
 - [ ] Motion is fast, `transform`/`opacity` only, behind `prefers-reduced-motion`.
+- [ ] Icons are SVG from one consistent set — **no system emoji** in chrome/buttons/status; icon-only
+      controls have an accessible label, decorative icons are `aria-hidden`.
 - [ ] Keyboard-operable, semantic HTML, screen-reader labels, no layout shift on load.
 - [ ] Looks right at mobile width and at 200% zoom; light and dark both checked.
 

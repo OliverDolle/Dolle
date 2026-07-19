@@ -129,7 +129,10 @@ exactly one machine.
 - **Work in device-independent units** and let the toolkit scale. Qt 6 enables HiDPI scaling by
   default and works in logical pixels — don't fight it with manual DPI math.
 - **Icons and images:** prefer **vector/SVG icons** (scale crisply at any factor) or provide
-  `@2x`/`@3x` raster variants. A single 16px PNG is blurry at 200 %.
+  `@2x`/`@3x` raster variants. A single 16px PNG is blurry at 200 %. **Never use system/OS emoji as
+  toolbar/menu/status icons** — they render differently per platform, ignore the app palette, and
+  are announced by name to screen readers; ship a real SVG icon set instead (see `devkit:ui-design`
+  §12).
 - **Use the system font and system metrics**, not a hardcoded family/size — it's what makes the app
   look native and respects the user's font-size setting. Theme *relative* to it.
 - Test on a HiDPI display and a scaled display, and across a multi-monitor drag between them.
@@ -215,7 +218,8 @@ Desktop a11y goes through **platform accessibility APIs** — UI Automation (Win
 - [ ] Fully keyboard-operable: tab order, visible focus, Enter=default / Esc=cancel, label buddies.
 - [ ] Layout uses layout managers with size policies/stretch + minimum sizes — resizes and
       translates without breaking; window geometry & panel state saved/restored.
-- [ ] HiDPI-clean at 100/150/200 %: device-independent units, vector/@2x icons, system font.
+- [ ] HiDPI-clean at 100/150/200 %: device-independent units, vector/@2x icons (**no system
+      emoji** as icons), system font.
 - [ ] Native file/color dialogs; follows OS light/dark palette; per-platform dialog button order
       (`QDialogButtonBox`); respects reduced-motion / high-contrast / font-size settings.
 - [ ] UI thread never blocks — long work is off-thread with progress + cancel; unsaved-changes
