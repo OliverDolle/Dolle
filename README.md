@@ -18,9 +18,14 @@ Sections today:
   design brief and building on the `frontend-design` skill.
 - **Web performance** — making pages fast against Core Web Vitals (LCP, CLS, INP): measure-first,
   a per-metric fix playbook, and budgets.
-- **UI design (fundamentals)** — the tool-agnostic craft of great UI: hierarchy, spacing/type
-  scales, semantic color + WCAG contrast, component & content states, forms, feedback,
-  accessibility, and a review checklist.
+- **UI design (craft)** — the tool-agnostic craft of great UI in two skills: *fundamentals*
+  (hierarchy, spacing/type scales, semantic color + WCAG contrast, component & content states,
+  forms, feedback, accessibility, a review checklist) and *design-systems* (design tokens, theming,
+  a component library, and the design-to-dev handoff to make it repeatable).
+- **GUI design (native/desktop)** — designing desktop apps (Qt, GTK, WinUI): the platform HIG,
+  window/menu/toolbar structure, the desktop keyboard model, resizable layout via layout managers,
+  HiDPI, native feel + OS dark mode, a responsive UI thread, and desktop accessibility. Builds on
+  the UI-design craft skills.
 - **Containerization** — Docker & Compose done right: multi-stage builds, small non-root images,
   layer caching, `.dockerignore`, healthchecks, and an image size/security checklist.
 - **Kubernetes** — deploying & configuring on K8s: Deployments/Services/Ingress, config/secrets,
@@ -94,9 +99,9 @@ The table below is generated from each doc's `description` frontmatter by
 
 ## What's in the box
 
-- **10 skill sections** (`plugins/devkit/packs/`) holding **14 skills** — loaded only via their
+- **11 skill sections** (`plugins/devkit/packs/`) holding **16 skills** — loaded only via their
   command.
-- **13 commands** (`plugins/devkit/commands/`) — `/devkit` (menu), one loader per section,
+- **14 commands** (`plugins/devkit/commands/`) — `/devkit` (menu), one loader per section,
   `/scaffold`, and `/mcp-preview-server`.
 - **1 bundled MCP server** (`plugins/devkit/.mcp.json`) — [Dolle-MCP](https://github.com/OliverDolle/Dolle-MCP)
   registers automatically when the plugin is enabled (no manual `claude mcp add`); it powers the

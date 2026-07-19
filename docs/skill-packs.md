@@ -95,19 +95,42 @@ font/third-party budgets to hold in CI.
 Usage: `/web-performance` (loads the section) or `/web-performance <page or metric>` (loads +
 starts from a baseline).
 
-## Section: UI design (fundamentals) — `/ui-design`
+## Section: UI design (craft) — `/ui-design`
 
-`packs/ui-design/SKILL.md` · 1 skill
+`packs/ui-design/` · 2 skills
 
-The **tool-agnostic** craft of great UI, applicable in any tool or stack: visual hierarchy (one
-primary action per view), a single spacing scale and a small type scale, semantic color roles with
-WCAG **AA** contrast (meaning never by color alone), the full set of component states
-(hover/focus/active/disabled/loading), the four content states (empty/loading/error/overflow), form
-and feedback design, responsive layout, microcopy, accessibility, and a review checklist. It sits
-under the other two design pieces: `frontend-design` owns aesthetic *direction*, `ui-ux-design` owns
-the Dolle-MCP *build workflow*, and this owns the *interface craft* beneath both.
+The **tool-agnostic** craft of great UI, applicable in any tool or stack. A multi-skill section
+(`INDEX.md` + two skills) that the loader reads selectively:
 
-Usage: `/ui-design` (loads the section) or `/ui-design <screen/component to design or review>`.
+| Skill | Covers |
+| --- | --- |
+| `fundamentals` | Getting one screen/component right: visual hierarchy (one primary action per view), a single spacing scale and a small type scale, semantic color roles with WCAG **AA** contrast (meaning never by color alone), the full set of component states (hover/focus/active/disabled/loading), the four content states (empty/loading/error/overflow), form and feedback design, responsive layout, microcopy, accessibility, and a review checklist. |
+| `design-systems` | Making those decisions *repeatable* across a product: the three-tier token architecture (primitive → semantic → component), building the color/type/spacing/elevation/motion scales into tokens, theming (light/dark, multi-brand, density), a component library (variants × states, composition), governance to stop drift, and the token-based design-to-dev handoff. The setup for work that outlives one screen. |
+
+It sits under the other design pieces: `frontend-design` owns aesthetic *direction*, `ui-ux-design`
+owns the Dolle-MCP *build workflow*, `gui-design` carries the craft onto native/desktop, and this
+owns the *interface craft* beneath them all.
+
+Usage: `/ui-design` (loads the section) or `/ui-design <screen/component to design or review>`, or
+`/ui-design design-systems` to focus the design-systems skill.
+
+## Section: GUI design (native/desktop) — `/gui-design`
+
+`packs/gui-design/SKILL.md` · 1 skill
+
+The desktop/native counterpart to the UI-design and UI/UX sections: the platform layer the web
+doesn't have. Following the platform Human Interface Guidelines (Apple/Windows/GNOME) and choosing a
+native-vs-consistent stance; window & app structure (menu bar, toolbar, status bar, sidebars,
+dialogs, SDI/MDI); menus and the command model (standard menus, mnemonics, platform-standard
+accelerators, context menus, enable-vs-hide); the desktop keyboard model (tab order, Enter/Esc
+default-and-cancel, label buddies); resizable layout via layout managers and size policies (never
+absolute positioning); HiDPI scaling and system fonts; native feel (native widgets/dialogs, OS dark
+mode, per-platform dialog button order); a responsive UI thread (long work off-thread, progress +
+cancel, undo/redo, unsaved-changes); and desktop accessibility through the platform a11y APIs
+(UIA/AT-SPI/NSAccessibility). Uses **Qt** as the worked example and generalizes to GTK/WinUI/wx. It
+reads on top of the `ui-design` craft skills.
+
+Usage: `/gui-design` (loads the section) or `/gui-design <desktop app/window to design or review>`.
 
 ## Section: Containerization — `/containerization`
 
@@ -175,9 +198,12 @@ enhance>`.
 - Web performance pairs with UI/UX design: the motion rules the design section enforces
   (`transform`/`opacity`, reduced-motion) are the same ones that protect the CLS and INP metrics.
   The `web-designer` subagent executes the UI/UX design loop; performance is checked after.
-- The three design sections layer: `frontend-design` (aesthetic direction) → **UI design**
-  (interface craft: hierarchy, states, forms, accessibility) → **UI/UX design** (build it on the
-  Dolle-MCP server). Web performance backstops all three.
+- The design sections layer: `frontend-design` (aesthetic direction) → **UI design / fundamentals**
+  (interface craft: hierarchy, states, forms, accessibility) → **UI design / design-systems** (make
+  it repeatable: tokens, component library, theming) → the build layer, either **UI/UX design**
+  (web, on the Dolle-MCP server) or **GUI design** (native/desktop: window chrome, menus, HiDPI,
+  platform HIG). GUI design and UI/UX design are siblings — same craft underneath, different
+  platform on top. Web performance backstops the web path.
 - The three platform sections form a delivery chain: **Containerization** builds the image (its
   non-root user, `HEALTHCHECK`, and `SIGTERM` handling are exactly what **Kubernetes** probes and
   graceful termination depend on), and **Cloud infrastructure** provisions the target and ships it
