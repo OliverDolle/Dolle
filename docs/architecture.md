@@ -35,7 +35,7 @@ Dolle/
         │   └── plugin.json      # plugin manifest (name: "devkit")
         ├── .mcp.json            # bundled Dolle-MCP server (auto-registers on enable)
         ├── commands/            # /devkit menu + loaders + /scaffold + /mcp-preview-server
-        ├── agents/              # subagents: agent-developer, doc-writer, web-designer
+        ├── agents/              # subagents: agent-developer, doc-writer, web-designer, app-prompt-engineer
         ├── skills/              # auto-loaded index skill (catalog) — the ONLY thing scanned
         │   └── catalog/SKILL.md # maps tasks -> which pack file Claude should read
         ├── packs/               # the skill sections — NOT auto-loaded
@@ -60,7 +60,8 @@ Dolle/
         │   ├── containerization/SKILL.md              # single-skill section
         │   ├── kubernetes/SKILL.md                    # single-skill section
         │   ├── cloud-infrastructure/SKILL.md          # single-skill section
-        │   └── prompt-enhancement/SKILL.md            # single-skill section
+        │   ├── prompt-enhancement/SKILL.md            # single-skill section
+        │   └── app-prompt/SKILL.md                    # single-skill section (idea → build spec)
         └── hooks/
             ├── hooks.json       # SessionStart + UserPromptSubmit
             └── scripts/*.mjs    # Node hook scripts (cross-platform)

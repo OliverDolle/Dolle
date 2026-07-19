@@ -28,8 +28,8 @@ street index — it names subsystems and their locations, not individual functio
 - `devkit.md` — the menu that lists sections without loading them.
 - `agent-development.md`, `subagents.md`, `docs.md`, `ui-ux-design.md`, `web-performance.md`,
   `ui-design.md`, `gui-design.md`, `containerization.md`, `kubernetes.md`,
-  `cloud-infrastructure.md`, `prompt-enhancement.md` — section loaders that read pack content into
-  context on demand.
+  `cloud-infrastructure.md`, `prompt-enhancement.md`, `app-prompt.md` — section loaders that read
+  pack content into context on demand.
 - `scaffold.md` — copies a bundled template into the workspace and adapts it.
 - `mcp-preview-server.md` — starts the bundled Dolle-MCP preview server and prints its URL.
 
@@ -68,6 +68,9 @@ Claude can load the right guidance on its own without a manual loader command.
   targets, OIDC auth, secrets, and observability.
 - `prompt-enhancement/SKILL.md` — single-skill section; turning a vague request into a precise
   prompt (diagnose gaps, ask-vs-assume, clarify with AskUserQuestion, sharpen and restate).
+- `app-prompt/SKILL.md` — single-skill section; turning a rough app idea into a build-ready spec
+  (AskUserQuestion brief across the app's axes, compiled into a fixed sectioned template with a
+  phased build order and handoff). Specializes prompt-enhancement for app creation.
 
 ## Subagents
 
@@ -77,6 +80,8 @@ Claude can load the right guidance on its own without a manual loader command.
 - `doc-writer.md` — writes/updates docs using the documentation method.
 - `web-designer.md` — runs the Dolle-MCP-driven build/verify loop from a settled design spec;
   granted the `mcp__dolle-mcp__*` tools plus the file tools.
+- `app-prompt-engineer.md` — compiles a settled app brief into a build-ready spec (or audits an
+  existing one) off the main thread, following the app-prompt template; file tools only.
 
 ## Hooks
 

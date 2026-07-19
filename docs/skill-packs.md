@@ -187,6 +187,26 @@ the AskUserQuestion-driven briefs used by `ui-ux-design`, `subagents`, and `deep
 Usage: `/prompt-enhancement` (loads the section) or `/prompt-enhancement <a rough request to
 enhance>`.
 
+## Section: App prompt engineering — `/app-prompt`
+
+`packs/app-prompt/SKILL.md` · 1 skill
+
+A method for turning a rough application idea into a **complete, build-ready specification** that a
+downstream implementing agent can execute without guessing — `prompt-enhancement` specialized to app
+creation, with a fixed brief and a fixed output template. Like the `ui-ux-design` brief but for the
+whole app: it runs a structured **AskUserQuestion** interview across the axes that decide an app
+(type & core purpose, platform/form factor, features & the MVP-vs-later cut, users/roles/auth, data
+& persistence, external integrations, tech stack, non-functional requirements, UI direction,
+deployment/ops, and success criteria & non-goals), then compiles the answers into a clean sectioned
+spec — goals/non-goals, users, prioritized features with testable acceptance criteria, data model,
+architecture & stack, integrations, UI/interface, non-functional, a **phased build order**,
+deployment, assumptions & open questions, and a **handoff** section naming exactly which devkit
+sections the builder should load. The interactive interview stays in the main thread; the
+`app-prompt-engineer` subagent compiles or audits the spec off the main thread. It routes UI work to
+`ui-ux-design` / `gui-design` rather than duplicating it.
+
+Usage: `/app-prompt` (loads the section) or `/app-prompt <app idea>` (loads + runs the brief).
+
 ## How the sections relate
 
 - Within agent-development, LangChain and LangGraph compose — LangChain components run inside
@@ -212,6 +232,12 @@ enhance>`.
   discipline it teaches (AskUserQuestion, ask-vs-assume, restate before building) is the same one
   the `ui-ux-design` design brief, the `subagents` self-contained brief, and `deep-research` scope
   narrowing already rely on — this section names the method they share.
+- **App prompt engineering** applies that discipline to a whole application: it sits at the very
+  front of a build, produces the spec, and then *routes* to the sections that execute it —
+  `ui-ux-design`/`gui-design` for the UI, `agent-development` when the app is an AI agent, and
+  `containerization`/`kubernetes`/`cloud-infrastructure` for shipping. It is to a full app what the
+  `ui-ux-design` brief is to a page. The `app-prompt-engineer` subagent compiles the spec off the
+  main thread, the same way `web-designer` executes a settled design brief.
 
 ## Related
 

@@ -1,7 +1,7 @@
 {
   "name": "devkit",
-  "description": "Command-gated skill packs, agents, and hooks for AI-assisted development: subagent-driven development, LangChain agents, LangGraph workflows, a documentation methodology, UI/UX design driven by the bundled Dolle-MCP server, web performance (Core Web Vitals), UI design craft (fundamentals + design systems: tokens, theming, component library), native/desktop GUI design (Qt, GTK, WinUI — platform HIG, windows, menus, HiDPI, accessibility), prompt enhancement (clarify with AskUserQuestion, then sharpen), and shipping to platforms — Docker containerization, Kubernetes, and cloud infrastructure (CI/CD & IaC). Packs live in packs/ and are exposed on demand via loader commands so they never bloat startup context.",
-  "version": "0.11.0",
+  "description": "Command-gated skill packs, agents, and hooks for AI-assisted development: subagent-driven development, LangChain agents, LangGraph workflows, a documentation methodology, UI/UX design driven by the bundled Dolle-MCP server, web performance (Core Web Vitals), UI design craft (fundamentals + design systems: tokens, theming, component library), native/desktop GUI design (Qt, GTK, WinUI — platform HIG, windows, menus, HiDPI, accessibility), prompt enhancement (clarify with AskUserQuestion, then sharpen), app prompt engineering (interview an app idea into a build-ready spec), and shipping to platforms — Docker containerization, Kubernetes, and cloud infrastructure (CI/CD & IaC). Packs live in packs/ and are exposed on demand via loader commands so they never bloat startup context.",
+  "version": "0.12.0",
   "author": {
     "name": "OliverDolle"
   },
@@ -36,6 +36,9 @@
     "cloud",
     "prompt-enhancement",
     "prompt-engineering",
-    "clarification"
+    "clarification",
+    "app-spec",
+    "app-creation",
+    "requirements"
   ]
 }

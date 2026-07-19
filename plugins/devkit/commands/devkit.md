@@ -10,8 +10,8 @@ context until the user explicitly loads one.
 
 If the user passed an argument that clearly names a section (`agent-development`, `subagents`,
 `docs`, `ui-ux-design`, `web-performance`, `ui-design`, `gui-design`, `containerization`,
-`kubernetes`, `cloud-infrastructure`, or `prompt-enhancement`), skip the menu and run that
-section's loader
+`kubernetes`, `cloud-infrastructure`, `prompt-enhancement`, or `app-prompt`), skip the menu and run
+that section's loader
 (follow the behavior in the corresponding loader command: read the section's `INDEX.md` if it has
 one, then the relevant `SKILL.md` files under `${CLAUDE_PLUGIN_ROOT}/packs/`).
 
@@ -34,6 +34,7 @@ Otherwise, present this menu to the user verbatim (adjust formatting only):
 | `/kubernetes` | Kubernetes | Deploying & configuring on K8s — Deployments/Services/Ingress, config/secrets, resources, probes, autoscaling, safe rollouts, Kustomize/Helm, and pod debugging. |
 | `/cloud-infrastructure` | Cloud infrastructure | CI/CD pipelines, Terraform/IaC, choosing a cloud compute target, OIDC auth, secrets across environments, and observability. |
 | `/prompt-enhancement` | Prompt enhancement | Turning a vague request into a precise prompt — diagnose the gaps, clarify with **AskUserQuestion**, then sharpen and restate before doing the work. |
+| `/app-prompt` | App prompt engineering | Turning a rough app idea into a build-ready spec — an **AskUserQuestion** interview across the app's axes (type/platform, users/auth, features & MVP scope, data, integrations, stack, deployment), compiled into a clean, sectioned spec with a phased build order and handoff. |
 
 Each loader also accepts an optional task, e.g.
 `/agent-development build an agent that queries Postgres`. `/agent-development` also accepts a
@@ -50,7 +51,8 @@ right one itself via the always-available `devkit:catalog` skill. The commands a
 manual way to force a specific section into context.
 
 Related subagents you can dispatch: `agent-developer`, `doc-writer`, `web-designer` (runs the
-Dolle-MCP-driven build/verify loop from a settled design spec).
+Dolle-MCP-driven build/verify loop from a settled design spec), `app-prompt-engineer` (compiles a
+settled app brief into a build-ready spec, or audits an existing one, off the main thread).
 
 ---
 

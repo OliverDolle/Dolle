@@ -10,7 +10,7 @@ const context =
   "devkit is available. Run /devkit to list the on-demand skill sections " +
   "(agent-development, subagent-driven development, documentation, ui-ux-design, " +
   "web-performance, ui-design, gui-design, containerization, kubernetes, " +
-  "cloud-infrastructure, prompt-enhancement). " +
+  "cloud-infrastructure, prompt-enhancement, app-prompt). " +
   "Each section loads only when you call its command, so startup context stays minimal.";
 
 process.stdout.write(

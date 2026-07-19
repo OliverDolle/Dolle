@@ -1,6 +1,6 @@
 ---
 name: catalog
-description: "Consult BEFORE building UI (web or native/desktop), writing a Dockerfile or Kubernetes manifest, designing a LangChain/LangGraph agent, optimizing web performance, documenting a project, or scaffolding — do not work from memory when a devkit section covers the task. Maps the request to the right section (agent development, subagent-driven dev, documentation, UI/UX web design, UI-craft & design systems, native/desktop GUI design, web performance, containerization, Kubernetes, cloud infra, prompt enhancement, scaffolding) and names the exact file to read."
+description: "Consult BEFORE building UI (web or native/desktop), writing a Dockerfile or Kubernetes manifest, designing a LangChain/LangGraph agent, optimizing web performance, documenting a project, or scaffolding — do not work from memory when a devkit section covers the task. Maps the request to the right section (agent development, subagent-driven dev, documentation, UI/UX web design, UI-craft & design systems, native/desktop GUI design, web performance, containerization, Kubernetes, cloud infra, prompt enhancement, app-creation spec, scaffolding) and names the exact file to read."
 ---
 
 # devkit skill catalog
@@ -93,6 +93,12 @@ Complements `ui-ux-design` (Dolle-MCP build workflow), `gui-design` (native/desk
 | --- | --- |
 | `${CLAUDE_PLUGIN_ROOT}/packs/prompt-enhancement/SKILL.md` | Turning a vague or underspecified request into a precise prompt — diagnosing missing goal/context/constraints/success-criteria, deciding when to ask vs. assume, clarifying with **AskUserQuestion**, and restating a sharpened prompt before doing the work. |
 
+## App prompt engineering (idea → build-ready spec)
+
+| Read this file | When the task is… |
+| --- | --- |
+| `${CLAUDE_PLUGIN_ROOT}/packs/app-prompt/SKILL.md` | Turning a rough application idea into a complete, build-ready spec a receiving agent can execute without guessing — an **AskUserQuestion** interview across the app's axes (type/platform, users/auth, features & MVP scope, data, integrations, stack, non-functional, deployment, success criteria), compiled into a fixed sectioned template with a phased build order and an explicit handoff. Specializes `prompt-enhancement` for app creation; the `app-prompt-engineer` agent compiles/audits the spec off the main thread. |
+
 ## Scaffolding templates
 
 Runnable starters live under `${CLAUDE_PLUGIN_ROOT}/packs/agent-development/templates/`
@@ -107,5 +113,5 @@ directory (the same install dir this skill was loaded from) — locate them with
 (e.g. `**/dolle/devkit/**/packs/**/SKILL.md`), or invoke the matching loader skill instead:
 `devkit:agent-development`, `devkit:subagents`, `devkit:docs`, `devkit:ui-ux-design`,
 `devkit:web-performance`, `devkit:ui-design`, `devkit:gui-design`, `devkit:containerization`,
-`devkit:kubernetes`, `devkit:cloud-infrastructure`, `devkit:prompt-enhancement`, or
-`devkit:scaffold`.
+`devkit:kubernetes`, `devkit:cloud-infrastructure`, `devkit:prompt-enhancement`,
+`devkit:app-prompt`, or `devkit:scaffold`.

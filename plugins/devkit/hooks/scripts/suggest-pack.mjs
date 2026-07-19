@@ -213,6 +213,25 @@ function main() {
         "underspecified",
       ],
     },
+    {
+      label: "app prompt engineering (/app-prompt)",
+      keys: [
+        "build an app",
+        "build me an app",
+        "build an application",
+        "create an app",
+        "make an app",
+        "spec out",
+        "spec this app",
+        "app spec",
+        "app requirements",
+        "build brief",
+        "plan this application",
+        "plan an app",
+        "turn my idea into",
+        "app idea",
+      ],
+    },
   ];
 
   const hits = packs

@@ -48,6 +48,7 @@ start immediately:
 | `/kubernetes` | Kubernetes — Deployments/Services/Ingress, config/secrets, resources, probes, autoscaling, safe rollouts, Kustomize/Helm |
 | `/cloud-infrastructure` | CI/CD, Terraform/IaC, cloud compute targets, OIDC auth, secrets, observability |
 | `/prompt-enhancement` | Turn a vague request into a precise prompt — diagnose gaps, clarify with AskUserQuestion, sharpen and restate |
+| `/app-prompt` | Turn a rough app idea into a build-ready spec — an AskUserQuestion brief across the app's axes, compiled into a sectioned spec with a phased build order and handoff |
 
 Examples:
 
@@ -92,13 +93,15 @@ the catalog's one-line description is ever loaded up front.
 
 ## Subagents
 
-Three subagents ship with devkit and can be dispatched for larger jobs:
+Four subagents ship with devkit and can be dispatched for larger jobs:
 
 - **`agent-developer`** — designs and builds LangChain + LangGraph agents/workflows, and
   debugs them against the troubleshooting log.
 - **`doc-writer`** — creates/updates documentation following the documentation method.
 - **`web-designer`** — takes a settled design spec and runs the Dolle-MCP-driven build/verify
   loop (templates, palettes, screenshots) off the main thread.
+- **`app-prompt-engineer`** — takes a settled app brief and compiles it into a build-ready spec
+  (or audits an existing spec) off the main thread, following the `app-prompt` template.
 
 Ask naturally ("use the agent-developer subagent to build the ingestion workflow") or let
 Claude pick them based on their descriptions. They read their section automatically, so you

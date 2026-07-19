@@ -32,6 +32,10 @@ Sections today:
   resources, probes, autoscaling, safe rollouts, Kustomize/Helm, and pod debugging.
 - **Cloud infrastructure** — CI/CD pipelines, Terraform/IaC, choosing a cloud compute target, OIDC
   auth, secrets across environments, and observability.
+- **App prompt engineering** — turning a rough app idea into a build-ready spec: an
+  **AskUserQuestion** interview across the app's axes (type/platform, users/auth, features & MVP
+  scope, data, integrations, stack, deployment), compiled into a clean, sectioned spec with a phased
+  build order and an explicit handoff for the implementing agent.
 
 ## Quickstart (Claude Code)
 
@@ -99,16 +103,17 @@ The table below is generated from each doc's `description` frontmatter by
 
 ## What's in the box
 
-- **11 skill sections** (`plugins/devkit/packs/`) holding **16 skills** — loaded only via their
+- **12 skill sections** (`plugins/devkit/packs/`) holding **17 skills** — loaded only via their
   command.
-- **14 commands** (`plugins/devkit/commands/`) — `/devkit` (menu), one loader per section,
+- **15 commands** (`plugins/devkit/commands/`) — `/devkit` (menu), one loader per section,
   `/scaffold`, and `/mcp-preview-server`.
 - **1 bundled MCP server** (`plugins/devkit/.mcp.json`) — [Dolle-MCP](https://github.com/OliverDolle/Dolle-MCP)
   registers automatically when the plugin is enabled (no manual `claude mcp add`); it powers the
   UI/UX design section and `/mcp-preview-server`.
 - **1 index skill** (`plugins/devkit/skills/catalog/`) — auto-loaded so Claude can find and read
   the right section itself, without you running a loader command.
-- **3 subagents** (`plugins/devkit/agents/`) — `agent-developer`, `doc-writer`, `web-designer`.
+- **4 subagents** (`plugins/devkit/agents/`) — `agent-developer`, `doc-writer`, `web-designer`,
+  `app-prompt-engineer`.
 - **2 hooks** (`plugins/devkit/hooks/`) — a session-start reminder and a topic-aware section
   suggester.
 - **Starter templates** (`plugins/devkit/packs/agent-development/templates/`) — runnable
