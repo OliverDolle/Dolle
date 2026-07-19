@@ -1,5 +1,5 @@
 ---
-description: Load the kubernetes skill — deploying & configuring services on K8s (Deployments/Services/Ingress, config/secrets, resources, probes, autoscaling, safe rollouts, Kustomize/Helm).
+description: "Use when deploying or configuring a service on Kubernetes, or debugging a pod that won't run — BEFORE hand-writing manifests. Covers Deployments/Services/Ingress, config/secrets, resource requests/limits, probes, autoscaling, safe rollouts, and Kustomize/Helm. Triggers: 'deploy to kubernetes', 'k8s manifest', 'my pod is crashing', 'set up an ingress', 'helm chart'."
 argument-hint: "[optional: what you're deploying, or a pod/manifest problem]"
 ---
 

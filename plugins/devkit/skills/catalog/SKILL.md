@@ -1,13 +1,14 @@
 ---
 name: catalog
-description: Catalog of devkit's development skills — building agents and workflows with LangChain and LangGraph, subagent-driven development, documentation, UI/UX design (via the Dolle-MCP server), web performance (Core Web Vitals), prompt enhancement (clarify with AskUserQuestion, then sharpen), and scaffolding templates. Consult this on such tasks to find and read the right devkit guidance automatically, instead of the user loading a section by hand.
+description: "Consult BEFORE building UI, writing a Dockerfile or Kubernetes manifest, designing a LangChain/LangGraph agent, optimizing web performance, documenting a project, or scaffolding — do not work from memory when a devkit section covers the task. Maps the request to the right section (agent development, subagent-driven dev, documentation, UI/UX and UI-craft design, web performance, containerization, Kubernetes, cloud infra, prompt enhancement, scaffolding) and names the exact file to read."
 ---
 
 # devkit skill catalog
 
-This is the index of devkit's bundled skills. When a task matches an entry below, **read that
-skill file directly** to load focused guidance before doing the work — you do not need the user
-to run a loader command.
+This is the index of devkit's bundled skills. When a task matches any entry below, **read that
+skill file before doing the work** — do not improvise from memory when a section covers it. You
+do not need the user to run a loader command: read the file directly, or invoke the matching
+`devkit:` command (its description carries the same trigger).
 
 The skills live under this plugin at `${CLAUDE_PLUGIN_ROOT}/packs/`. Read the specific
 `SKILL.md`(s) for the task; read more than one when they apply (e.g. LangChain **and**

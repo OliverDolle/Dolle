@@ -1,5 +1,5 @@
 ---
-description: Load the documentation skill pack (short README + linked per-section docs).
+description: "Use when creating or updating project documentation — BEFORE writing docs or a README. A short README hub whose index is auto-generated from each doc's frontmatter, one doc per major section, and a code map of where subsystems live. Triggers: 'write docs', 'document this project', 'update the README', 'the docs are stale', 'add a doc for X'."
 argument-hint: "[optional: 'this project' or a subsystem to document]"
 ---
 

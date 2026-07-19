@@ -1,5 +1,5 @@
 ---
-description: Start the Dolle-MCP live preview server (if it isn't running) and print its gallery URL — so you never have to remember or ask for it.
+description: "Use when you want the Dolle-MCP live preview gallery URL — starts the preview server (if needed) and prints the URL so you can browse the template and palette library in a browser. Triggers: 'show me the templates', 'open the gallery', 'preview URL', 'browse the design library', 'start the preview server'."
 argument-hint: "[optional: a template id to open in the browser, e.g. 'charts' or 'charts#candlestick', or 'open' for the gallery]"
 ---
 

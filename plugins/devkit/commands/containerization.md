@@ -1,5 +1,5 @@
 ---
-description: Load the containerization skill — Docker & Compose done right (multi-stage builds, small non-root images, layer caching, Compose stacks, and a size/security checklist).
+description: "Use when writing or fixing a Dockerfile or Compose stack, or shrinking/securing an image — BEFORE hand-writing container config. Covers multi-stage builds, small non-root images, layer-cache ordering, .dockerignore, healthchecks, and a size/security checklist. Triggers: 'write a Dockerfile', 'dockerize this', 'docker compose', 'image too big', 'containerize the app'."
 argument-hint: "[optional: what you're containerizing, or a Dockerfile/compose issue]"
 ---
 

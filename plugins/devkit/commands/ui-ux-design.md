@@ -1,5 +1,5 @@
 ---
-description: Load the UI/UX design skill — distinctive web design driven by the Dolle-MCP server (templates, color palettes, WCAG contrast, SVG, screenshots), starting with a short design brief.
+description: "Use BEFORE building, designing, or restyling any web page, site, landing page, or UI — before writing markup or picking colors. Runs a quick design brief, then drives real templates, curated palettes, WCAG contrast, SVG, and screenshots. Triggers: 'build a website', 'landing page', 'redesign this page', 'make it look good', 'navbar', 'hero section'."
 argument-hint: "[optional: what you're designing, e.g. 'a SaaS landing page']"
 ---
 

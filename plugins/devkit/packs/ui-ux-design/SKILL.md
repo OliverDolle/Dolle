@@ -39,11 +39,11 @@ claude mcp add dolle-mcp -s user -- uvx --from git+https://github.com/OliverDoll
 ```
 
 The surface you will actually use (call `list_templates` and read the server's own
-`guide://chart-libraries` resource for the live, authoritative list):
+`guide://templates` resource for the live, authoritative list):
 
 | Tool (`mcp__dolle-mcp__…`) | Use it to |
 | --- | --- |
-| `list_templates()` | **Start here.** Discover the 32 offline, theme-driven templates (id, theme, category, components) so you propose from what exists, not from memory. |
+| `list_templates(category?, theme?, component?, q?, detail?)` | **Start here.** Returns compact rows `{id, name, category, theme, summary}` for the ~50 offline templates. **Narrow instead of scanning:** filter by `category` / `theme` / `component`, or `q` (substring). `detail=True` gives full metadata. Read `guide://templates` for a grouped one-line pick map. |
 | `get_template_source(id)` | Pull the real HTML/CSS/JS for a template to adapt — buttons, navbars, typography, charts, business pages, effects. |
 | `list_segments(id)` | List a catalog template's **individually-copyable pieces** (id/title/group only) — grab one button/nav/chart/shape/grid/text-effect instead of a whole page. |
 | `get_segment(id, seg)` | Return **one** self-contained snippet (`html`/`css`/`js` + a combined `code`) — far less to read than the full page. |
@@ -60,17 +60,22 @@ The surface you will actually use (call `list_templates` and read the server's o
 | `trace_image_to_svg(image_path, max_colors?, name?)` | Trace a raster logo/image to a segmented, animatable SVG. |
 | `screenshot_preview(url, …)` | Screenshot any live preview URL (e.g. a generated SVG) so you can see the animated result. |
 
-The template catalog (32 templates) spans: **starters** (`aurora-light/dark`), **components**
-(`buttons`, `text-effects`, `kinetic-text`, `typography`, `navbars`), **data & 3D** (`charts`,
-`charts-lab`, `diagrams`, `threed-css`, `threed-webgl`, `scroll-3d`, `gallery-wheel`), **motion &
-SVG** (`parallax`, `motion`, `svg-segments`, `svg-page`, `scroll-effects`, `gallery-scroll`),
-**effects & backgrounds** (`glitch`, `bg-transitions`, `mechanics`, `shapes`, `interactive`),
-**layout & grids** (`grids`), and **business pages** (`biz-saas`, `biz-agency`, `biz-corporate`,
-`biz-luxury`, `biz-launch`, `biz-restaurant`). Read the source of the ones that fit — and for the
-**catalog** templates (`buttons`, `text-effects`, `kinetic-text`, `navbars`, `typography`,
-`charts-lab`, `diagrams`, `scroll-effects`, `shapes`, `gallery-wheel`, `gallery-scroll`,
-`interactive`, `grids`) prefer `list_segments` + `get_segment` to pull one piece — rather than
-reinventing components, then adapt them to the brief's palette and voice.
+The catalog is ~50 templates across ten categories (call `list_templates(category=…)` or read
+`guide://templates` for the authoritative, current list — don't rely on this snapshot):
+**Buttons & text** (`buttons`, `text-effects`, `kinetic-text`, `typography`), **Navigation**
+(`navbars`, `nav-patterns`), **Data & charts** (`charts`, `charts-lab`, `diagrams`,
+`data-relations`, `data-geo`), **3D** (`threed-css`, `threed-webgl`, `scroll-3d`, `gallery-wheel`,
+`containers-3d`), **Motion & SVG** (`svg-segments`, `scroll-effects`, `gallery-scroll`,
+`gallery-swipe`), **Effects & backgrounds** (`glitch`, `bg-transitions`, `mechanics`, `shapes`,
+`interactive`, `bg-live`, `light-shadow`, `light-craft`, `visual-fx`), **Layout & grids** (`grids`,
+`image-layouts`, `hierarchy`), **Components & sections** (`content-sections`, `cards`, `forms`,
+`loaders`, `notifications`, `social-proof`, `time-counters`, `audio-players`), **Design styles**
+(`design-styles` — 14 aesthetics on one module), and **Business pages** (`biz-saas`, `biz-agency`,
+`biz-corporate`, `biz-luxury`, `biz-launch`, `biz-restaurant`, `biz-capital`, `biz-counsel`,
+`biz-consult`). Read the source of the ones that fit — and for the **component-catalog** templates
+(the Buttons & text, Navigation, Components & sections, `shapes`, `grids`, `image-layouts`,
+`design-styles`, catalog charts) prefer `list_segments` + `get_segment` to pull one piece rather
+than reinventing it, then adapt to the brief's palette and voice.
 
 ## Step 1 — Run the design brief (ask before you build)
 
@@ -119,16 +124,18 @@ Cover these axes:
      `frontend-design` calls out (cream + serif + terracotta; near-black + one acid accent).
 
 6. **Animation.** Do they want motion, and how much? Offer concrete, existing options rather
-   than "some animations": scroll-reveal & parallax (`parallax`), a reusable entrance/hover/
-   loader catalog (`motion`), section-to-section **background transitions** (`bg-transitions`),
+   than "some animations": advanced scroll mechanics — variable speed, horizontal, motion-blur,
+   snap, scrub (`scroll-effects`), section-to-section **background transitions** (`bg-transitions`),
    **web mechanics** — sticky theme-switch, bento, marquee, count-up, scroll progress, magnetic
-   cursor, scrollytelling (`mechanics`), text animations (`text-effects`), kinetic / 3D / scroll-
-   scrubbed / path text (`kinetic-text`), advanced scroll mechanics — variable speed, horizontal,
-   motion-blur, snap, scrub (`scroll-effects`), scroll-driven galleries & media transitions —
-   arched/coverflow/cylinder wheels, shuffle, depth reel, full-bleed reveal, visibility-gated
-   video (`gallery-wheel`, `gallery-scroll`), pointer-interactive canvases — water ripple, ASCII
-   reveal, particle shatter, cursor followers (`interactive`), or cyber glitch
-   (`glitch`). They can also ask for something not in the library — build it, but hold it to the
+   cursor, scrollytelling (`mechanics`), a **loading-state** catalog — spinners, skeletons,
+   stateful loaders (`loaders`), text animations (`text-effects`), kinetic / 3D / scroll-
+   scrubbed / path text (`kinetic-text`), SVG animation — segment reveals, logo draw-ons, morphs
+   (`svg-segments`), scroll-driven galleries & media transitions — arched/coverflow/cylinder
+   wheels, shuffle, depth reel, full-bleed reveal, visibility-gated video, image swipes
+   (`gallery-wheel`, `gallery-scroll`, `gallery-swipe`), pointer-interactive canvases & ambient
+   backgrounds — water ripple, ASCII reveal, particle shatter, flow fields, aurora
+   (`interactive`, `bg-live`), visual-effect filters — blur/glass, glow, grain, duotone
+   (`visual-fx`), or cyber glitch (`glitch`). They can also ask for something not in the library — build it, but hold it to the
    same bar. Whatever is chosen: animate only `transform`/`opacity`, gate everything behind
    `prefers-reduced-motion`, and no-op pointer effects on touch. Prefer one orchestrated moment
    over scattered effects.

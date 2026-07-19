@@ -1,5 +1,5 @@
 ---
-description: Load the web-performance skill — making pages fast against Core Web Vitals (LCP, CLS, INP) with a measure-first workflow, a per-metric fix playbook, and budgets.
+description: "Use when a page feels slow or BEFORE shipping a new page/site — to hit Core Web Vitals (LCP, CLS, INP). Measure first (lab + field), then apply the per-metric fix playbook and JS/image/font/third-party budgets. Triggers: 'page is slow', 'optimize load time', 'improve performance', 'reduce bundle size', 'core web vitals', 'lighthouse score'."
 argument-hint: "[optional: a page/URL to optimize, or a metric e.g. 'LCP']"
 ---
 

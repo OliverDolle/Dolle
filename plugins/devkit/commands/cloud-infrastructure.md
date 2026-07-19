@@ -1,5 +1,5 @@
 ---
-description: Load the cloud-infrastructure skill — CI/CD pipelines, Terraform/IaC, choosing a cloud compute target (containers/serverless/PaaS), OIDC auth, secrets, and observability.
+description: "Use when building a CI/CD pipeline, writing Terraform/IaC, choosing a cloud compute target, or shipping to AWS/GCP/Azure — BEFORE authoring pipeline or infra code. Covers pipeline stages, Terraform state, OIDC auth (no long-lived keys), secrets/config across environments, and observability. Triggers: 'set up CI/CD', 'write terraform', 'deploy to cloud run', 'github actions pipeline', 'infrastructure as code'."
 argument-hint: "[optional: the platform/pipeline/IaC task, e.g. 'deploy to Cloud Run' or 'set up Terraform state']"
 ---
 
