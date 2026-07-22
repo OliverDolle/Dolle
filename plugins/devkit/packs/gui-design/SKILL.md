@@ -186,6 +186,12 @@ Desktop a11y goes through **platform accessibility APIs** — UI Automation (Win
   web.
 - **Don't encode meaning in color alone; honor high-contrast themes**; ensure text contrast meets
   AA against the *actual* system palette in both light and dark.
+- **WCAG 2.2 is the reference where it applies** (it's authored for the web, but its intent ports):
+  keep **click/tap targets** comfortable (the 24px floor / 44px comfortable target-size guidance —
+  don't cram toolbar buttons, see §5); keep the **focused control fully visible** — auto-scroll it
+  into view so a docked panel, status bar, or floating inspector never covers the focus ring (the
+  desktop analogue of Focus Not Obscured); and give any **drag-only** interaction a keyboard/click
+  alternative (the Dragging Movements analogue).
 
 ## 10 — Qt specifics (and how they generalize)
 
@@ -225,7 +231,9 @@ Desktop a11y goes through **platform accessibility APIs** — UI Automation (Win
 - [ ] UI thread never blocks — long work is off-thread with progress + cancel; unsaved-changes
       prompt on close; undo/redo for edits.
 - [ ] Accessible via the platform API: named controls, standard widgets (or a custom a11y bridge),
-      keyboard + focus, no color-only meaning, AA contrast on the real palette.
+      keyboard + focus, no color-only meaning, AA contrast on the real palette. **WCAG 2.2 analogues:**
+      comfortable target sizes (24/44px), focused control auto-scrolled into view (not obscured),
+      drag-only actions have a keyboard/click alternative.
 - [ ] The `ui-design` fundamentals (hierarchy, spacing/type scale, states, forms) and token
       discipline still hold — the platform layer is *on top of* them, not instead.
 
@@ -234,8 +242,9 @@ Desktop a11y goes through **platform accessibility APIs** — UI Automation (Win
 - `devkit:ui-design` — **read first.** `fundamentals` (hierarchy, spacing/type, component & content
   states, forms, feedback, accessibility) and `design-systems` (tokens, theming, component library)
   are the base craft; this skill only adds the native/desktop platform layer.
-- `frontend-design:frontend-design` — aesthetic direction; applies to a custom-styled desktop app
-  just as to the web (and the same AI-default looks to avoid).
+- `devkit:ui-design` `fundamentals` §0 — aesthetic direction (distinctive, not templated; the
+  AI-default looks to avoid). Applies to a custom-styled desktop app just as to the web. The external
+  `frontend-design` skill covers the same ground, optionally — not required.
 - `devkit:ui-ux-design` — the web counterpart (Dolle-MCP build workflow). Use it for browser UIs;
   use this for native ones. The design-brief discipline (settle direction before building) is worth
   borrowing either way.

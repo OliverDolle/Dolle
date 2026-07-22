@@ -3,8 +3,10 @@ description: "Use when building a CI/CD pipeline, writing Terraform/IaC, choosin
 argument-hint: "[optional: the platform/pipeline/IaC task, e.g. 'deploy to Cloud Run' or 'set up Terraform state']"
 ---
 
-Read the file `${CLAUDE_PLUGIN_ROOT}/packs/cloud-infrastructure/SKILL.md` in full and adopt it as
-active guidance for the rest of this session.
+**A CI/CD, Terraform/IaC, or cloud-deploy request matches this command — load it before authoring
+pipeline or infra code; do not hand-write it from memory.** Read the file
+`${CLAUDE_PLUGIN_ROOT}/packs/cloud-infrastructure/SKILL.md` in full and follow it as the active
+method for this work.
 
 Then:
 1. Confirm in one line that the **cloud-infrastructure** section is loaded.

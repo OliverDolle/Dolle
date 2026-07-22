@@ -13,8 +13,8 @@ is the heavy execution loop that would otherwise flood the main context with tem
 palette JSON, and screenshots.
 
 Read `${CLAUDE_PLUGIN_ROOT}/packs/ui-ux-design/SKILL.md` first and follow it, and keep the
-`frontend-design` craft principles in mind (hero-as-thesis, deliberate typography,
-structure-as-information, restraint, one signature element). This agent is the tool-driven
+`devkit:ui-design` §0 craft principles in mind (ground it in the subject, hero-as-thesis, deliberate
+typography, structure-as-information, restraint, one signature element). This agent is the tool-driven
 execution of that skill.
 
 If your prompt did **not** include a settled spec, do not guess the open axes and do not try to

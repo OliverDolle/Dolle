@@ -80,26 +80,34 @@ approval prompt**. Confirm it with:
 
 Notes:
 
-- The server launches via `uvx --from git+https://github.com/OliverDolle/Dolle-MCP@<tag> dolle-mcp`,
-  **pinned to a version tag**, so [`uv`](https://docs.astral.sh/uv/) must be on your PATH (see
-  the prerequisites above). No clone or build — `uvx` fetches and runs the pinned build on demand.
+- The server launches via `uvx --refresh --from git+https://github.com/OliverDolle/Dolle-MCP dolle-mcp`,
+  tracking the **latest** default-branch build (no version pin), so [`uv`](https://docs.astral.sh/uv/)
+  must be on your PATH (see the prerequisites above). No clone or build — `uvx` fetches and runs it
+  on demand, and `--refresh` re-checks for a newer build each launch.
+- If `uv` is **not** on your PATH, devkit's SessionStart hook detects it (instead of the server
+  failing silently) and prompts the assistant to first **confirm whether you have uv installed**,
+  then offer the install command for your OS (Windows / macOS / Linux). Install uv and restart
+  Claude Code so the server relaunches; the design skills still work meanwhile, minus the live
+  template/palette/contrast/screenshot tooling.
 - Use `/mcp-preview-server` to start the live preview gallery and print its URL.
 - If `/mcp` shows it disconnected after an update, reconnect it there (a running MCP server does
   not hot-reload).
 - You can still add it standalone (without the plugin) — see the Dolle-MCP README.
 
-### How server updates flow (version pinning)
+### How server updates flow (tracks latest)
 
-The bundled server is **pinned to a Dolle-MCP release tag** in `plugins/devkit/.mcp.json`, so
-the two repos update in lockstep and reproducibly:
+The bundled server tracks the **latest Dolle-MCP build** from its default branch in
+`plugins/devkit/.mcp.json` — there is no version tag to bump, so the two repos can't drift out of
+sync because someone forgot to update a pin here:
 
-- **You get a new server build only when the plugin ships a new pin.** Because the pinned tag
-  travels inside the plugin, `/plugin update devkit@dolle` is what delivers a server upgrade —
-  and changing the tag busts `uvx`'s cache automatically (no `--refresh` needed). Pinning also
-  means everyone on a given plugin version runs the *same* server build.
-- **To release a new server version** (maintainers): tag Dolle-MCP `vX.Y.Z`, then bump the pin
-  in `.mcp.json` to `@vX.Y.Z` and release the plugin. Full steps live in the Dolle-MCP repo's
-  `CLAUDE.md` (“Releasing & how the devkit plugin consumes this server”).
+- **You get the newest server build automatically.** The `--refresh` flag makes `uvx` re-check the
+  git source on each launch, so a new commit on Dolle-MCP is picked up the next time the server
+  starts (reconnect via `/mcp`, or restart Claude Code). The trade-off is a small startup cost —
+  `uvx` needs network at launch to check for updates, and a changed build is re-fetched/rebuilt.
+- **Releasing a server change** (maintainers): merge to the Dolle-MCP default branch — that's it.
+  No pin bump or plugin release is needed to deliver it.
+- **Need everyone frozen on one build** (e.g. to reproduce a bug)? Temporarily pin by appending
+  `@vX.Y.Z` to the `git+…` URL and dropping `--refresh`; revert to track latest again afterward.
 
 ## Updating
 

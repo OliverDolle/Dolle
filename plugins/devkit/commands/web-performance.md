@@ -3,8 +3,9 @@ description: "Use when a page feels slow or BEFORE shipping a new page/site — 
 argument-hint: "[optional: a page/URL to optimize, or a metric e.g. 'LCP']"
 ---
 
-Read the file `${CLAUDE_PLUGIN_ROOT}/packs/web-performance/SKILL.md` in full and adopt it as
-active guidance for the rest of this session.
+**A "page is slow / hit Core Web Vitals" request matches this command — load it before optimizing;
+do not guess at fixes.** Read the file `${CLAUDE_PLUGIN_ROOT}/packs/web-performance/SKILL.md` in full
+and follow it as the active method for this work.
 
 Then:
 1. Confirm in one line that the **web-performance** section is loaded.

@@ -48,12 +48,18 @@ or `/agent-development workflow-design` (focus a specific skill).
 
 ## Section: Subagent-driven development — `/subagents`
 
-`packs/subagent-driven-development/SKILL.md` · 1 skill
+`packs/subagent-driven-development/` · 2 skills
 
-A methodology for building software by decomposing work and orchestrating subagents rather than
-doing everything in one context: the core loop (decompose → delegate → verify → integrate),
-subagent roles, self-contained briefs, parallel vs. sequential dispatch, adversarial
-verification, anti-patterns, and Claude Code specifics.
+Building software by delegating to a team of focused subagents. The loader reads the section
+index, then the skill(s) your task needs.
+
+| Skill | Covers |
+| --- | --- |
+| `orchestration` | The methodology: the core loop (decompose → delegate → verify → integrate), subagent roles, self-contained briefs in summary, parallel vs. sequential dispatch, adversarial verification, anti-patterns, and Claude Code specifics. |
+| `writing-subagent-instructions` | The craft of the brief a subagent runs on: the role/goal/context/output/boundaries contract, pinning the decisions you don't want delegated, tool grants, effort scaling, stop & failure conditions, requiring a deviations report, recency/honesty rules, and a copy-paste brief template. |
+
+Usage: `/subagents` (loads the section), `/subagents <task>` (loads + starts), or
+`/subagents writing-subagent-instructions` (focus a specific skill).
 
 ## Section: Documentation — `/docs`
 
@@ -77,7 +83,7 @@ tools first — `list_templates`
 `trace_image_to_svg` for animatable SVG — and runs a **design brief** before building: asking
 the user for any unspecified direction (menu bar, page count, single-document vs separate API
 entry points, colors/palette, animation, images/SVG, page structure). It builds on the
-`frontend-design` skill and steers away from the AI-default looks (no purple/violet by default).
+aesthetic-direction craft in `ui-design` §0 and steers away from the AI-default looks (no purple/violet by default).
 
 Usage: `/ui-ux-design` (loads the section) or `/ui-ux-design <what you're designing>` (loads +
 runs the brief).
@@ -97,22 +103,25 @@ starts from a baseline).
 
 ## Section: UI design (craft) — `/ui-design`
 
-`packs/ui-design/` · 2 skills
+`packs/ui-design/` · 4 skills
 
 The **tool-agnostic** craft of great UI, applicable in any tool or stack. A multi-skill section
-(`INDEX.md` + two skills) that the loader reads selectively:
+(`INDEX.md` + four skills) that the loader reads selectively:
 
 | Skill | Covers |
 | --- | --- |
-| `fundamentals` | Getting one screen/component right: visual hierarchy (one primary action per view), a single spacing scale and a small type scale, semantic color roles with WCAG **AA** contrast (meaning never by color alone), the full set of component states (hover/focus/active/disabled/loading), the four content states (empty/loading/error/overflow), form and feedback design, responsive layout, microcopy, accessibility, and a review checklist. |
+| `fundamentals` | Getting one screen/component right: visual hierarchy (one primary action per view), a single spacing scale and a small type scale, semantic color roles with WCAG **2.2 AA** contrast (meaning never by color alone), the full set of component states (hover/focus/active/disabled/loading), the four content states (empty/loading/error/overflow), form and feedback design, responsive layout, microcopy, accessibility, and a review checklist. |
 | `design-systems` | Making those decisions *repeatable* across a product: the three-tier token architecture (primitive → semantic → component), building the color/type/spacing/elevation/motion scales into tokens, theming (light/dark, multi-brand, density), a component library (variants × states, composition), governance to stop drift, and the token-based design-to-dev handoff. The setup for work that outlives one screen. |
+| `data-visualization` | The craft of charts & dashboards: picking the chart from the question asked, dashboard layout & hierarchy, categorical/sequential/diverging color (resolved from tokens, colorblind-safe), declarative titles & direct labeling, honest non-deceptive scales, chart states, and accessible/responsive charts. |
+| `motion-and-interaction` | The craft of motion & micro-interactions: what to animate and why, easing/duration intent, choreography & staggered reveals, state & page transitions, gesture feedback, and motion as a tokenized system — every rule paired with `prefers-reduced-motion` and the INP/CLS link. |
 
-It sits under the other design pieces: `frontend-design` owns aesthetic *direction*, `ui-ux-design`
+It sits under the other design pieces: `ui-design` `fundamentals` §0 owns aesthetic *direction*, `ui-ux-design`
 owns the Dolle-MCP *build workflow*, `gui-design` carries the craft onto native/desktop, and this
-owns the *interface craft* beneath them all.
+owns the *interface craft* beneath them all. `data-visualization` and `motion-and-interaction` deepen
+two specific crafts on top of `fundamentals`.
 
 Usage: `/ui-design` (loads the section) or `/ui-design <screen/component to design or review>`, or
-`/ui-design design-systems` to focus the design-systems skill.
+`/ui-design data-visualization` to focus a specific skill.
 
 ## Section: GUI design (native/desktop) — `/gui-design`
 
@@ -146,16 +155,17 @@ Usage: `/containerization` (loads the section) or `/containerization <what you'r
 
 ## Section: Kubernetes — `/kubernetes`
 
-`packs/kubernetes/SKILL.md` · 1 skill
+`packs/kubernetes/` · 2 skills
 
-Deploying and configuring services on K8s: choosing the controller (Deployment by default), a
-production-grade Deployment (resource requests/limits, distinct liveness/readiness/startup probes,
-non-root security context, digest-pinned image), config via ConfigMaps and Secrets (and why base64
-Secrets aren't encryption), exposing with Services/Ingress/Gateway API + cert-manager, autoscaling
-(HPA) and availability (PDB, topology spread), safe rollouts, packaging with Kustomize or Helm, and
-a debug playbook for the common pod failures.
+Running services on K8s, in two stacked skills (`INDEX.md` + two skills):
 
-Usage: `/kubernetes` (loads the section) or `/kubernetes <what you're deploying or the failure>`.
+| Skill | Covers |
+| --- | --- |
+| `workloads` | Defining/configuring the workload: choosing the controller (Deployment by default), a production-grade Deployment (resource requests/limits, distinct liveness/readiness/startup probes, non-root security context, digest-pinned image), config via ConfigMaps/Secrets (and why base64 Secrets aren't encryption), exposing with Services/Ingress/Gateway API + cert-manager, autoscaling (HPA) and availability (PDB, topology spread), packaging with Kustomize or Helm, and a pod-failure debug playbook. |
+| `deployment-and-gitops` | Getting it deployed: push vs. pull delivery, the deploy loop (`apply`, `kubectl rollout status/undo`, image digests), RollingUpdate vs. Recreate, progressive delivery (canary/blue-green via **Argo Rollouts** or **Flagger** with metric-gated promotion & auto-rollback), **GitOps** (**Argo CD** / **Flux**: declarative, pull-based, drift-corrected, app-of-apps), and multi-environment promotion. |
+
+Usage: `/kubernetes` (loads the section), `/kubernetes <what you're deploying or the failure>`, or
+`/kubernetes deployment-and-gitops` to focus a skill.
 
 ## Section: Cloud infrastructure — `/cloud-infrastructure`
 
@@ -207,6 +217,138 @@ sections the builder should load. The interactive interview stays in the main th
 
 Usage: `/app-prompt` (loads the section) or `/app-prompt <app idea>` (loads + runs the brief).
 
+## Section: AI agent evaluation — `/agent-evaluation`
+
+`packs/agent-evaluation/` · 5 skills
+
+The quality gate for the agents `agent-development` builds: how you *prove* an agent works and keep
+it from regressing. A multi-skill section (`INDEX.md` + five skills) plus a runnable
+eval-in-CI scaffold:
+
+| Skill | Covers |
+| --- | --- |
+| `eval-foundations` | What to measure — task vs. component vs. trajectory (tool-call correctness, the path), building an eval dataset and growing it from real failures, offline (gate releases) vs. online (watch drift), and RAG metrics. Read first. |
+| `llm-as-judge` | Scoring open-ended output with a model — rubric/assertion design, pairwise vs. pointwise, the judge-bias catalog (position/verbosity/self-preference) and mitigations, and validating the judge against human labels. |
+| `eval-harness-ci` | Turning evals into a merge gate — deterministic vs. model-graded assertions, pass-rate thresholds, regression suites, and the tooling landscape (promptfoo/DeepEval/Ragas). |
+| `tracing-observability` | Tracing & monitoring — OpenTelemetry GenAI semantic conventions, online eval on live traffic, and production-drift monitoring. |
+| `langgraph-workflow-evals` | Evaluating a LangChain/**LangGraph** agent specifically — datasets from traces; final-response vs. single-step (node) vs. trajectory evaluators; LangSmith `evaluate`/`aevaluate` + `pytest`; reproducible runs via checkpointing; gating graph changes. Applies the general discipline to LangGraph. |
+
+A `promptfoo-eval-ci` starter under `templates/` wires a first gate in one `/scaffold`.
+
+Usage: `/agent-evaluation` (loads the section), `/agent-evaluation <task>`, or
+`/agent-evaluation langgraph-workflow-evals` (focus a skill).
+
+## Section: Extensible code architecture — `/extensible-architecture`
+
+`packs/extensible-architecture/SKILL.md` · 1 skill
+
+The craft of writing code that is easy to extend and adapt *without rewrites*: coupling↓/cohesion↑
+as the measure, module boundaries and package-by-feature, dependency inversion and injection,
+open-closed in practice (extend via new implementations, not edits), hexagonal ports-and-adapters
+to keep the core free of I/O, extension points and plugin/registry design, stable semantic-versioned
+contracts, refactoring toward seams (Feathers) and the strangler-fig, and feature flags for safe
+incremental change — with a "make-it-extensible" review checklist. The source-structure companion to
+`app-prompt`/`subagents` (which produce/decompose the work) and `agent-development`'s workflow design.
+
+Usage: `/extensible-architecture` (loads the section) or `/extensible-architecture <module/feature>`.
+
+## Section: Database design & configuration — `/database-design`
+
+`packs/database-design/` · 2 skills
+
+The data-layer rung between "spec the app" and "ship it" — engine-neutral principles with Postgres as
+the worked example. A multi-skill section (`INDEX.md` + two skills):
+
+| Skill | Covers |
+| --- | --- |
+| `data-modeling` | Designing the schema: modeling to access patterns, entities/relationships, normalization 1NF–3NF and when to denormalize (only when measured), keys/constraints/types, SQL-vs-NoSQL selection, and ORM/query patterns (N+1, pagination). |
+| `operations-and-tuning` | Running it in production: indexing & reading EXPLAIN, migrations & versioning (expand/contract, zero-downtime), connection pooling (PgBouncer modes, sizing), transactions & isolation levels, Postgres config, security (least-privilege, TLS, encryption, secret rotation), and backups/PITR. |
+
+Usage: `/database-design` (loads the section), `/database-design <task>`, or
+`/database-design operations-and-tuning` (focus a skill).
+
+## Section: Deployment pipelines — `/deployment-pipelines`
+
+`packs/deployment-pipelines/` · 2 skills
+
+Platform-specific CI/CD field manuals — the concrete-YAML companion to `cloud-infrastructure`'s
+vendor-neutral concepts. A multi-skill section (`INDEX.md` + two skills) plus starter workflows:
+
+| Skill | Covers |
+| --- | --- |
+| `github-actions` | Production GitHub Actions — pipeline skeleton, OIDC keyless cloud auth, least-privilege `GITHUB_TOKEN`, environments & required reviewers, deployment strategies, reusable workflows vs. composite actions, matrix/cache/concurrency, and supply-chain hardening (SHA-pinning, `attest-build-provenance`/SLSA, dependabot). |
+| `azure-devops` | Production Azure DevOps Pipelines — multi-stage YAML, templates, workload-identity (OIDC) service connections, environments & approvals/checks, variable groups linked to Key Vault, and deployment jobs & strategies (runOnce/rolling/canary/blueGreen). |
+
+A `cicd-starters` template under `templates/` ships an OIDC-authed, prod-gated `deploy.yml` and
+`azure-pipelines.yml`.
+
+Usage: `/deployment-pipelines` (loads the section), `/deployment-pipelines <task>`, or
+`/deployment-pipelines azure-devops` (focus a skill).
+
+## Section: Prompt engineering — `/prompt-engineering`
+
+`packs/prompt-engineering/SKILL.md` · 1 skill
+
+The craft of writing an effective prompt or system prompt for reliable LLM output — distinct from
+`prompt-enhancement` (which sharpens *your* request to Claude). Prompt structure & delimiters (role/
+task/context/constraints/output/examples; XML tags; long data at the top), few-shot/multishot,
+chain-of-thought vs. reasoning models (when "think step by step" *hurts*), output & structured-output
+control, the named prompt patterns (chaining/routing/parallelization/orchestrator-workers/
+evaluator-optimizer), instruction hygiene, and eval-driven iteration — Claude-first but portable, with
+an OpenAI reasoning-model contrast.
+
+Usage: `/prompt-engineering` (loads the section) or `/prompt-engineering <prompt or task>`.
+
+## Section: Systematic debugging — `/systematic-debugging`
+
+`packs/systematic-debugging/SKILL.md` · 1 skill
+
+A stack-agnostic method for debugging any failing program, flaky test, or production incident —
+debugging as a *search*, not a guess: reproduce reliably (a minimal, deterministic repro), read the
+real error and stack trace, work one hypothesis at a time (predict → observe), bisect the search
+space (`git bisect`, binary search, delta debugging), reach for the right instrument (structured
+logs, interactive debuggers/watchpoints, tracing, profilers, sanitizers, core dumps), recognize the
+common bug classes and their tells (races/heisenbugs, off-by-one, env/config drift, dependency
+version, integration boundary), and confirm the root cause with a failing regression test *before*
+fixing. Cross-cutting — it applies to any code, including the agents and pipelines the other sections
+build.
+
+Usage: `/systematic-debugging` (loads the section) or `/systematic-debugging <the bug or failing test>`.
+
+## Section: Speech interfaces (STT & TTS) — `/speech-interfaces`
+
+`packs/speech-interfaces/` · 2 skills
+
+Adding voice to an app, practically — engine option matrices and integration patterns, not a single
+recommendation. A multi-skill section (`INDEX.md` + two skills):
+
+| Skill | Covers |
+| --- | --- |
+| `speech-to-text` | Recognition/STT: choosing an engine by constraint (accuracy vs. latency vs. cost vs. on-device/privacy) across cloud (Azure/Google/AWS/Deepgram/OpenAI-Whisper) and open/on-device (whisper.cpp, faster-whisper, Vosk), streaming vs. batch (interim results, endpointing/VAD), audio capture & format, wake words, diarization/timestamps, and integration patterns. |
+| `text-to-speech` | Synthesis/TTS: choosing an engine across cloud (Azure/Google/AWS Polly/ElevenLabs/OpenAI) and open/on-device (Piper, Coqui/XTTS, espeak-ng), streaming synthesis & first-byte latency for real-time use, voice/prosody/SSML, audio formats & playback, cost, and integration patterns. |
+
+Vendor specifics move fast — both skills carry a "verify current" note. Pairs with
+`agent-development` for two-way voice agents.
+
+Usage: `/speech-interfaces` (loads the section), `/speech-interfaces <task>`, or
+`/speech-interfaces text-to-speech` (focus a skill).
+
+## Section: Embedded dev boards — ESP32 — `/esp32`
+
+`packs/esp32/SKILL.md` · 1 skill
+
+A tips-and-tricks field manual for ESP32 (the worked example for embedded dev boards): choosing a
+toolchain (ESP-IDF vs. Arduino-ESP32 vs. PlatformIO); flashing and the upload-failure fixes — force
+download mode by **holding BOOT while tapping EN/RESET**, or **holding BOOT through power-up until
+the flash finishes**, plus USB-UART drivers (CP2102/CH340), ports, baud, bad/charge-only cables, and
+`erase_flash`; a symptom→cause→fix upload/boot table; **dual-core FreeRTOS** — pin a task per core
+with `xTaskCreatePinnedToCore` (core 0 runs the WiFi/BT stack; Arduino `loop()` runs on core 1), pass
+data with queues/semaphores/notifications, feed the watchdog, never block `loop()`; GPIO & strapping
+pins (input-only 34–39, ADC2-vs-WiFi conflict, boot-sensitive pins); brownout and deep sleep; and
+serial/JTAG debugging (decoding a panic backtrace).
+
+Usage: `/esp32` (loads the section) or `/esp32 <the board task or upload symptom>`.
+
 ## How the sections relate
 
 - Within agent-development, LangChain and LangGraph compose — LangChain components run inside
@@ -214,12 +356,12 @@ Usage: `/app-prompt` (loads the section) or `/app-prompt <app idea>` (loads + ru
 - Subagent-driven development is orthogonal and applies to any task, including building the
   agent-development code or writing docs.
 - UI/UX design depends on the external Dolle-MCP server for its tools, and layers on the
-  `frontend-design` skill for design craft.
+  aesthetic-direction craft in `ui-design` §0 (the external `frontend-design` skill is an optional complement).
 - Web performance pairs with UI/UX design: the motion rules the design section enforces
   (`transform`/`opacity`, reduced-motion) are the same ones that protect the CLS and INP metrics.
   The `web-designer` subagent executes the UI/UX design loop; performance is checked after.
-- The design sections layer: `frontend-design` (aesthetic direction) → **UI design / fundamentals**
-  (interface craft: hierarchy, states, forms, accessibility) → **UI design / design-systems** (make
+- The design sections layer: **UI design / fundamentals** (§0 aesthetic direction, then the §1+
+  interface craft: hierarchy, states, forms, accessibility) → **UI design / design-systems** (make
   it repeatable: tokens, component library, theming) → the build layer, either **UI/UX design**
   (web, on the Dolle-MCP server) or **GUI design** (native/desktop: window chrome, menus, HiDPI,
   platform HIG). GUI design and UI/UX design are siblings — same craft underneath, different
@@ -238,6 +380,40 @@ Usage: `/app-prompt` (loads the section) or `/app-prompt <app idea>` (loads + ru
   `containerization`/`kubernetes`/`cloud-infrastructure` for shipping. It is to a full app what the
   `ui-ux-design` brief is to a page. The `app-prompt-engineer` subagent compiles the spec off the
   main thread, the same way `web-designer` executes a settled design brief.
+- **Agent development and agent evaluation are a build→measure pair**: `agent-development` builds the
+  LangChain/LangGraph agent; `agent-evaluation` proves it works and gates changes against regression.
+  The eval-harness plugs into a CI pipeline (`cloud-infrastructure` / `deployment-pipelines`) as a
+  merge gate, and `prompt-engineering`'s eval-driven-iteration loop *is* an agent-evaluation dataset.
+- **Deployment pipelines is the platform-mechanics layer under cloud infrastructure**: cloud-infra
+  owns the vendor-neutral *why* (build-once-promote, OIDC rationale, strategy tradeoffs);
+  deployment-pipelines owns the concrete GitHub Actions / Azure DevOps YAML that implements it, and
+  ships the container from `containerization` to the `kubernetes`/cloud target.
+- **Database design is the data-layer rung** between `app-prompt` (which captures *what* data) and
+  `cloud-infrastructure` (which provisions the managed DB *service*): it owns how you model, index,
+  migrate, pool, and secure the database itself.
+- **Extensible architecture is cross-cutting source-structure craft**: it shapes the code the other
+  build sections produce so features slot in without rewrites; pairs naturally with
+  `agent-development`'s workflow design and anything `app-prompt`/`subagents` decompose.
+- **Prompt engineering vs. prompt enhancement vs. app prompt vs. subagent briefs**: `prompt-engineering`
+  is the craft of the prompt *handed to a model*; `prompt-enhancement` sharpens *your* request before
+  work; `app-prompt` turns an app idea into a spec; and `subagents`' `writing-subagent-instructions`
+  writes the brief a *worker* runs on. Same family, four distinct moments.
+
+- **Kubernetes is now a build→ship pair**: `workloads` defines the manifests; `deployment-and-gitops`
+  ships them (rollout loop, Argo Rollouts/Flagger progressive delivery, Argo CD/Flux GitOps that reads
+  those very manifests as desired state). It sits between `containerization` (the image) and
+  `deployment-pipelines`/`cloud-infrastructure` (the surrounding CI/CD).
+- **The design section now has four crafts**: `fundamentals` and `design-systems` are the base;
+  `data-visualization` and `motion-and-interaction` deepen two specific crafts on top, resolving color
+  and motion from `design-systems` tokens and honoring `web-performance`'s CLS/INP budgets.
+- **LangGraph evaluation closes the agent loop**: `agent-development` builds the graph,
+  `agent-evaluation`'s new `langgraph-workflow-evals` measures it (trajectory + node + response) using
+  the section's general discipline (`llm-as-judge`, `eval-harness-ci`, `tracing-observability`).
+- **Systematic debugging is cross-cutting**, like prompt-enhancement: it applies to any failing code —
+  an agent, a pipeline, a query, board firmware — and complements `agent-development`'s troubleshooting
+  log with a general method.
+- **Speech interfaces and ESP32 extend devkit past the web/cloud stack** into voice apps and embedded
+  firmware; speech pairs with `agent-development` (voice agents) and ESP32 with `systematic-debugging`.
 
 ## Related
 

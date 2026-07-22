@@ -3,8 +3,9 @@ description: "Use when building or debugging an AI agent or LLM workflow with La
 argument-hint: "[optional task, or a skill to focus e.g. 'workflow-design']"
 ---
 
-First read the section index at `${CLAUDE_PLUGIN_ROOT}/packs/agent-development/INDEX.md` to see
-the skills available in this section.
+**An agent / LLM-workflow build or debug matches this command — load it before writing agent code;
+do not hand-roll LangChain/LangGraph from memory.** First read the section index at
+`${CLAUDE_PLUGIN_ROOT}/packs/agent-development/INDEX.md` to see the skills available in this section.
 
 Then read the skill files relevant to the task from
 `${CLAUDE_PLUGIN_ROOT}/packs/agent-development/<skill>/SKILL.md`. LangChain and LangGraph are

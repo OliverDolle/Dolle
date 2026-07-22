@@ -1,7 +1,7 @@
 ---
-name: kubernetes
+name: workloads
 description: >-
-  Method for deploying and configuring services on Kubernetes correctly. Load when writing or
+  Method for defining and configuring Kubernetes workloads correctly. Load when writing or
   fixing manifests, wiring config/secrets, exposing a service, setting resources/probes/autoscaling,
   or debugging a pod that won't run. Covers Deployments/Services/Ingress, ConfigMaps & Secrets,
   requests/limits, liveness/readiness/startup probes, HPA, rollouts, security context, and

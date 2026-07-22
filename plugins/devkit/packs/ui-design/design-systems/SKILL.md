@@ -73,7 +73,7 @@ so no one free-hands a value again.
   tints and shades to map semantics onto; work in **OKLCH** for even lightness steps. Then map
   semantic roles (`bg`, `surface`, `text`, `text-muted`, `border`, `action`, `success`/`warning`/
   `danger`/`info`) onto ramp stops. **Bake contrast into the mapping:** every text-on-surface and
-  control pair a theme produces must clear WCAG **AA** (4.5:1 text, 3:1 large/UI) — verify the
+  control pair a theme produces must clear WCAG **2.2 AA** (4.5:1 text, 3:1 large/UI) — verify the
   pairs the *semantic* tier can produce, in every theme.
 - **Type scale.** Families, a modular size ramp (1.2–1.25 ratio), weight tokens, line-height and
   measure tokens, and named **roles** (`display`, `heading`, `body`, `caption`). Prefer **fluid
@@ -84,6 +84,10 @@ so no one free-hands a value again.
 - **The rest of the taxonomy** — don't stop at color/type/space. Tokenize **radii**, **border
   widths**, **elevation** (shadow ramp), **z-index** layers, **motion** (duration + easing tokens),
   **breakpoints**, and **opacity**. Anything a component hardcodes today is a token you're missing.
+- **Accessibility primitives are tokens too (WCAG 2.2).** A **focus-ring** token set (color, width,
+  offset — so Focus Appearance is consistent and always ≥3:1 against its backdrop) and a
+  **minimum target-size** token (24px floor / 44px comfortable, per 2.5.8) belong in the system, not
+  re-decided per component — they're what makes every consumer pass a11y by default.
 
 ## 3 — Theming: a swap, not a rewrite
 
@@ -185,8 +189,9 @@ when **the same token source feeds both sides**:
 - [ ] Components/screens reference **semantic** tokens only — no primitive or raw values in the UI.
 - [ ] Every scale is a token set (color ramps, type, spacing, **radii, elevation, z-index, motion,
       breakpoints, opacity**) — nothing routinely hardcoded.
-- [ ] Theming is a semantic-mapping swap: light **and** dark defined, contract names stable; AA
-      contrast holds on every pair each theme can produce.
+- [ ] Theming is a semantic-mapping swap: light **and** dark defined, contract names stable; WCAG
+      2.2 AA contrast holds on every pair each theme can produce.
+- [ ] Focus-ring and minimum target-size (24/44px) are tokenized system-level, not per-component.
 - [ ] Each component has a variants × states matrix, one canonical accessible build, and composes
       rather than multiplies.
 - [ ] Foundations (icons, grid, elevation) and content/voice rules are decided once, not per-screen.
@@ -200,8 +205,9 @@ when **the same token source feeds both sides**:
 
 - **`fundamentals` (sibling in this section)** — the per-screen craft this skill makes repeatable.
   Get one screen right there first; the system just stops you from re-deciding on the next screen.
-- `frontend-design:frontend-design` — aesthetic *direction*; a system encodes a direction into
-  tokens, it doesn't choose one. Decide the feel there, then tokenize it here.
+- **`fundamentals` §0 (sibling in this section)** — aesthetic *direction*; a system encodes a
+  direction into tokens, it doesn't choose one. Decide the feel there, then tokenize it here. (The
+  external `frontend-design` skill covers the same ground, optionally.)
 - `devkit:ui-ux-design` — on the web, the **Dolle-MCP** server is a ready component/token source:
   theme its templates via CSS custom properties and gate pairs through `color_contrast` instead of
   building a library from scratch.

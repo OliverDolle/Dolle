@@ -1,0 +1,48 @@
+# promptfoo eval config — see https://promptfoo.dev/docs/configuration/guide/
+# Verify provider ids and model names are current for your vendor before committing.
+# yaml-language-server: $schema=https://promptfoo.dev/config-schema.json
+
+description: "Eval gate for {{PROJECT_NAME}}"
+
+# The model under test. Replace with your provider id, e.g.:
+#   openai:gpt-4o-mini
+#   anthropic:messages:claude-3-5-haiku-latest
+providers:
+  - "{{PROVIDER}}"
+
+# The prompt under test. Inline here; or replace with a file ref (e.g. file://prompt.txt)
+# or point providers at your app's own endpoint. {{topic}} etc. are filled from tests.yaml.
+prompts:
+  - |
+    You are a concise assistant. Answer the user's question about {{topic}}.
+    Respond with ONLY a JSON object of the form {"answer": "<your answer>"}.
+    Question: {{question}}
+
+# Judge model for the model-graded (llm-rubric) assertions below.
+# Prefer a capable model from a different family than the one under test (see llm-as-judge §3).
+defaultTest:
+  options:
+    provider: "{{JUDGE_PROVIDER}}"
+
+# Assertions that apply to EVERY test case. Per-case asserts live in tests.yaml and add to these.
+# Mix deterministic checks (cheap, reproducible) with an llm-rubric (model-graded) check.
+  assert:
+    # --- deterministic: output must be valid JSON ---
+    - type: is-json
+      value:
+        type: object
+        required: ["answer"]
+        properties:
+          answer:
+            type: string
+    # --- deterministic: keep responses bounded ---
+    - type: cost
+      threshold: 0.02
+    # --- model-graded: the subjective quality bar ---
+    - type: llm-rubric
+      value: >-
+        The answer directly addresses the question, is factually accurate, and is
+        free of hedging filler. Ignore response length; do not reward verbosity.
+
+# The dataset lives in a separate file so it can grow independently of this config.
+tests: file://tests.yaml

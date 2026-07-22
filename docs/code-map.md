@@ -26,9 +26,11 @@ street index — it names subsystems and their locations, not individual functio
 `/plugins/devkit/commands/` — one Markdown file per slash command.
 
 - `devkit.md` — the menu that lists sections without loading them.
-- `agent-development.md`, `subagents.md`, `docs.md`, `ui-ux-design.md`, `web-performance.md`,
-  `ui-design.md`, `gui-design.md`, `containerization.md`, `kubernetes.md`,
-  `cloud-infrastructure.md`, `prompt-enhancement.md`, `app-prompt.md` — section loaders that read
+- `agent-development.md`, `agent-evaluation.md`, `subagents.md`, `docs.md`, `ui-ux-design.md`,
+  `web-performance.md`, `ui-design.md`, `gui-design.md`, `extensible-architecture.md`,
+  `database-design.md`, `systematic-debugging.md`, `containerization.md`, `kubernetes.md`,
+  `cloud-infrastructure.md`, `deployment-pipelines.md`, `speech-interfaces.md`, `esp32.md`,
+  `prompt-enhancement.md`, `prompt-engineering.md`, `app-prompt.md` — section loaders that read
   pack content into context on demand.
 - `scaffold.md` — copies a bundled template into the workspace and adapts it.
 - `mcp-preview-server.md` — starts the bundled Dolle-MCP preview server and prints its URL.
@@ -47,25 +49,55 @@ Claude can load the right guidance on its own without a manual loader command.
   `langgraph-workflows/`, `combining-langchain-and-langgraph/`, `workflow-design/`,
   `troubleshooting/`, each a `SKILL.md`. Its `templates/` holds runnable starters
   (`langgraph-workflow`, `langchain-agent`) that `/scaffold` copies and adapts.
-- `subagent-driven-development/SKILL.md` — single-skill section.
+- `agent-evaluation/` — multi-skill section: `INDEX.md` plus `eval-foundations/`, `llm-as-judge/`,
+  `eval-harness-ci/`, `tracing-observability/`, and `langgraph-workflow-evals/` (LangChain/LangGraph-
+  specific), each a `SKILL.md`. Its `templates/promptfoo-eval-ci/` is a runnable eval-in-CI starter.
+  The quality-gate complement to `agent-development`.
+- `subagent-driven-development/` — multi-skill section: `INDEX.md` plus `orchestration/SKILL.md`
+  (the decompose → delegate → verify → integrate methodology) and
+  `writing-subagent-instructions/SKILL.md` (the craft of the brief each subagent runs on).
 - `documentation/SKILL.md` — single-skill section; its `assets/` holds the doc-index templates.
 - `ui-ux-design/SKILL.md` — single-skill section; web design driven by the external Dolle-MCP
-  server, layered on the `frontend-design` skill.
+  server; design-craft base is `ui-design` §0 (external `frontend-design` optional).
 - `web-performance/SKILL.md` — single-skill section; Core Web Vitals (LCP/CLS/INP), measuring,
   the per-metric fix playbook, and budgets.
 - `ui-design/` — multi-skill section: `INDEX.md` plus `fundamentals/SKILL.md` (tool-agnostic UI
-  craft — hierarchy, spacing/type scales, semantic color + contrast, component/content states,
-  forms, accessibility, checklist) and `design-systems/SKILL.md` (tokens, theming, component
-  library, dev handoff).
+  craft — hierarchy, spacing/type scales, semantic color + WCAG 2.2 contrast, component/content
+  states, forms, accessibility, checklist), `design-systems/SKILL.md` (tokens, theming, component
+  library, dev handoff), `data-visualization/SKILL.md` (charts & dashboards), and
+  `motion-and-interaction/SKILL.md` (animation & micro-interactions).
 - `gui-design/SKILL.md` — single-skill section; native/desktop GUI design (platform HIG, window/
   menu/toolbar structure, keyboard model, resizable layout, HiDPI, native feel, responsive UI
   thread, desktop accessibility), Qt as the worked example.
 - `containerization/SKILL.md` — single-skill section; Docker & Compose (multi-stage builds, small
   non-root images, layer caching, healthchecks, size/security).
-- `kubernetes/SKILL.md` — single-skill section; K8s workloads, config/secrets, resources, probes,
-  autoscaling, rollouts, and Kustomize/Helm.
+- `kubernetes/` — multi-skill section: `INDEX.md` plus `workloads/SKILL.md` (workloads, config/
+  secrets, resources, probes, autoscaling, rollouts, Kustomize/Helm, pod debugging) and
+  `deployment-and-gitops/SKILL.md` (the deploy/rollout loop, progressive delivery via Argo
+  Rollouts/Flagger, and GitOps via Argo CD/Flux).
 - `cloud-infrastructure/SKILL.md` — single-skill section; CI/CD, Terraform/IaC, cloud compute
   targets, OIDC auth, secrets, and observability.
+- `deployment-pipelines/` — multi-skill section: `INDEX.md` plus `github-actions/SKILL.md` and
+  `azure-devops/SKILL.md` (platform mechanics), and `templates/cicd-starters/` (starter workflow
+  YAML). The concrete-YAML companion to `cloud-infrastructure`'s vendor-neutral concepts.
+- `database-design/` — multi-skill section: `INDEX.md` plus `data-modeling/SKILL.md` (schema,
+  normalization, SQL-vs-NoSQL, ORM patterns) and `operations-and-tuning/SKILL.md` (indexing,
+  migrations, pooling, transactions, security, backups).
+- `extensible-architecture/SKILL.md` — single-skill section; writing code that extends without
+  rewrites (boundaries, dependency inversion, open-closed, ports-and-adapters, extension points,
+  SemVer contracts, seams, feature flags).
+- `systematic-debugging/SKILL.md` — single-skill section; a method for debugging any failing
+  program/flaky test/incident (reproduce, read the error, hypothesis-per-change, bisect, the right
+  instrument, confirm root cause before fixing).
+- `speech-interfaces/` — multi-skill section: `INDEX.md` plus `speech-to-text/SKILL.md` and
+  `text-to-speech/SKILL.md` (engine option matrices, streaming vs. batch, SSML/prosody, latency &
+  cost, integration patterns).
+- `esp32/SKILL.md` — single-skill section; ESP32/embedded-board tips (toolchains, flashing &
+  upload-failure fixes, dual-core FreeRTOS task pinning, GPIO/strapping gotchas, brownout, deep
+  sleep, serial/JTAG debugging).
+- `prompt-engineering/SKILL.md` — single-skill section; the craft of an effective prompt/system
+  prompt (structure, few-shot, reasoning models, structured output, prompt patterns, eval-driven
+  iteration). Distinct from `prompt-enhancement` (which sharpens the user's request).
 - `prompt-enhancement/SKILL.md` — single-skill section; turning a vague request into a precise
   prompt (diagnose gaps, ask-vs-assume, clarify with AskUserQuestion, sharpen and restate).
 - `app-prompt/SKILL.md` — single-skill section; turning a rough app idea into a build-ready spec

@@ -14,14 +14,14 @@ description: >-
 You are the design lead. The client is paying for a point of view they could not get from a
 template — so every color, type, and layout choice is made *for this brief*, and you have a
 real, offline design library to pull from: the **Dolle-MCP** server. This skill layers a
-concrete tool workflow on top of the general design craft in the `frontend-design` skill.
+concrete tool workflow on top of the general design craft in **`devkit:ui-design`**.
 
-**Load `frontend-design:frontend-design` first (or keep it in mind) and treat it as the base.**
-It owns the craft — grounding the design in the subject, the hero-as-thesis, deliberate
-typography, structure-as-information, restraint, and self-critique. This skill does not repeat
-that; it adds *how to execute it against Dolle-MCP* and *what to settle with the user before
-building*. When the two ever conflict, `frontend-design`'s craft wins on aesthetics, this skill
-wins on the tool workflow.
+**Keep the design-craft base in mind — `devkit:ui-design` `fundamentals`, especially its §0
+(aesthetic direction): ground the design in the subject, the hero-as-thesis, deliberate typography,
+structure-as-information, restraint, and self-critique.** This skill does not repeat that craft; it
+adds *how to execute it against Dolle-MCP* and *what to settle with the user before building*. (The
+external `frontend-design` skill covers the same aesthetic ground if you happen to have it —
+optional, never required.)
 
 ## Step 0 — Confirm the Dolle-MCP server is available and use it first
 
@@ -92,7 +92,10 @@ Cover these axes:
    starting template via `list_templates` (e.g. B2B → `biz-corporate`, SaaS / AI launch →
    `biz-saas` / `biz-launch`, agency/portfolio → `biz-agency`, luxury brand → `biz-luxury`,
    restaurant/hospitality → `biz-restaurant`, cyber → `glitch`). If they have no idea,
-   `open_preview()` so they can browse the gallery and point.
+   `open_preview()` so they can browse the gallery and point. Also settle **three personality
+   adjectives** and commit to them everywhere — they calibrate intensity (bold / editorial / warm
+   vs. restrained / luxurious / quiet) — and ask for a **reference vibe** (a site or brand whose feel
+   they like: "like Linear", "editorial like a magazine") to anchor the aesthetic fast.
 
 2. **Menu bar / navigation (if the page needs one).** Does it need nav at all? If so, which
    shape — simple, centered, split, transparent-over-hero, sticky-shrink, glass, pill/floating,
@@ -121,7 +124,7 @@ Cover these axes:
      reads as "AI-generated." Unless the brand *is* purple, seed the palette from the subject or
      the curated catalog (blue, teal, emerald, amber, rose, sunset, lime, cyan, …) — the library
      is deliberately varied for exactly this reason. Also steer clear of the other AI defaults
-     `frontend-design` calls out (cream + serif + terracotta; near-black + one acid accent).
+     called out in `devkit:ui-design` §0 (cream + serif + terracotta; near-black + one acid accent).
 
 6. **Animation.** Do they want motion, and how much? Offer concrete, existing options rather
    than "some animations": advanced scroll mechanics — variable speed, horizontal, motion-blur,
@@ -138,15 +141,28 @@ Cover these axes:
    (`visual-fx`), or cyber glitch (`glitch`). They can also ask for something not in the library — build it, but hold it to the
    same bar. Whatever is chosen: animate only `transform`/`opacity`, gate everything behind
    `prefers-reduced-motion`, and no-op pointer effects on touch. Prefer one orchestrated moment
-   over scattered effects.
+   over scattered effects. A solid **baseline for a marketing/brand page**: a hero entrance,
+   staggered section reveals as they enter the viewport, one scroll-linked / parallax moment, and
+   hover micro-interactions on links/cards (~200–300ms, ease-out, a real curve like
+   `cubic-bezier(0.22, 1, 0.36, 1)` — **never linear**). Keep it orchestrated: *everything*
+   animating is as templated as nothing animating — motion should feel composed, not busy.
 
 7. **Images / SVG assets.** Do they have images or SVGs to use? Do they want a raster
    logo/image **traced to SVG** so it can animate? If yes:
    - `trace_image_to_svg("C:/path/logo.png", max_colors=6)` → segmented, animatable SVG.
    - `segment_svg(svg)` for existing SVG markup/files.
    - `screenshot_preview(preview_url)` to see the animated result before committing.
+   - **Text over imagery — do it deliberately.** Make the words legible and placed with intent: a
+     gradient scrim / overlay behind text (never a headline floating on busy pixels), tasteful
+     `mix-blend-mode` where it helps, and placement that follows the image's composition rather than
+     dead-center by default. Treat photographic images so they don't look dropped-in — a
+     duotone/tint, a grain/noise layer, or a soft hero parallax. The library already ships these:
+     `visual-fx` (blur/glass, glow, grain, duotone), `light-craft` / `light-shadow`, `bg-live`, and
+     `image-layouts` — pull from them rather than hand-rolling.
    - If they have none, decide with them whether the design leans on type/color/layout instead
-     (often stronger than stock imagery).
+     (often stronger than stock imagery); when a photographic hero is genuinely wanted, a
+     subject-appropriate placeholder from a stock source (e.g. Unsplash) can stand in — but a strong
+     type/color/layout system and the offline library usually read as less generic than stock.
 
 8. **Page structure & layout.** How is content organized — heavy on **containers/cards** (bento
    grids, feature cards, stat tiles, pricing tiers — see the business templates, `mechanics`
@@ -154,16 +170,21 @@ Cover these axes:
    subgrid, plus warped / sidewall / isometric / radial / hex) or on **long-form text sections**
    (editorial, multi-column, article, sticky-aside — see the `typography` template)? Read the
    relevant template source to see the structural options the library already supports, and
-   propose a concrete section skeleton (hero → … → footer) before writing code.
+   propose a concrete section skeleton (hero → … → footer) before writing code. Whichever it is,
+   give the page **rhythm**: alternate section treatments (light/dark, full-bleed image, split,
+   oversized type) and use asymmetry / an editorial grid instead of a stack of identical centered
+   bands — see `devkit:ui-design` §0 (*compose, don't stack*). Every section should earn its place
+   and look different from its neighbors.
 
 If content/charts are involved, also read `guide://chart-libraries` (default: **ECharts**,
 vendored, colors resolved from CSS custom properties) before picking a charting approach.
 
 ## Step 2 — Plan (brief → token system), then build
 
-Once the axes are settled, do the `frontend-design` two-pass planning: a compact token system
-(4–6 named hex values, 2+ type roles, a layout concept with an ASCII wireframe, and one
-**signature** element), critique it against the brief to strip anything generic, then build —
+Once the axes are settled, plan in two passes (the aesthetic-direction discipline from
+`devkit:ui-design` §0): first a compact token system (4–6 named hex values, 2+ type roles, a layout
+concept with an ASCII wireframe, and one **signature** element), then critique it against the brief
+to strip anything generic, then build —
 adapting real template source where it fits and deriving every color/type decision from the
 locked plan. Theme with **CSS custom properties** so palette and light/dark are swappable
 (charts must resolve their colors from those variables at render time and re-apply on theme
@@ -173,11 +194,25 @@ change — never hardcode).
 
 - `screenshot_template` / `screenshot_preview` your result and critique the pixels — a picture
   is worth 1000 tokens. Fix what looks templated or off-balance.
-- Run **every** foreground/background pair through `color_contrast` and hit **AA at minimum**
-  (AAA for body text where you can).
+- Ask the hard question of that screenshot: *would this look at home in an award gallery, or like a
+  template?* Name the single most generic thing (default display type, everything centered, a flat
+  palette, no motion, text lost on an image) and fix it before shipping — the §0 self-critique.
+- Run **every** foreground/background pair through `color_contrast` and hit **WCAG 2.2 AA at
+  minimum** (AAA for body text where you can). WCAG 2.2 is the current W3C Recommendation — also
+  check its AA additions: targets ≥24×24px (44 comfortable), the focus ring never obscured by a
+  sticky nav, any drag interaction has a single-pointer alternative, and login fields allow paste /
+  password managers (see `devkit:ui-design` `fundamentals` §11).
 - Check it responsive down to mobile, keyboard focus visible, and reduced-motion honored
   (motion freezes to a rich static state; loops never start; reveal content is never left
   hidden).
+- **Heuristic evaluation (a quick design-QA pass).** Before shipping, walk the result once against
+  **Nielsen's 10 usability heuristics** (visibility of system status; match to the real world;
+  user control & freedom / easy undo; consistency & standards; error prevention; recognition over
+  recall; flexibility & efficiency; aesthetic & minimalist design; help users recover from errors;
+  help & documentation). Log each issue with a **severity rating** (0 = not a problem → 4 =
+  usability catastrophe, must fix before ship) so fixes are prioritized, not just listed. It's a
+  structured sweep *over* the per-skill checklists, not a replacement for them; **~3 independent
+  evaluators surface roughly 60% of issues**, so a second and third pass (or reviewer) pays off.
 - Confirm the single-document vs separate-entry-point decision is actually reflected in how the
   files/routes are wired.
 
@@ -186,9 +221,14 @@ change — never hardcode).
 - **Use the library before inventing.** Adapt template source and curated palettes; only
   hand-roll what the library genuinely lacks — then hold it to the same quality.
 - **No purple-by-default**, and no cream/serif/terracotta or black/acid-accent auto-pilot.
-  Choose from the subject or the curated catalog.
-- **Accessibility is not optional:** WCAG AA contrast, visible focus, reduced-motion, touch
-  no-ops, semantic structure.
+  Choose from the subject or the curated catalog. Avoid the other AI defaults too — a default UI
+  sans (Inter/Roboto/Open Sans) as the *display* face, the blue-grey "SaaS" palette, pure black on
+  pure white, the dead-centered hero, and the identical three-up icon-card grid (see
+  `devkit:ui-design` §0).
+- **Real copy, never lorem ipsum.** Write specific, confident text in the brand's voice; placeholder
+  text hides whether the layout actually works and ships looking unfinished.
+- **Accessibility is not optional:** WCAG 2.2 AA contrast, visible focus (never obscured), 24/44px
+  targets, a single-pointer alternative to any drag, reduced-motion, touch no-ops, semantic structure.
 - **SVG icons, never system emoji.** Don't drop OS emoji (🎉, ✅, 🚀) into markup as icons — they
   render differently per platform, can't be styled to the palette, and are screen-reader noise. Use
   SVG icons (inline or from the library) that inherit `currentColor`; label icon-only controls and
@@ -202,7 +242,8 @@ change — never hardcode).
 
 ## Related
 
-- `frontend-design:frontend-design` — the design-craft base this skill layers on.
+- `devkit:ui-design` — the design-craft base this skill layers on (`fundamentals` §0 owns aesthetic
+  direction). The external `frontend-design` skill is an optional complement, not required.
 - Dolle-MCP docs (sibling repo): `docs/templates.md`, `docs/color-tools.md`, `docs/svg-tools.md`,
   `docs/web-mechanics.md`, `docs/backgrounds-and-transitions.md`, `docs/chart-libraries.md`,
   `docs/mcp-tools.md`.

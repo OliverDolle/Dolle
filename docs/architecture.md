@@ -46,7 +46,17 @@ Dolle/
         │   │   ├── combining-langchain-and-langgraph/SKILL.md
         │   │   ├── workflow-design/SKILL.md
         │   │   └── troubleshooting/SKILL.md
-        │   ├── subagent-driven-development/SKILL.md   # single-skill section
+        │   ├── agent-evaluation/                     # multi-skill section (+ templates/)
+        │   │   ├── INDEX.md
+        │   │   ├── eval-foundations/SKILL.md
+        │   │   ├── llm-as-judge/SKILL.md
+        │   │   ├── eval-harness-ci/SKILL.md
+        │   │   ├── tracing-observability/SKILL.md
+        │   │   └── langgraph-workflow-evals/SKILL.md
+        │   ├── subagent-driven-development/          # multi-skill section
+        │   │   ├── INDEX.md
+        │   │   ├── orchestration/SKILL.md
+        │   │   └── writing-subagent-instructions/SKILL.md
         │   ├── documentation/
         │   │   ├── SKILL.md                           # single-skill section
         │   │   └── assets/                            # doc-index templates to copy per repo
@@ -55,12 +65,33 @@ Dolle/
         │   ├── ui-design/                             # multi-skill section
         │   │   ├── INDEX.md                           # section catalog
         │   │   ├── fundamentals/SKILL.md
-        │   │   └── design-systems/SKILL.md
+        │   │   ├── design-systems/SKILL.md
+        │   │   ├── data-visualization/SKILL.md
+        │   │   └── motion-and-interaction/SKILL.md
         │   ├── gui-design/SKILL.md                    # single-skill section (native/desktop)
+        │   ├── systematic-debugging/SKILL.md          # single-skill section
         │   ├── containerization/SKILL.md              # single-skill section
-        │   ├── kubernetes/SKILL.md                    # single-skill section
+        │   ├── kubernetes/                            # multi-skill section
+        │   │   ├── INDEX.md
+        │   │   ├── workloads/SKILL.md
+        │   │   └── deployment-and-gitops/SKILL.md
         │   ├── cloud-infrastructure/SKILL.md          # single-skill section
+        │   ├── deployment-pipelines/                  # multi-skill section (+ templates/)
+        │   │   ├── INDEX.md
+        │   │   ├── github-actions/SKILL.md
+        │   │   └── azure-devops/SKILL.md
+        │   ├── database-design/                       # multi-skill section
+        │   │   ├── INDEX.md
+        │   │   ├── data-modeling/SKILL.md
+        │   │   └── operations-and-tuning/SKILL.md
+        │   ├── extensible-architecture/SKILL.md       # single-skill section
+        │   ├── speech-interfaces/                     # multi-skill section
+        │   │   ├── INDEX.md
+        │   │   ├── speech-to-text/SKILL.md
+        │   │   └── text-to-speech/SKILL.md
+        │   ├── esp32/SKILL.md                         # single-skill section (embedded boards)
         │   ├── prompt-enhancement/SKILL.md            # single-skill section
+        │   ├── prompt-engineering/SKILL.md            # single-skill section
         │   └── app-prompt/SKILL.md                    # single-skill section (idea → build spec)
         └── hooks/
             ├── hooks.json       # SessionStart + UserPromptSubmit

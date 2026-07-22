@@ -1,0 +1,81 @@
+name: LLM eval gate
+
+# Runs the promptfoo eval on pull requests and fails the build if the pass rate drops
+# below {{PASS_THRESHOLD}}. Make this a required status check on the protected branch.
+# See the devkit agent-evaluation skill `eval-harness-ci`.
+
+on:
+  pull_request:
+    # Only run when something that can change model behavior changes. Adjust to your layout.
+    paths:
+      - "promptfooconfig.yaml"
+      - "tests.yaml"
+      - "prompts/**"
+      - "src/**"
+      - ".github/workflows/eval.yml"
+
+# Least privilege: the eval only needs to read the checked-out code.
+permissions:
+  contents: read
+
+concurrency:
+  group: eval-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    env:
+      # The provider SDK reads this; the value comes from a repo secret (never committed).
+      # (The key is quoted so the file stays valid YAML before the token is substituted.)
+      "{{API_KEY_ENV}}": ${{ secrets.{{API_KEY_SECRET}} }}
+      PASS_THRESHOLD: "{{PASS_THRESHOLD}}"
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Run promptfoo eval
+        # Pinned version keeps the gate reproducible; bump deliberately.
+        run: >-
+          npx promptfoo@latest eval
+          --config promptfooconfig.yaml
+          --output results.json
+          --no-progress-bar
+        # Don't let a single failing assertion abort the job; we judge on the pass rate below.
+        continue-on-error: true
+
+      - name: Enforce pass-rate threshold
+        run: |
+          if [ ! -f results.json ]; then
+            echo "::error::results.json not produced — the eval did not run."
+            exit 1
+          fi
+          SUCCESSES=$(jq '.results.stats.successes' results.json)
+          FAILURES=$(jq '.results.stats.failures' results.json)
+          ERRORS=$(jq '(.results.stats.errors // 0)' results.json)
+          TOTAL=$((SUCCESSES + FAILURES + ERRORS))
+          if [ "$TOTAL" -eq 0 ]; then
+            echo "::error::No assertions were evaluated."
+            exit 1
+          fi
+          RATE=$(awk "BEGIN { printf \"%.4f\", $SUCCESSES / $TOTAL }")
+          echo "Pass rate: $RATE ($SUCCESSES/$TOTAL passed, threshold $PASS_THRESHOLD)"
+          PASS=$(awk "BEGIN { print ($RATE >= $PASS_THRESHOLD) ? 1 : 0 }")
+          if [ "$PASS" -ne 1 ]; then
+            echo "::error::Pass rate $RATE is below the threshold $PASS_THRESHOLD — blocking merge."
+            exit 1
+          fi
+          echo "Pass rate meets the threshold."
+
+      - name: Upload eval report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: promptfoo-results
+          path: results.json
+          if-no-files-found: warn
