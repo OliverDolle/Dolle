@@ -1,11 +1,13 @@
 ---
-description: "Use BEFORE building, designing, or restyling any web page, site, landing page, or UI — before writing markup or picking colors. Runs a quick design brief, then drives real templates, curated palettes, WCAG contrast, SVG, and screenshots. Triggers: 'build a website', 'landing page', 'redesign this page', 'make it look good', 'navbar', 'hero section'."
+description: "Use this whenever the user asks to build, design, or restyle a web page, site, landing page, or web UI — load it BEFORE writing any markup or picking colors. This is the web-build workflow: a short design brief, then real templates, curated palettes, WCAG contrast, SVG, and screenshots. NOT for native/desktop apps (use gui-design) and NOT for standalone component or design-system craft (use ui-design). Triggers: 'build a website', 'landing page', 'redesign this page', 'make it look good', 'navbar', 'hero section'."
 argument-hint: "[optional: what you're designing, e.g. 'a SaaS landing page']"
 ---
 
-Read the file `${CLAUDE_PLUGIN_ROOT}/packs/ui-ux-design/SKILL.md` in full and adopt it as active
-guidance for the rest of this session. It builds on the `frontend-design` skill — load
-`frontend-design:frontend-design` too and treat it as the design-craft base.
+**A web-design request matches this command — load it before writing any markup; do not design a
+site from memory.** Read the file `${CLAUDE_PLUGIN_ROOT}/packs/ui-ux-design/SKILL.md` in full and
+follow it as the active method for this work. Its design-craft base is `devkit:ui-design` §0
+(aesthetic direction — distinctive, not templated); the external `frontend-design` skill covers the
+same ground if you have it, but it is optional, never required.
 
 Then:
 1. Confirm in one line that the **ui-ux-design** section is loaded (and note whether the

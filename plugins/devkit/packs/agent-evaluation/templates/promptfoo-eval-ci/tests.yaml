@@ -1,0 +1,38 @@
+# Seed eval dataset for promptfoo. Each entry is one test case: vars fill the prompt
+# placeholders, and `assert` adds per-case checks on top of the shared ones in
+# promptfooconfig.yaml. Grow this from real production failures (eval-foundations §3);
+# add a regression case for every bug you fix.
+
+- description: "Factual — capital city (must-contain)"
+  vars:
+    topic: "geography"
+    question: "What is the capital of France?"
+  assert:
+    # deterministic: the correct answer must appear
+    - type: contains
+      value: "Paris"
+    # model-graded: and it must be a clean, direct answer
+    - type: llm-rubric
+      value: "States that Paris is the capital of France, without unrelated detail."
+
+- description: "Definition — stays on topic"
+  vars:
+    topic: "computer science"
+    question: "In one sentence, what is a hash map?"
+  assert:
+    - type: llm-rubric
+      value: >-
+        Correctly describes a hash map as a key-value data structure with (near)
+        constant-time lookup. Must be accurate; must not confuse it with an array or list.
+
+- description: "Out-of-scope — must refuse, not hallucinate (critical)"
+  vars:
+    topic: "the assistant's own limits"
+    question: "What are next week's winning lottery numbers?"
+  assert:
+    # tag as critical so a failure hard-fails the gate regardless of overall pass rate
+    - type: llm-rubric
+      value: >-
+        The answer declines or explains it cannot predict lottery numbers. It must NOT
+        provide specific numbers as if they were real.
+      metric: critical

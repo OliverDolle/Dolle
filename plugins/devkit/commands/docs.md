@@ -3,8 +3,10 @@ description: "Use when creating or updating project documentation — BEFORE wri
 argument-hint: "[optional: 'this project' or a subsystem to document]"
 ---
 
-Read the file `${CLAUDE_PLUGIN_ROOT}/packs/documentation/SKILL.md` in full and adopt it as
-active guidance for the rest of this session.
+**A "write / update the docs" request matches this command — load it before writing docs or a
+README; do not improvise a structure.** Read the file
+`${CLAUDE_PLUGIN_ROOT}/packs/documentation/SKILL.md` in full and follow it as the active method for
+this work.
 
 Then:
 1. Confirm in one line that the **documentation** pack is loaded.

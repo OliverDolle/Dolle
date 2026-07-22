@@ -3,8 +3,9 @@ description: "Use when a request is vague, underspecified, or could be read seve
 argument-hint: "[optional: a rough request to enhance, or a task to scope]"
 ---
 
-Read the file `${CLAUDE_PLUGIN_ROOT}/packs/prompt-enhancement/SKILL.md` in full and adopt it as
-active guidance for the rest of this session.
+**A vague or underspecified request matches this command — load it before doing the work; do not
+guess at what the user meant.** Read the file `${CLAUDE_PLUGIN_ROOT}/packs/prompt-enhancement/SKILL.md`
+in full and follow it as the active method for this work.
 
 Then:
 1. Confirm in one line that the **prompt-enhancement** section is loaded.

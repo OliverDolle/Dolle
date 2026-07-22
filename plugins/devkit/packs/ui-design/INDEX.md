@@ -1,6 +1,6 @@
 ---
 name: ui-design
-description: Section index for the craft of great UI. Two skills — fundamentals (getting one screen/component right: hierarchy, spacing, type, color, states, forms, accessibility) and design-systems (making those decisions repeatable across a product: tokens, a component library, theming, and dev handoff). Read fundamentals for a single screen; add design-systems when the work outlives one screen.
+description: Section index for the craft of great UI. Four skills — fundamentals (getting one screen/component right: hierarchy, spacing, type, color, states, forms, accessibility), design-systems (making those decisions repeatable: tokens, a component library, theming, dev handoff), data-visualization (charts & dashboards), and motion-and-interaction (animation & micro-interactions). Read fundamentals for a single screen; add the others as the work calls for a system, charts, or motion.
 ---
 
 # UI design — section index
@@ -19,6 +19,8 @@ drifts as it grows. Read the one(s) the task needs — you don't have to read bo
 | --- | --- | --- |
 | **Fundamentals** | Designing/reviewing a single screen, component, or flow — visual hierarchy, spacing & type scales, semantic color + WCAG contrast, every component and content state, forms, feedback, responsive layout, microcopy, accessibility, and a review checklist. | `fundamentals/SKILL.md` |
 | **Design systems** | Making the above scale: design tokens (primitive → semantic → component tiers), a component library (variants, a states matrix, composition), theming (light/dark, multi-brand, density), documentation, and design-to-dev handoff. The *setup* a professional stands up before building many screens. | `design-systems/SKILL.md` |
+| **Data visualization** | The craft of charts & dashboards: chart-type selection by the question asked, dashboard layout & hierarchy, categorical/sequential/diverging color, declarative titles & direct labeling, honest scales, chart states, and accessible/responsive charts. Read when building any chart, KPI tile, or dashboard. | `data-visualization/SKILL.md` |
+| **Motion & interaction** | The craft of motion & micro-interactions: what to animate and why, easing/duration intent, choreography, state & page transitions, gesture feedback, and motion as a tokenized system — every rule paired with `prefers-reduced-motion`. Read when designing transitions, micro-interactions, or a motion system. | `motion-and-interaction/SKILL.md` |
 
 Paths are relative to this section folder (`${CLAUDE_PLUGIN_ROOT}/packs/ui-design/`).
 
@@ -29,12 +31,14 @@ Paths are relative to this section folder (`${CLAUDE_PLUGIN_ROOT}/packs/ui-desig
   engineer, a rebrand or a dark mode): also read `design-systems` — it turns the fundamentals into
   tokens and reusable components so consistency is automatic, not manual.
 - **Building it on the web with the Dolle-MCP library:** pair either skill with
-  `devkit:ui-ux-design` (the build workflow) and `frontend-design` (aesthetic direction).
+  `devkit:ui-ux-design` (the build workflow). Aesthetic direction lives in `fundamentals` §0 (the
+  external `frontend-design` skill is an optional complement, not required).
 - **Building a native/desktop app** (Qt, GTK): use `devkit:gui-design`, which carries the same
   craft onto desktop conventions (window chrome, menus, keyboard model, HiDPI, native a11y).
 
 ## How the design skills relate
 
-`frontend-design` (what it should *feel* like) → **fundamentals** (make one screen work) →
+**fundamentals §0** (what it should *feel* like) → **fundamentals §1–§12** (make one screen work) →
 **design-systems** (make it repeatable) → `ui-ux-design` (build it on Dolle-MCP) /
-`gui-design` (build it native). `web-performance` backstops the web path.
+`gui-design` (build it native). `web-performance` backstops the web path. (The external
+`frontend-design` skill is an optional complement to §0.)

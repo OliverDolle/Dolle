@@ -2,7 +2,7 @@
   "mcpServers": {
     "dolle-mcp": {
       "command": "uvx",
-      "args": ["--from", "git+https://github.com/OliverDolle/Dolle-MCP@v0.6.0", "dolle-mcp"]
+      "args": ["--refresh", "--from", "git+https://github.com/OliverDolle/Dolle-MCP", "dolle-mcp"]
     }
   }
 }

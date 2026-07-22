@@ -3,8 +3,10 @@ description: "Use when writing or fixing a Dockerfile or Compose stack, or shrin
 argument-hint: "[optional: what you're containerizing, or a Dockerfile/compose issue]"
 ---
 
-Read the file `${CLAUDE_PLUGIN_ROOT}/packs/containerization/SKILL.md` in full and adopt it as
-active guidance for the rest of this session.
+**A Dockerfile / Compose / container-image request matches this command — load it before writing
+container config; do not hand-write it from memory.** Read the file
+`${CLAUDE_PLUGIN_ROOT}/packs/containerization/SKILL.md` in full and follow it as the active method
+for this work.
 
 Then:
 1. Confirm in one line that the **containerization** section is loaded.

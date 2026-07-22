@@ -1,10 +1,12 @@
 ---
-description: "Use BEFORE building an application from a rough idea — turn it into a complete, build-ready spec a receiving agent can execute without guessing. Runs an AskUserQuestion interview across the app's axes (type/platform, users/auth, features + MVP scope, data, integrations, stack, non-functional, deployment, success criteria), then compiles a clean, sectioned spec with a phased build order and explicit handoff. Triggers: 'build an app', 'spec out this app', 'app requirements', 'turn my idea into a spec', 'plan this application', 'write a build brief'."
+description: "Use this whenever the user wants to build an application from a rough idea — load it BEFORE building to turn the idea into a complete, build-ready spec a receiving agent can execute without guessing. Runs an AskUserQuestion interview across the app's axes (type/platform, users/auth, features + MVP scope, data, integrations, stack, non-functional, deployment, success criteria), then compiles a clean, sectioned spec with a phased build order and explicit handoff. Use this (not prompt-enhancement) whenever the thing being built is an app or product; prompt-enhancement is for sharpening a general, non-app request. Triggers: 'build an app', 'spec out this app', 'app requirements', 'turn my idea into a spec', 'plan this application', 'write a build brief'."
 argument-hint: "[optional: the app idea to spec, e.g. 'a habit tracker with reminders']"
 ---
 
-Read the file `${CLAUDE_PLUGIN_ROOT}/packs/app-prompt/SKILL.md` in full and adopt it as active
-guidance for the rest of this session. It specializes the `prompt-enhancement` method — load
+**A "build an app / spec this out" request matches this command — load it before building; do not
+start coding from a rough idea.** Read the file `${CLAUDE_PLUGIN_ROOT}/packs/app-prompt/SKILL.md` in
+full and follow it as the active method for this work. It specializes the `prompt-enhancement`
+method — load
 `devkit:prompt-enhancement` too and keep its ask-vs-assume discipline in mind.
 
 Then:

@@ -18,33 +18,74 @@ read the skills you need. LangChain and LangGraph are used together here.
 | How to construct/design a workflow | `agent-development/workflow-design/SKILL.md` |
 | An error during development (and to log a new one) | `agent-development/troubleshooting/SKILL.md` |
 
-**Subagent-driven development** — `plugins/devkit/packs/subagent-driven-development/SKILL.md`.
-Orchestrating subagents / decomposing large tasks.
+**AI agent evaluation** — `plugins/devkit/packs/agent-evaluation/INDEX.md`, then the skill you
+need: `eval-foundations/SKILL.md` (what to measure, datasets), `llm-as-judge/SKILL.md` (model-graded
+scoring + bias), `eval-harness-ci/SKILL.md` (assertions + pass-rate CI merge gate),
+`tracing-observability/SKILL.md` (OpenTelemetry GenAI, drift), `langgraph-workflow-evals/SKILL.md`
+(evaluating a LangChain/LangGraph agent specifically — trajectory/node/response, LangSmith + pytest).
+The quality gate for the agents agent-development builds.
+
+**Subagent-driven development** — `plugins/devkit/packs/subagent-driven-development/INDEX.md`
+(then `orchestration/SKILL.md` for decomposing/orchestrating large tasks;
+`writing-subagent-instructions/SKILL.md` for the craft of the brief each subagent runs on).
 
 **Documentation** — `plugins/devkit/packs/documentation/SKILL.md`. Writing or updating docs.
 
 **UI/UX design** — `plugins/devkit/packs/ui-ux-design/SKILL.md`. Building/reshaping a web page
-on the Dolle-MCP server (needs that server; layers on the `frontend-design` skill).
+on the Dolle-MCP server (needs that server; design-craft base is `ui-design` §0, with the external `frontend-design` skill as an optional complement).
 
 **Web performance** — `plugins/devkit/packs/web-performance/SKILL.md`. Core Web Vitals
 (LCP/CLS/INP), measuring, per-metric fixes, budgets.
 
-**UI design (fundamentals)** — `plugins/devkit/packs/ui-design/SKILL.md`. Tool-agnostic UI craft:
-hierarchy, spacing/type scales, semantic color + contrast, component/content states, forms,
-accessibility, review checklist.
+**UI design (craft)** — `plugins/devkit/packs/ui-design/INDEX.md`, then the skill you need:
+`fundamentals/SKILL.md` (hierarchy, spacing/type scales, semantic color + WCAG 2.2 contrast,
+component/content states, forms, accessibility), `design-systems/SKILL.md` (tokens, theming,
+component library, dev handoff), `data-visualization/SKILL.md` (charts & dashboards), or
+`motion-and-interaction/SKILL.md` (animation & micro-interactions).
+
+**Systematic debugging** — `plugins/devkit/packs/systematic-debugging/SKILL.md`. A method for any
+failing program/flaky test/incident: reproduce, read the real error, one hypothesis at a time,
+bisect, the right instrument (debugger/tracing/profiler/sanitizers), confirm root cause before fixing.
 
 **Containerization** — `plugins/devkit/packs/containerization/SKILL.md`. Docker & Compose:
 multi-stage builds, small non-root images, layer caching, healthchecks, size/security.
 
-**Kubernetes** — `plugins/devkit/packs/kubernetes/SKILL.md`. K8s workloads, config/secrets,
-resources, probes, autoscaling, rollouts, Kustomize/Helm, pod debugging.
+**Kubernetes** — `plugins/devkit/packs/kubernetes/INDEX.md`, then `workloads/SKILL.md` (workloads,
+config/secrets, resources, probes, autoscaling, Kustomize/Helm, pod debugging) or
+`deployment-and-gitops/SKILL.md` (rollout loop, Argo Rollouts/Flagger progressive delivery, Argo
+CD/Flux GitOps).
 
 **Cloud infrastructure** — `plugins/devkit/packs/cloud-infrastructure/SKILL.md`. CI/CD,
 Terraform/IaC, cloud compute targets, OIDC auth, secrets, observability.
 
+**Deployment pipelines** — `plugins/devkit/packs/deployment-pipelines/INDEX.md`, then
+`github-actions/SKILL.md` or `azure-devops/SKILL.md`. Platform-specific CI/CD YAML (OIDC/workload
+identity, environments & approvals, deployment strategies, reuse, supply-chain hardening) — the
+concrete companion to cloud-infrastructure's concepts.
+
+**Database design & configuration** — `plugins/devkit/packs/database-design/INDEX.md`, then
+`data-modeling/SKILL.md` (schema, normalization, SQL-vs-NoSQL, ORM patterns) or
+`operations-and-tuning/SKILL.md` (indexing, migrations, pooling, transactions, security, backups).
+
+**Extensible code architecture** — `plugins/devkit/packs/extensible-architecture/SKILL.md`. Writing
+code that extends without rewrites: boundaries, dependency inversion, open-closed, ports-and-adapters,
+extension points, SemVer contracts, seams, feature flags.
+
 **Prompt enhancement** — `plugins/devkit/packs/prompt-enhancement/SKILL.md`. Turn a vague request
 into a precise prompt: diagnose gaps, decide ask-vs-assume, clarify with AskUserQuestion, sharpen
 and restate before doing the work.
+
+**Prompt engineering** — `plugins/devkit/packs/prompt-engineering/SKILL.md`. The craft of the prompt
+handed to a model: structure & delimiters, few-shot, CoT vs. reasoning models, structured output,
+prompt patterns, eval-driven iteration. (Distinct from prompt-enhancement.)
+
+**Speech interfaces (STT & TTS)** — `plugins/devkit/packs/speech-interfaces/INDEX.md`, then
+`speech-to-text/SKILL.md` or `text-to-speech/SKILL.md`. Engine options (cloud & on-device),
+streaming vs. batch, audio format, SSML/prosody, latency & cost, integration patterns.
+
+**Embedded dev boards — ESP32** — `plugins/devkit/packs/esp32/SKILL.md`. Toolchains, flashing &
+upload-failure fixes (hold BOOT while resetting/powering), dual-core FreeRTOS task pinning, GPIO/
+strapping gotchas, brownout, deep sleep, serial/JTAG debugging.
 
 Load a skill only when the current task matches it — don't read everything up front.
 

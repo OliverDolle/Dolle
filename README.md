@@ -11,31 +11,63 @@ Sections today:
 
 - **Agent development** — building agents & workflows with **LangChain + LangGraph** together,
   how to combine them, workflow design, and a troubleshooting log (5 skills).
-- **Subagent-driven development** — a methodology for decomposing work across subagents.
+- **AI agent evaluation** — the quality gate for those agents: what to measure (task/component/
+  trajectory), LLM-as-judge and its biases, a pass-rate **CI merge gate**, OpenTelemetry GenAI
+  tracing/drift, and **LangChain/LangGraph-specific** workflow evals (5 skills + a promptfoo
+  eval-in-CI scaffold).
+- **Subagent-driven development** — decomposing work across subagents (*orchestration*) and the
+  craft of the brief each subagent runs on (*writing-subagent-instructions*) (2 skills).
 - **Documentation** — a short-README-plus-linked-docs method.
 - **UI/UX design** — distinctive web design driven by the [Dolle-MCP](https://github.com/OliverDolle/Dolle-MCP)
   server (templates, curated color palettes, WCAG contrast, SVG, screenshots), starting with a
-  design brief and building on the `frontend-design` skill.
+  design brief; the aesthetic-direction craft is built into `ui-design` §0.
 - **Web performance** — making pages fast against Core Web Vitals (LCP, CLS, INP): measure-first,
   a per-metric fix playbook, and budgets.
-- **UI design (craft)** — the tool-agnostic craft of great UI in two skills: *fundamentals*
-  (hierarchy, spacing/type scales, semantic color + WCAG contrast, component & content states,
-  forms, feedback, accessibility, a review checklist) and *design-systems* (design tokens, theming,
-  a component library, and the design-to-dev handoff to make it repeatable).
+- **UI design (craft)** — the tool-agnostic craft of great UI in four skills: *fundamentals*
+  (hierarchy, spacing/type scales, semantic color + WCAG 2.2 contrast, component & content states,
+  forms, feedback, accessibility, a review checklist), *design-systems* (design tokens, theming, a
+  component library, dev handoff), *data-visualization* (charts & dashboards), and
+  *motion-and-interaction* (animation & micro-interactions, with `prefers-reduced-motion`).
 - **GUI design (native/desktop)** — designing desktop apps (Qt, GTK, WinUI): the platform HIG,
   window/menu/toolbar structure, the desktop keyboard model, resizable layout via layout managers,
   HiDPI, native feel + OS dark mode, a responsive UI thread, and desktop accessibility. Builds on
   the UI-design craft skills.
 - **Containerization** — Docker & Compose done right: multi-stage builds, small non-root images,
   layer caching, `.dockerignore`, healthchecks, and an image size/security checklist.
-- **Kubernetes** — deploying & configuring on K8s: Deployments/Services/Ingress, config/secrets,
-  resources, probes, autoscaling, safe rollouts, Kustomize/Helm, and pod debugging.
+- **Kubernetes** — running services on K8s in two skills: *workloads* (Deployments/Services/Ingress,
+  config/secrets, resources, probes, autoscaling, Kustomize/Helm, pod debugging) and
+  *deployment-and-gitops* (the rollout loop, canary/blue-green via Argo Rollouts/Flagger, and GitOps
+  with Argo CD/Flux).
+- **Systematic debugging** — a stack-agnostic method for any failing program, flaky test, or
+  incident: reproduce reliably, read the real error, one hypothesis at a time, bisect the search
+  space, the right instrument (debugger/tracing/profiler/sanitizers), and confirm root cause before
+  fixing.
 - **Cloud infrastructure** — CI/CD pipelines, Terraform/IaC, choosing a cloud compute target, OIDC
   auth, secrets across environments, and observability.
+- **Deployment pipelines** — production CI/CD field manuals for **GitHub Actions** and **Azure
+  DevOps**: OIDC/workload-identity keyless auth, environments & approvals, deployment strategies,
+  reusable workflows/templates, and supply-chain hardening (SHA-pinning, attestation). The concrete
+  YAML companion to cloud-infrastructure's concepts (2 skills + starter workflows).
+- **Database design & configuration** — the data layer: schema/data modeling, normalization,
+  SQL-vs-NoSQL selection, indexing & EXPLAIN, migrations, connection pooling, transactions &
+  isolation, security, and backups/PITR — engine-neutral with Postgres as the worked example (2 skills).
+- **Extensible code architecture** — writing code that extends without rewrites: module boundaries,
+  dependency inversion, open-closed, hexagonal ports-and-adapters, extension points/plugins,
+  semantic-versioned contracts, refactoring toward seams, and feature flags.
 - **App prompt engineering** — turning a rough app idea into a build-ready spec: an
   **AskUserQuestion** interview across the app's axes (type/platform, users/auth, features & MVP
   scope, data, integrations, stack, deployment), compiled into a clean, sectioned spec with a phased
   build order and an explicit handoff for the implementing agent.
+- **Prompt engineering** — the craft of the prompt handed to a model (distinct from sharpening your
+  own request): structure & delimiters, few-shot, chain-of-thought vs. reasoning models, structured
+  output, the named prompt patterns, and eval-driven iteration.
+- **Speech interfaces (STT & TTS)** — adding voice to an app: engine option matrices (cloud &
+  on-device) for **speech-to-text** and **text-to-speech**, streaming vs. batch, audio format,
+  SSML/prosody, latency & cost, and integration patterns (2 skills).
+- **Embedded dev boards — ESP32** — a tips-and-tricks field manual: toolchains (ESP-IDF/Arduino/
+  PlatformIO), flashing & the upload-failure fixes (hold **BOOT** while resetting/powering), dual-core
+  **FreeRTOS** task pinning (WiFi on core 0), GPIO/strapping-pin gotchas, brownout, deep sleep, and
+  serial/JTAG debugging.
 
 ## Quickstart (Claude Code)
 
@@ -103,9 +135,9 @@ The table below is generated from each doc's `description` frontmatter by
 
 ## What's in the box
 
-- **12 skill sections** (`plugins/devkit/packs/`) holding **17 skills** — loaded only via their
+- **20 skill sections** (`plugins/devkit/packs/`) holding **36 skills** — loaded only via their
   command.
-- **15 commands** (`plugins/devkit/commands/`) — `/devkit` (menu), one loader per section,
+- **23 commands** (`plugins/devkit/commands/`) — `/devkit` (menu), one loader per section,
   `/scaffold`, and `/mcp-preview-server`.
 - **1 bundled MCP server** (`plugins/devkit/.mcp.json`) — [Dolle-MCP](https://github.com/OliverDolle/Dolle-MCP)
   registers automatically when the plugin is enabled (no manual `claude mcp add`); it powers the
@@ -116,8 +148,9 @@ The table below is generated from each doc's `description` frontmatter by
   `app-prompt-engineer`.
 - **2 hooks** (`plugins/devkit/hooks/`) — a session-start reminder and a topic-aware section
   suggester.
-- **Starter templates** (`plugins/devkit/packs/agent-development/templates/`) — runnable
-  LangGraph and LangChain skeletons that `/scaffold` copies in and adapts.
+- **Starter templates** (`plugins/devkit/packs/*/templates/`) — runnable skeletons that
+  `/scaffold` copies in and adapts: LangGraph & LangChain agents, a **promptfoo eval-in-CI** gate,
+  and **GitHub Actions + Azure DevOps** starter pipelines.
 - **Self-maintaining docs** — the README index above is generated from each doc's `description`
   by `scripts/generate-doc-index.mjs`, kept in sync by a GitHub Action.
 
