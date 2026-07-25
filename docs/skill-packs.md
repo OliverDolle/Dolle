@@ -83,7 +83,10 @@ tools first — `list_templates`
 `trace_image_to_svg` for animatable SVG — and runs a **design brief** before building: asking
 the user for any unspecified direction (menu bar, page count, single-document vs separate API
 entry points, colors/palette, animation, images/SVG, page structure). It builds on the
-aesthetic-direction craft in `ui-design` §0 and steers away from the AI-default looks (no purple/violet by default).
+aesthetic-direction craft in `ui-design` §0 and steers away from the AI-default looks (no purple/violet
+by default). Before building it reads three `ui-design` skills — `anti-slop` (tells + the gate sweep it
+runs against the finished screenshot), `structural-variety` (state a page shape, nav and footer before
+markup) and `type-and-color` (a real pairing and an OKLCH palette instead of a free-handed one).
 
 Usage: `/ui-ux-design` (loads the section) or `/ui-ux-design <what you're designing>` (loads +
 runs the brief).
@@ -103,25 +106,40 @@ starts from a baseline).
 
 ## Section: UI design (craft) — `/ui-design`
 
-`packs/ui-design/` · 4 skills
+`packs/ui-design/` · 8 skills
 
 The **tool-agnostic** craft of great UI, applicable in any tool or stack. A multi-skill section
-(`INDEX.md` + four skills) that the loader reads selectively:
+(`INDEX.md` + eight skills) that the loader reads selectively. Two of them are the defaults:
+`fundamentals` makes one screen *work*, and `anti-slop` stops it from being the same screen every
+model produces — a UI can satisfy every usability rule and still read as machine-generated.
 
 | Skill | Covers |
 | --- | --- |
-| `fundamentals` | Getting one screen/component right: visual hierarchy (one primary action per view), a single spacing scale and a small type scale, semantic color roles with WCAG **2.2 AA** contrast (meaning never by color alone), the full set of component states (hover/focus/active/disabled/loading), the four content states (empty/loading/error/overflow), form and feedback design, responsive layout, microcopy, accessibility, and a review checklist. |
+| `anti-slop` | The **anti-generic pass**, for anything you're about to generate or review visually: the slop signature (what you'll produce if you don't intervene), ~60 named tells across visuals, chrome, motion, copy and implementation — violet/gradient heroes, gradient headlines, the `100vh` all-centered hero, the identical three-up icon-card grid, card-in-card, pure `#000`/`#fff`, a default UI sans as display, italic headings, the AI nav and AI footer, eyebrow-on-every-section, re-drawn browser/phone chrome, emoji-as-icon, invented metrics, `transition: all`, uniform hover-scale, fade-in focus rings, banned marketing openers, off-scale spacing, two-line CTA labels — each with why it reads as generated and the fix. Plus the ten escape moves, an audit report format (severity · why · fix · verdict), a six-axis pre-emit self-critique (philosophy/hierarchy/execution/specificity/restraint/variety, anything <3 triggers a revision), and a 40-question gate sweep where every answer must be "no". |
+| `fundamentals` | Getting one screen/component right: visual hierarchy (one primary action per view), a single spacing scale and a small type scale, semantic color roles with WCAG **2.2 AA** contrast (meaning never by color alone), the full set of component states (hover/focus/active/disabled/loading), the four content states (empty/loading/error/overflow), form and feedback design, responsive layout, microcopy, accessibility, and a review checklist. §0 sets aesthetic direction. |
+| `structural-variety` | **Page shape** — the fingerprint that survives every palette swap. The six structural axes (section-head placement, body composition, divider language, button voice, image treatment, reveal), ~20 named whole-page shapes to pick from with a domain → offer-three table, nav archetypes and footer archetypes that escape the two most-recognized AI defaults, hero fit-the-fold (1280×800, bottom-weighted padding, headline sized to its length), the enrichment hierarchy (typography-only is always acceptable), section rhythm, and a stamp-then-differ rule so consecutive builds never share a fingerprint. |
+| `type-and-color` | The two decisions that give a design away. **Type:** display + body + at most one outlier (three families is the ceiling), the default faces to avoid and a catalog of foundry-grade *free* alternatives by voice with tone pairings, ratio scales, display caps and headline-length buckets, weight contrast ≥300, measure, all-caps leading floors, numerals and real punctuation, roman-headings-only. **Color:** OKLCH four-layer palettes (paper/ink/tinted neutrals/one accent), no zero-chroma greys or pure `#000`/`#fff`, accent ≤5% of a viewport, gradient bans, a dark-mode recipe (paper 12–18%, ink 92–96%, weight −50, elevation by lightness, same hue), and the four contrast pairs that fail most often (surface flips, accent-ink, muted-on-tinted, invisible focus rings). |
+| `surfaces-and-details` | **Containers and finish** — the half of "looks generated" that isn't layout or palette. The containment ladder (nothing → whitespace → hairline → tinted surface → bordered card → elevation) so a card needs a card-shaped problem; radius as one committed *language* (square/soft/round/pill) with ≤2 radii and computed nested corners; hairline and border discipline (border *or* tint *or* shadow, never all three); elevation recipes that invert between light and dark (lightness steps, never a glow); density, optical padding, and card ≠ section ≠ page padding; a three-surface limit with every flip stating its own text color. Then the 1px detail layer: `text-wrap: balance/pretty`, hanging punctuation, tabular/oldstyle figures, focus-ring geometry via reserved transparent `outline`, selection/caret/`accent-color`/tap-highlight, `scrollbar-gutter: stable`, `scroll-margin-top` under sticky headers, reserved helper-text and input-icon slots, centered mixed-height rows, honest cursors, and `forced-colors`/zoom/reduced-motion respect. |
 | `design-systems` | Making those decisions *repeatable* across a product: the three-tier token architecture (primitive → semantic → component), building the color/type/spacing/elevation/motion scales into tokens, theming (light/dark, multi-brand, density), a component library (variants × states, composition), governance to stop drift, and the token-based design-to-dev handoff. The setup for work that outlives one screen. |
 | `data-visualization` | The craft of charts & dashboards: picking the chart from the question asked, dashboard layout & hierarchy, categorical/sequential/diverging color (resolved from tokens, colorblind-safe), declarative titles & direct labeling, honest non-deceptive scales, chart states, and accessible/responsive charts. |
 | `motion-and-interaction` | The craft of motion & micro-interactions: what to animate and why, easing/duration intent, choreography & staggered reveals, state & page transitions, gesture feedback, and motion as a tokenized system — every rule paired with `prefers-reduced-motion` and the INP/CLS link. |
 
-It sits under the other design pieces: `ui-design` `fundamentals` §0 owns aesthetic *direction*, `ui-ux-design`
-owns the Dolle-MCP *build workflow*, `gui-design` carries the craft onto native/desktop, and this
-owns the *interface craft* beneath them all. `data-visualization` and `motion-and-interaction` deepen
-two specific crafts on top of `fundamentals`.
+It sits under the other design pieces: `fundamentals` §0 + `anti-slop` own aesthetic *direction*,
+`structural-variety` / `type-and-color` / `surfaces-and-details` own the shape, surface and finish
+decisions, `ui-ux-design` owns the Dolle-MCP *build workflow*, `gui-design` carries the craft onto
+native/desktop, and this section owns the *interface craft* beneath them all. `design-systems`,
+`data-visualization` and `motion-and-interaction` deepen three specific crafts on top of
+`fundamentals`.
 
-Usage: `/ui-design` (loads the section) or `/ui-design <screen/component to design or review>`, or
-`/ui-design data-visualization` to focus a specific skill.
+Usage: `/ui-design` (loads `anti-slop` + `fundamentals`) or
+`/ui-design <screen/component to design or review>`, or a skill name to focus one —
+`/ui-design anti-slop`, `/ui-design structural-variety`, `/ui-design type-and-color`,
+`/ui-design surfaces-and-details`, `/ui-design design-systems`, `/ui-design data-visualization`,
+`/ui-design motion-and-interaction`.
+
+*Credit: the tell taxonomy and gate format in `anti-slop` (and the structural/typographic depth it
+draws on) are adapted from the MIT-licensed [Hallmark](https://github.com/Nutlope/hallmark) skill,
+reworked to be tool-agnostic and consistent with the rest of devkit.*
 
 ## Section: GUI design (native/desktop) — `/gui-design`
 
@@ -403,9 +421,14 @@ Usage: `/esp32` (loads the section) or `/esp32 <the board task or upload symptom
   ships them (rollout loop, Argo Rollouts/Flagger progressive delivery, Argo CD/Flux GitOps that reads
   those very manifests as desired state). It sits between `containerization` (the image) and
   `deployment-pipelines`/`cloud-infrastructure` (the surrounding CI/CD).
-- **The design section now has four crafts**: `fundamentals` and `design-systems` are the base;
-  `data-visualization` and `motion-and-interaction` deepen two specific crafts on top, resolving color
-  and motion from `design-systems` tokens and honoring `web-performance`'s CLS/INP budgets.
+- **The design section now has eight crafts, split by failure mode**: `fundamentals` and
+  `design-systems` are the base (does it *work*, and does it stay consistent); `anti-slop`,
+  `structural-variety`, `type-and-color` and `surfaces-and-details` are the anti-generic layer (does it
+  look *made for this*, or like every other generated page — the named tells, plus shape, surface and
+  containment/finish, which is where "correct but still generated" usually lives); `data-visualization` and
+  `motion-and-interaction` deepen two specific crafts on top, resolving color and motion from
+  `design-systems` tokens and honoring `web-performance`'s CLS/INP budgets. `ui-ux-design` executes
+  all of it on Dolle-MCP; `gui-design` carries it to native/desktop.
 - **LangGraph evaluation closes the agent loop**: `agent-development` builds the graph,
   `agent-evaluation`'s new `langgraph-workflow-evals` measures it (trajectory + node + response) using
   the section's general discipline (`llm-as-judge`, `eval-harness-ci`, `tracing-observability`).

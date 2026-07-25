@@ -23,9 +23,16 @@ Sections today:
   design brief; the aesthetic-direction craft is built into `ui-design` §0.
 - **Web performance** — making pages fast against Core Web Vitals (LCP, CLS, INP): measure-first,
   a per-metric fix playbook, and budgets.
-- **UI design (craft)** — the tool-agnostic craft of great UI in four skills: *fundamentals*
-  (hierarchy, spacing/type scales, semantic color + WCAG 2.2 contrast, component & content states,
-  forms, feedback, accessibility, a review checklist), *design-systems* (design tokens, theming, a
+- **UI design (craft)** — the tool-agnostic craft of great UI in eight skills: *anti-slop* (the named
+  AI-default tells with a fix for each, the escape moves, an audit report format, a six-axis pre-emit
+  self-critique and a 40-question gate sweep — the pass that stops output from looking machine-made),
+  *fundamentals* (hierarchy, spacing/type scales, semantic color + WCAG 2.2 contrast, component &
+  content states, forms, feedback, accessibility, a review checklist), *structural-variety* (page
+  shape: ~20 named shapes, nav/footer archetypes, hero fit, section rhythm, stamp-then-differ),
+  *type-and-color* (real type pairings and free foundry-grade alternatives, OKLCH palettes, accent
+  ≤5%, dark-mode recipe, the contrast pairs that fail, themes as bundles you rotate),
+  *surfaces-and-details* (the containment ladder so cards stop being the reflex, radius/border/elevation
+  as one language, and the 1px detail layer), *design-systems* (design tokens, theming, a
   component library, dev handoff), *data-visualization* (charts & dashboards), and
   *motion-and-interaction* (animation & micro-interactions, with `prefers-reduced-motion`).
 - **GUI design (native/desktop)** — designing desktop apps (Qt, GTK, WinUI): the platform HIG,

@@ -64,7 +64,11 @@ Dolle/
         │   ├── web-performance/SKILL.md               # single-skill section
         │   ├── ui-design/                             # multi-skill section
         │   │   ├── INDEX.md                           # section catalog
+        │   │   ├── anti-slop/SKILL.md                 # AI-default tells, escape moves, gate sweep
         │   │   ├── fundamentals/SKILL.md
+        │   │   ├── structural-variety/SKILL.md        # page shape, nav/footer archetypes, hero fit
+        │   │   ├── type-and-color/SKILL.md            # pairings, OKLCH palettes, contrast pairs, themes
+        │   │   ├── surfaces-and-details/SKILL.md      # containment ladder, radius/border/elevation, 1px layer
         │   │   ├── design-systems/SKILL.md
         │   │   ├── data-visualization/SKILL.md
         │   │   └── motion-and-interaction/SKILL.md

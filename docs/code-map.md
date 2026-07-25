@@ -61,11 +61,20 @@ Claude can load the right guidance on its own without a manual loader command.
   server; design-craft base is `ui-design` §0 (external `frontend-design` optional).
 - `web-performance/SKILL.md` — single-skill section; Core Web Vitals (LCP/CLS/INP), measuring,
   the per-metric fix playbook, and budgets.
-- `ui-design/` — multi-skill section: `INDEX.md` plus `fundamentals/SKILL.md` (tool-agnostic UI
-  craft — hierarchy, spacing/type scales, semantic color + WCAG 2.2 contrast, component/content
-  states, forms, accessibility, checklist), `design-systems/SKILL.md` (tokens, theming, component
-  library, dev handoff), `data-visualization/SKILL.md` (charts & dashboards), and
-  `motion-and-interaction/SKILL.md` (animation & micro-interactions).
+- `ui-design/` — multi-skill section: `INDEX.md` plus `anti-slop/SKILL.md` (the named AI-default
+  tells with fixes, escape moves, audit report format, six-axis pre-emit self-critique, 40-question
+  gate sweep), `fundamentals/SKILL.md` (tool-agnostic UI craft — hierarchy, spacing/type scales,
+  semantic color + WCAG 2.2 contrast, component/content states, forms, accessibility, checklist),
+  `structural-variety/SKILL.md` (page shape: six axes, ~20 named shapes, nav/footer archetypes, hero
+  fit + enrichment tiers, section rhythm, stamp-then-differ), `type-and-color/SKILL.md` (type pairing
+  rule + free foundry-grade catalog, scales/measure/numerals, OKLCH palette layers, accent ≤5%,
+  dark-mode recipe, the contrast pairs that fail, themes as named bundles),
+  `surfaces-and-details/SKILL.md` (the containment ladder so cards stop being the reflex, radius as one
+  committed language, hairline/elevation discipline, optical padding, a three-surface limit, and the
+  1px detail layer — text-wrap, focus-ring geometry, selection/caret/scrollbar, reserved slots, honest
+  cursors), `design-systems/SKILL.md` (tokens, theming,
+  component library, dev handoff), `data-visualization/SKILL.md` (charts & dashboards), and
+  `motion-and-interaction/SKILL.md` (animation & micro-interactions + the named motion tells).
 - `gui-design/SKILL.md` — single-skill section; native/desktop GUI design (platform HIG, window/
   menu/toolbar structure, keyboard model, resizable layout, HiDPI, native feel, responsive UI
   thread, desktop accessibility), Qt as the worked example.
