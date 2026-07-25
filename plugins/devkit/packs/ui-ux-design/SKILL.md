@@ -33,7 +33,15 @@ design involves cards, panels, or a radius/shadow decision — the containment l
 every group becoming the same rounded bordered box, and its 1px layer is most of what "polished" means.
 Everything in Step 1's brief below feeds those decisions.
 
-## Step 0 — Confirm the Dolle-MCP server is available and use it first
+## Step 0 — Confirm the Dolle-MCP server is available, then call `golden_rules` first
+
+**Before anything else in this workflow, call `mcp__dolle-mcp__golden_rules()`.** It returns this
+server's own ordered workflow plus the golden rules of UI design, each wired to the templates that
+demonstrate it — it is the fastest way to get the craft *and* the tool sequence in one call, and it
+stays in sync with the library automatically. Use `golden_rules(topic="…")` when you need one area
+in full (colour, containment, motion, content, accessibility, …).
+
+## Step 0b — Use the library before inventing
 
 The design library is served by the **`dolle-mcp`** MCP server (sibling repo `Dolle-MCP`,
 registered in Claude Code as `dolle-mcp`). Its tools are namespaced **`mcp__dolle-mcp__<tool>`**.
@@ -53,7 +61,8 @@ The surface you will actually use (call `list_templates` and read the server's o
 
 | Tool (`mcp__dolle-mcp__…`) | Use it to |
 | --- | --- |
-| `list_templates(category?, theme?, component?, q?, detail?)` | **Start here.** Returns compact rows `{id, name, category, theme, summary}` for the ~50 offline templates. **Narrow instead of scanning:** filter by `category` / `theme` / `component`, or `q` (substring). `detail=True` gives full metadata. Read `guide://templates` for a grouped one-line pick map. |
+| **`golden_rules(topic?, detail?)`** | **Call this first on any design work.** ~48 golden rules of UI design across process, structure, type, colour, containment, states, motion, content, accessibility, responsiveness and performance — each naming *the templates that demonstrate it* (resolved live, with what each one is), *the tool* that does the work, and *the tell* (what the failure looks like). Also returns the ordered workflow for this server and a pre-ship checklist. Compact by default; `topic="color"` for one area in full. Same content as the `guide://golden-rules` resource. |
+| `list_templates(category?, theme?, component?, q?, detail?)` | **Then here.** Returns compact rows `{id, name, category, theme, summary}` for the ~50 offline templates. **Narrow instead of scanning:** filter by `category` / `theme` / `component`, or `q` (substring). `detail=True` gives full metadata. Read `guide://templates` for a grouped one-line pick map. |
 | `get_template_source(id)` | Pull the real HTML/CSS/JS for a template to adapt — buttons, navbars, typography, charts, business pages, effects. |
 | `list_segments(id)` | List a catalog template's **individually-copyable pieces** (id/title/group only) — grab one button/nav/chart/shape/grid/text-effect instead of a whole page. |
 | `get_segment(id, seg)` | Return **one** self-contained snippet (`html`/`css`/`js` + a combined `code`) — far less to read than the full page. |
@@ -66,11 +75,25 @@ The surface you will actually use (call `list_templates` and read the server's o
 | `color_info(color)` | Any color in hex/rgb/hsl/hsv/oklch + nearest name + `best_text`. |
 | `color_contrast(fg, bg)` | WCAG ratio + AA/AAA verdicts — **gate every text/background pair through this.** |
 | `color_gradients(colors, angle?)` | Paste-ready CSS linear/radial/conic gradients. |
+| **`generate_theme(brand_color?/anchor_hue?, paper_band?, accent_hue?, accent_chroma?, radius?)`** | **Use this instead of hand-writing colors.** Builds a complete, contrast-**verified** OKLCH token set: paper→ink ramp with every neutral tinted toward the anchor hue (never flat grey, never `#fff`/`#000`), one accent, a verified `--color-accent-ink` for text *on* the accent, and a focus ring that clears 3:1 against both the page and the accent (two-tone where no single tone can). Returns tokens, paste-ready CSS, a pass/fail contrast table, `failures` (empty = all passed), notes on every adjustment it made, a dark-mode remap, and a stamp comment. |
+| `list_themes()` / `get_theme(name)` | The 12 named theme **bundles** — anchor · paper band · display voice · accent family · radius · motion — with the rotation rule and the font pairing each expects; `get_theme` returns one bundle's verified tokens. Browse them rendered side by side in the `themes` template. |
+| `extract_palette(image_path, max_colors?)` | Read a reference image's palette as design **roles** (surface / lightest / darkest / accent) + a `suggested_recipe` for `generate_theme`. The honest way to answer "make it feel like this" — take the colour relationships, not the layout. |
+| **`design_variation(kind?, avoid?, domain?)`** | **Run this before writing markup.** Returns a page shape / nav / footer / theme that *differs from the last build*: no args → a full structural fingerprint plus the stamp comment to paste; `kind=` → one axis with alternates; `domain=` → three shapes from categorically different families to offer the user. Pass `avoid=` with whatever the project's existing stamp records. |
+| **`slop_check(target)`** | **Run this before handing work back.** Lints a file path or raw HTML/CSS for the mechanically-detectable AI-default tells with line numbers and severity (violet gradients, gradient headlines, `#000`/`#fff`, zero-chroma neutrals, `transition: all`, uniform hover-scale, overshoot easing, animated layout props, fade-in focus rings, missing `prefers-reduced-motion`, `100vw`, bare `1fr` with images, italic headings, emoji icons, ad-hoc z-index, banned copy, unsourced metrics). Also lists what still needs eyes. |
+| `search_segments(q, limit?, template?)` | Search **every** template's copyable components at once — "masthead", "ticket", "stat", "focus", "containment" — instead of guessing which template holds it. |
 | `segment_svg(svg, name?)` | Split an SVG into independently-animatable `.seg` groups + an animated preview. |
 | `trace_image_to_svg(image_path, max_colors?, name?)` | Trace a raster logo/image to a segmented, animatable SVG. |
 | `screenshot_preview(url, …)` | Screenshot any live preview URL (e.g. a generated SVG) so you can see the animated result. |
 
-The catalog is ~50 templates across ten categories (call `list_templates(category=…)` or read
+**Four reference sheets exist specifically to break the sameness — read them before you invent:**
+**`themes`** (12 bundles rendering one module like-for-like, each printing its measured contrast),
+**`page-shapes`** (12 whole-page shapes in 6 families as copyable skeletons — the fix for pages that
+are visually distinct but structurally identical), **`details`** (19 before/after specimens of the
+1px layer: focus geometry, `text-wrap`, reserved slots, OS preferences), and **`cards`**, whose
+*first* row is the containment ladder — the alternatives that come before reaching for a rounded
+bordered box.
+
+The catalog is ~75 templates across ten categories (call `list_templates(category=…)` or read
 `guide://templates` for the authoritative, current list — don't rely on this snapshot):
 **Buttons & text** (`buttons`, `text-effects`, `kinetic-text`, `typography`), **Navigation**
 (`navbars`, `nav-patterns`), **Data & charts** (`charts`, `charts-lab`, `diagrams`,
@@ -124,6 +147,14 @@ Cover these axes:
 
 5. **Colors & palette.** Ask for any brand colors or a mood. Then **generate options with the
    MCP tools, do not free-hand a palette**:
+   - **A palette is not a theme.** Once a direction is picked, run
+     **`generate_theme(brand_color="#…", paper_band=…, radius=…)`** (or `get_theme(name)` for a
+     named bundle) and build from the tokens it returns. It is the only path that guarantees
+     tinted neutrals, one accent, a verified accent-ink, and a focus ring that clears both the
+     page and the accent — the four things hand-picked palettes get wrong. Check `failures` is
+     empty, and paste its `stamp` at the top of the stylesheet.
+   - Working from a reference image or screenshot? `extract_palette(path)` → feed its
+     `suggested_recipe` into `generate_theme`. Take the colour relationships, never the layout.
    - Have a seed color / brand → `find_palettes(["#seed"])` for curated sets **and**
      `color_palettes(["#seed"])` for harmonies around it.
    - Only a mood, no color → `find_palettes()` (browse the curated catalog) or seed from a
@@ -174,7 +205,12 @@ Cover these axes:
      subject-appropriate placeholder from a stock source (e.g. Unsplash) can stand in — but a strong
      type/color/layout system and the offline library usually read as less generic than stock.
 
-8. **Page structure & layout.** How is content organized — heavy on **containers/cards** (bento
+8. **Page structure & layout.** **Start by calling `design_variation(domain="<what this is>")`**
+   and offer the user the three page shapes it returns (they come from categorically different
+   families — that contrast is what produces variety). If the project already has a stamp comment
+   from a previous build, pass those values as `avoid=[…]` so this page can't repeat the last one.
+   State the chosen shape, nav and footer in prose before writing markup, and browse
+   `page-shapes` for the skeleton. Then: how is content organized — heavy on **containers/cards** (bento
    grids, feature cards, stat tiles, pricing tiers — see the business templates, `mechanics`
    bento, and the **`grids`** layout catalog: auto-fit, masonry, bento, justified, mosaic, areas,
    subgrid, plus warped / sidewall / isometric / radial / hex) or on **long-form text sections**
@@ -207,7 +243,9 @@ change — never hardcode).
 - Ask the hard question of that screenshot: *would this look at home in an award gallery, or like a
   template?* Name the single most generic thing (default display type, everything centered, a flat
   palette, no motion, text lost on an image) and fix it before shipping — the §0 self-critique.
-- **Run `anti-slop`'s gate sweep against the screenshot and the source** — every answer must be "no":
+- **Run `slop_check(<path>)` on every file you wrote** and fix what it names — it reports the
+  mechanical gates with line numbers, so this is evidence rather than self-assessment. Then run
+  `anti-slop`'s gate sweep against the screenshot and the source for the ones a regex can't judge — every answer must be "no":
   no gradient hero or gradient headline, no `100vh` all-centered hero, no three-up icon-card grid, no
   card-in-card, no wordmark+4-links nav or 4-column link-farm footer, no italic heading, no emoji
   icons or mixed icon sets, no `transition: all` or uniform hover-scale, no invented metrics or

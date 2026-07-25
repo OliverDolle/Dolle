@@ -77,10 +77,13 @@ own docs follow it.
 A method for designing distinctive web UI/UX on top of the **Dolle-MCP** server (sibling repo,
 registered in Claude Code as `dolle-mcp` — **bundled with this plugin**, so it auto-registers on
 install; see [Installation](installation.md#bundled-mcp-server-dolle-mcp)). It uses that server's
-tools first — `list_templates`
-/ `get_template_source` / `screenshot_template` for the 19 offline templates, `find_palettes` /
-`color_palettes` / `color_contrast` / `color_gradients` for color, `segment_svg` /
-`trace_image_to_svg` for animatable SVG — and runs a **design brief** before building: asking
+tools first — `golden_rules` (the server's own workflow + the design rules, each wired to the
+template that demonstrates it), `list_templates`
+/ `get_template_source` / `search_segments` / `screenshot_template` for the ~75 offline templates,
+`find_palettes` / `color_palettes` / `color_contrast` / `color_gradients` / `extract_palette` for
+color, `generate_theme` / `get_theme` for a contrast-verified OKLCH token set, `design_variation` to
+pick a page shape/nav/footer that differs from the last build, `slop_check` to audit the result, and
+`segment_svg` / `trace_image_to_svg` for animatable SVG — and runs a **design brief** before building: asking
 the user for any unspecified direction (menu bar, page count, single-document vs separate API
 entry points, colors/palette, animation, images/SVG, page structure). It builds on the
 aesthetic-direction craft in `ui-design` §0 and steers away from the AI-default looks (no purple/violet
