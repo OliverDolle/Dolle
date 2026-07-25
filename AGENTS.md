@@ -38,10 +38,16 @@ on the Dolle-MCP server (needs that server; design-craft base is `ui-design` §0
 (LCP/CLS/INP), measuring, per-metric fixes, budgets.
 
 **UI design (craft)** — `plugins/devkit/packs/ui-design/INDEX.md`, then the skill you need:
-`fundamentals/SKILL.md` (hierarchy, spacing/type scales, semantic color + WCAG 2.2 contrast,
-component/content states, forms, accessibility), `design-systems/SKILL.md` (tokens, theming,
-component library, dev handoff), `data-visualization/SKILL.md` (charts & dashboards), or
-`motion-and-interaction/SKILL.md` (animation & micro-interactions).
+`anti-slop/SKILL.md` (the named AI-default tells, escape moves, audit report format, pre-emit
+self-critique, gate sweep — read by default on anything visual), `fundamentals/SKILL.md` (hierarchy,
+spacing/type scales, semantic color + WCAG 2.2 contrast, component/content states, forms,
+accessibility), `structural-variety/SKILL.md` (page shape, nav/footer archetypes, hero fit, section
+rhythm), `type-and-color/SKILL.md` (type pairings, OKLCH palettes, accent & contrast discipline,
+themes), `surfaces-and-details/SKILL.md` (the containment ladder, radius/border/elevation, the 1px
+detail layer — read when a UI is "correct but still looks generated"),
+`design-systems/SKILL.md` (tokens, theming, component library, dev handoff),
+`data-visualization/SKILL.md` (charts & dashboards), or `motion-and-interaction/SKILL.md`
+(animation & micro-interactions).
 
 **Systematic debugging** — `plugins/devkit/packs/systematic-debugging/SKILL.md`. A method for any
 failing program/flaky test/incident: reproduce, read the real error, one hypothesis at a time,

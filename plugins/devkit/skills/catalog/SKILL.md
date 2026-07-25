@@ -54,20 +54,25 @@ Section index: `${CLAUDE_PLUGIN_ROOT}/packs/subagent-driven-development/INDEX.md
 | --- | --- |
 | `${CLAUDE_PLUGIN_ROOT}/packs/web-performance/SKILL.md` | Making a page fast — Core Web Vitals (LCP, CLS, INP), measuring lab + field, the per-metric fix playbook, and JS/image/font/third-party budgets. |
 
-## UI design — craft (fundamentals, design systems, data-viz, motion)
+## UI design — craft (anti-slop, fundamentals, structure, type & color, surfaces, design systems, data-viz, motion)
 
 Section index: `${CLAUDE_PLUGIN_ROOT}/packs/ui-design/INDEX.md`
 
 | Read this file | When the task is… |
 | --- | --- |
+| `${CLAUDE_PLUGIN_ROOT}/packs/ui-design/anti-slop/SKILL.md` | **Anything visual you are about to generate or review** — the named tells of AI-default UI (violet/gradient hero, `100vh` centered hero, three-up icon cards, the AI nav/footer, italic headings, `transition: all`, emoji icons, invented metrics, re-drawn browser chrome) with why each reads as generated and the fix, the escape moves, an audit report format, a six-axis pre-emit self-critique, and a 40-question gate sweep. Read by default with `fundamentals`; also the right read for "does this look AI-generated?" / "make it less generic". |
 | `${CLAUDE_PLUGIN_ROOT}/packs/ui-design/fundamentals/SKILL.md` | Designing or reviewing the *craft* of a single UI (tool-agnostic) — visual hierarchy, spacing/type scales, semantic color + WCAG 2.2 contrast, the full set of component states, the four content states, forms, feedback, responsive layout, accessibility, and a review checklist. |
+| `${CLAUDE_PLUGIN_ROOT}/packs/ui-design/structural-variety/SKILL.md` | Deciding a page's **shape** before writing markup — the six structural axes, ~20 named whole-page shapes (plus a domain → offer-three table), nav and footer archetypes that escape the two most-recognized AI defaults, hero fit-the-fold + the enrichment hierarchy, section rhythm, and the stamp-then-differ rule so two builds never share a fingerprint. |
+| `${CLAUDE_PLUGIN_ROOT}/packs/ui-design/type-and-color/SKILL.md` | Picking a **typeface or a palette** — the display+body(+one outlier) pairing rule, the default faces to avoid and a catalog of foundry-grade free alternatives by voice, ratio scales/display caps/weight/measure/numerals, OKLCH palette construction with tinted neutrals, one accent ≤5%, a dark-mode recipe, and the contrast pairs that fail most often (accent-ink, surface flips, muted-on-tinted). |
+| `${CLAUDE_PLUGIN_ROOT}/packs/ui-design/surfaces-and-details/SKILL.md` | **Containers and finish** — when a UI is "correct but still looks generated", or before reaching for a card: the containment ladder (whitespace → hairline → tint → border → elevation) so cards stop being the reflex, radius as one committed language with computed nested corners, hairline/border discipline, elevation recipes for light vs dark (lightness, never glow), density & optical padding, a three-surface limit, and the 1px detail layer (`text-wrap: balance/pretty`, hanging punctuation, focus-ring geometry, selection/caret/accent/tap-highlight colors, `scrollbar-gutter`, `scroll-margin-top`, reserved helper/icon slots, honest cursors). |
 | `${CLAUDE_PLUGIN_ROOT}/packs/ui-design/design-systems/SKILL.md` | Making that craft *repeatable* across a product — design tokens (primitive → semantic → component tiers), building the color/type/spacing/elevation/motion scales into tokens, theming (light/dark, multi-brand), a component library (variants × states), governance, and the token-based design-to-dev handoff. Read when the work outlives one screen. |
 | `${CLAUDE_PLUGIN_ROOT}/packs/ui-design/data-visualization/SKILL.md` | Building any chart, KPI tile, or dashboard — chart-type selection by the question asked, dashboard layout & hierarchy, categorical/sequential/diverging color, declarative titles & direct labeling, honest scales, chart states, and accessible/responsive charts. |
 | `${CLAUDE_PLUGIN_ROOT}/packs/ui-design/motion-and-interaction/SKILL.md` | Designing transitions, micro-interactions, loading choreography, or a motion system — easing/duration intent, choreography & staggered reveals, state & page transitions, gesture feedback, motion tokens, and `prefers-reduced-motion`. |
 
 Complements `ui-ux-design` (Dolle-MCP build workflow) and `gui-design` (native/desktop); aesthetic
-direction is built into `fundamentals` §0 (the external `frontend-design` skill is an optional
-complement).
+direction is built into `fundamentals` §0 and deepened by `anti-slop` (the external `frontend-design`
+skill is an optional complement). **Never generate a UI straight from memory when the request is
+visual — `anti-slop` exists because the memory default *is* the slop.**
 
 ## GUI design — native & desktop
 

@@ -23,6 +23,16 @@ adds *how to execute it against Dolle-MCP* and *what to settle with the user bef
 external `frontend-design` skill covers the same aesthetic ground if you happen to have it —
 optional, never required.)
 
+**Before you build a page here, read three ui-design skills — they decide the things this workflow
+then executes:** `anti-slop` (the named AI-default tells, the escape moves, and the gate sweep to run
+on the finished screenshot), `structural-variety` (pick and *state* a named page shape, a nav
+archetype and a footer archetype before markup — and make them differ from the last build), and
+`type-and-color` (a real display+body pairing rather than a default UI sans, an OKLCH palette with
+tinted neutrals, one accent under ~5%, a named theme bundle). Add `surfaces-and-details` the moment the
+design involves cards, panels, or a radius/shadow decision — the containment ladder there is what stops
+every group becoming the same rounded bordered box, and its 1px layer is most of what "polished" means.
+Everything in Step 1's brief below feeds those decisions.
+
 ## Step 0 — Confirm the Dolle-MCP server is available and use it first
 
 The design library is served by the **`dolle-mcp`** MCP server (sibling repo `Dolle-MCP`,
@@ -197,6 +207,15 @@ change — never hardcode).
 - Ask the hard question of that screenshot: *would this look at home in an award gallery, or like a
   template?* Name the single most generic thing (default display type, everything centered, a flat
   palette, no motion, text lost on an image) and fix it before shipping — the §0 self-critique.
+- **Run `anti-slop`'s gate sweep against the screenshot and the source** — every answer must be "no":
+  no gradient hero or gradient headline, no `100vh` all-centered hero, no three-up icon-card grid, no
+  card-in-card, no wordmark+4-links nav or 4-column link-farm footer, no italic heading, no emoji
+  icons or mixed icon sets, no `transition: all` or uniform hover-scale, no invented metrics or
+  testimonials, no fake browser/phone/terminal chrome, no off-scale spacing or ad-hoc z-index. Score
+  the six pre-emit axes (philosophy · hierarchy · execution · specificity · restraint · variety) and
+  revise anything under 3 before you hand it back.
+- **Check the hero fits the fold at 1280×800** — headline, lede and primary action visible without
+  scrolling, bottom-weighted padding, at most two elements on the centered axis.
 - Run **every** foreground/background pair through `color_contrast` and hit **WCAG 2.2 AA at
   minimum** (AAA for body text where you can). WCAG 2.2 is the current W3C Recommendation — also
   check its AA additions: targets ≥24×24px (44 comfortable), the focus ring never obscured by a
@@ -223,8 +242,16 @@ change — never hardcode).
 - **No purple-by-default**, and no cream/serif/terracotta or black/acid-accent auto-pilot.
   Choose from the subject or the curated catalog. Avoid the other AI defaults too — a default UI
   sans (Inter/Roboto/Open Sans) as the *display* face, the blue-grey "SaaS" palette, pure black on
-  pure white, the dead-centered hero, and the identical three-up icon-card grid (see
-  `devkit:ui-design` §0).
+  pure white, the dead-centered hero, and the identical three-up icon-card grid (the full catalog is
+  `devkit:ui-design` `anti-slop`; direction is `fundamentals` §0).
+- **State the page shape, nav and footer before markup**, and make them differ from the last page you
+  built for this user — structural sameness survives every palette swap, so it's the fingerprint that
+  matters most (`devkit:ui-design` `structural-variety`). Leave a stamp comment recording the picks.
+- **One accent, under ~5% of any viewport; every neutral tinted toward the anchor hue; author color in
+  OKLCH.** Define an accent-text token for any surface the accent fills, and make every rule that flips
+  a background also state its `color` (`devkit:ui-design` `type-and-color`).
+- **Never invent a metric, testimonial, logo or customer count.** Use a labelled placeholder or drop
+  the section; fabricated proof discredits the real claims next to it.
 - **Real copy, never lorem ipsum.** Write specific, confident text in the brand's voice; placeholder
   text hides whether the layout actually works and ships looking unfinished.
 - **Accessibility is not optional:** WCAG 2.2 AA contrast, visible focus (never obscured), 24/44px
@@ -242,8 +269,11 @@ change — never hardcode).
 
 ## Related
 
-- `devkit:ui-design` — the design-craft base this skill layers on (`fundamentals` §0 owns aesthetic
-  direction). The external `frontend-design` skill is an optional complement, not required.
+- `devkit:ui-design` — the design-craft base this skill layers on: `anti-slop` (tells, escape moves,
+  gate sweep), `structural-variety` (page shape, nav/footer archetypes, hero fit), `type-and-color`
+  (pairings, OKLCH palettes, contrast pairs), `fundamentals` (§0 aesthetic direction + the craft),
+  `motion-and-interaction`, `data-visualization`, `design-systems`. The external `frontend-design`
+  skill is an optional complement, not required.
 - Dolle-MCP docs (sibling repo): `docs/templates.md`, `docs/color-tools.md`, `docs/svg-tools.md`,
   `docs/web-mechanics.md`, `docs/backgrounds-and-transitions.md`, `docs/chart-libraries.md`,
   `docs/mcp-tools.md`.

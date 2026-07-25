@@ -242,9 +242,13 @@ Desktop a11y goes through **platform accessibility APIs** — UI Automation (Win
 - `devkit:ui-design` — **read first.** `fundamentals` (hierarchy, spacing/type, component & content
   states, forms, feedback, accessibility) and `design-systems` (tokens, theming, component library)
   are the base craft; this skill only adds the native/desktop platform layer.
-- `devkit:ui-design` `fundamentals` §0 — aesthetic direction (distinctive, not templated; the
-  AI-default looks to avoid). Applies to a custom-styled desktop app just as to the web. The external
-  `frontend-design` skill covers the same ground, optionally — not required.
+- `devkit:ui-design` `fundamentals` §0 and **`anti-slop`** — aesthetic direction and the named
+  AI-default tells (untinted greys, a default UI sans as display, one violet accent, decoration without
+  purpose, invented metrics, emoji as icons, `transition: all`-style motion). Most of them apply to a
+  custom-styled desktop app exactly as to the web; the web-only ones (nav/footer archetypes, `100vh`
+  heroes) simply don't fire. Its `type-and-color` sibling is the palette and pairing depth — but respect
+  the platform's system font and system accent first (§7 here). The external `frontend-design` skill
+  covers similar ground, optionally — not required.
 - `devkit:ui-ux-design` — the web counterpart (Dolle-MCP build workflow). Use it for browser UIs;
   use this for native ones. The design-brief discipline (settle direction before building) is worth
   borrowing either way.

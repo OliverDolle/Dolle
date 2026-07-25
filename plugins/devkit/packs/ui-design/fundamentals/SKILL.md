@@ -21,10 +21,12 @@ hand-writing CSS, or driving the Dolle-MCP library.
 
 This section covers **both halves of the craft**: §0 sets the aesthetic *direction* (making it
 distinctive, not templated) and §1–§12 make the interface *work* (hierarchy, spacing, type, color,
-states, forms, accessibility). Where the neighbors fit: **`ui-ux-design`** owns the *build workflow*
-on the Dolle-MCP server; **`design-systems`** makes these decisions repeatable. The external
-**`frontend-design`** skill, if you have it, covers the same aesthetic-direction ground as §0 — a
-useful complement, never a dependency: devkit is self-contained here.
+states, forms, accessibility). Where the neighbors fit: **`anti-slop`** is §0 at full depth — the
+named tells of AI-default UI, the escape moves, and the gate sweep to run before shipping;
+**`structural-variety`** and **`type-and-color`** are the page-shape and surface decisions §0 asks
+for; **`design-systems`** makes all of it repeatable; **`ui-ux-design`** owns the *build workflow* on
+the Dolle-MCP server. The external **`frontend-design`** skill, if you have it, covers similar
+aesthetic-direction ground — a useful complement, never a dependency: devkit is self-contained here.
 
 ## 0 — Aesthetic direction: distinctive, not templated
 
@@ -51,18 +53,34 @@ direction first; the rest of this skill executes it.
   layout break — and let it be loud; keep everything around it quiet. Bold everywhere reads as noisy;
   restraint is what makes the one move land.
 - **Avoid the AI-default looks.** These read as "machine-generated" because models overproduce them;
-  catching one in your own draft is the signal to re-seed from the subject:
-  - **Palette:** purple / violet / indigo as the default accent; the blue-and-grey "SaaS default";
-    pure `#000` on pure `#fff` (use a near-black and an off-white instead). Seed from the subject or
-    a curated set (blue, teal, emerald, amber, rose, sunset, lime, cyan…).
+  catching one in your own draft is the signal to re-seed from the subject. **The full catalog —
+  ~60 named tells with the fix for each, plus the audit gates — is the sibling `anti-slop` skill;
+  read it before generating anything visual.** The headline offenders:
+  - **Palette:** purple / violet / indigo as the default accent; a purple→pink or cyan→magenta
+    gradient (especially as a `background-clip: text` headline); the blue-and-grey "SaaS default";
+    pure `#000` on pure `#fff` (use a near-black and a tinted paper instead); untinted greys. Seed
+    from the subject or a curated set (blue, teal, emerald, amber, rose, sunset, lime, cyan…), keep
+    to **one** accent, and hold it under ~5% of any viewport.
   - **Type:** a default UI sans (Inter, Roboto, Open Sans, Helvetica) used as the *display/brand*
     face. They're fine for body and UI, but headlines are where personality lives — pick a
-    distinctive display face with a point of view.
-  - **Layout:** the dead-centered hero (headline + subhead + two grey buttons) and the identical
-    three-up feature-card grid with tiny icons in circles. Break the everything-centered habit
-    (see *compose, don't stack* above).
+    distinctive display face with a point of view (candidates in `type-and-color` §3). Headings are
+    **roman**: an italicized emphasis word inside a heading is one of the most reliable tells.
+  - **Layout:** the dead-centered `100vh` hero (headline + subhead + two grey buttons) and the
+    identical three-up feature-card grid with tiny icons in circles; cards nested inside cards;
+    an eyebrow label on every section. Break the everything-centered habit (see *compose, don't
+    stack* above), and pick the page's **shape** deliberately (`structural-variety`).
+  - **Chrome:** the wordmark-left / four-links / button-right sticky nav and the four-column
+    link-farm footer with a social row. Both are genre-blind — they land identically on a bakery and
+    a B2B platform.
   - **Cream + serif + terracotta** ("tasteful editorial") and **near-black + one acid/neon accent**
     ("sleek tech") — each was once distinctive and is now its own cliché.
+- **Never invent facts to fill a layout.** No metric, testimonial, logo, or customer count the user
+  didn't give you — "10× faster" and "trusted by 50,000+ teams" read as generated and poison every
+  real claim beside them. A labelled gap ("metric to confirm") is honest; if a stat-led section has no
+  stats, it's the wrong section.
+- **Decoration needs an anchor.** A shape, badge, numeral, or caret earns its place only when the
+  content motivates it (a caret inside a typed command, a numeral that names a version or issue, a
+  stamp that names a date). "Something needed to go here" is not a reason.
 - **Write real copy, never lorem ipsum.** Specific, confident words in the brand's voice are part of
   the design — they set tone and prove the layout works at real lengths. Placeholder text hides
   whether the design holds up and always ships looking unfinished.
@@ -254,6 +272,9 @@ status, or headings.
 
 - [ ] Direction is grounded in the subject — distinctive, not templated; none of the AI-default
       looks (purple-by-default, cream/serif/terracotta, black/acid-accent); one deliberate signature move.
+- [ ] `anti-slop`'s gate sweep run and clean — no gradient hero/headline, no `100vh` centered hero, no
+      three-up icon-card grid, no AI nav/footer, no italic heading, no invented metrics or fabricated
+      proof, one accent under ~5%.
 - [ ] One clear primary action per view; hierarchy guides the eye.
 - [ ] All spacing on the scale; consistent rhythm, generous breathing room.
 - [ ] Type: ≤6 sizes, body ≥16px, line length 45–75ch, left-aligned body.
@@ -272,6 +293,13 @@ status, or headings.
 
 ## Related
 
+- **`anti-slop` (sibling in this section)** — §0 at full depth: the named tells of AI-default UI with a
+  fix for each, the escape moves, an audit report format, the six-axis pre-emit self-critique, and a
+  gate sweep. Read it before generating or reviewing anything visual.
+- **`structural-variety` (sibling)** — the *page shape* §0's "structure carries meaning" and "compose,
+  don't stack" ask for: named shapes, nav/footer archetypes, hero fit, section rhythm.
+- **`type-and-color` (sibling)** — §3 and §4 at full depth: real type pairings (and the faces to avoid),
+  OKLCH palette construction, accent discipline, dark-mode recipe, and the contrast pairs that fail.
 - **`design-systems` (sibling in this section)** — once these rules are settled for one screen,
   that skill makes them *repeatable*: design tokens, a component library, theming, and dev handoff
   so the whole product stays consistent. Use this skill to get one screen right; use that one to

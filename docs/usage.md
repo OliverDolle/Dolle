@@ -42,7 +42,7 @@ start immediately:
 | `/docs` | The documentation method |
 | `/ui-ux-design` | UI/UX design via the Dolle-MCP server (templates, palettes, contrast, SVG, screenshots) |
 | `/web-performance` | Web performance — Core Web Vitals (LCP, CLS, INP), measuring, fixes, budgets |
-| `/ui-design` | UI design craft (2 skills) — *fundamentals* (hierarchy, spacing/type scales, semantic color & contrast, component/content states, forms, a11y, checklist) and *design-systems* (tokens, theming, component library, dev handoff) |
+| `/ui-design` | UI design craft (8 skills) — *anti-slop* (AI-default tells, escape moves, audit gates), *fundamentals* (hierarchy, spacing/type scales, semantic color & contrast, component/content states, forms, a11y, checklist), *structural-variety* (page shape, nav/footer archetypes, hero fit), *type-and-color* (type pairings, OKLCH palettes, accent & contrast discipline, themes), *surfaces-and-details* (containers beyond cards, radius/border/elevation, the 1px detail layer), *design-systems* (tokens, theming, component library, dev handoff), *data-visualization*, *motion-and-interaction* |
 | `/gui-design` | GUI design (native/desktop) — platform HIG, window/menu/toolbar structure, keyboard model, resizable layout, HiDPI, native feel & OS dark mode, responsive UI thread, desktop a11y; Qt as the worked example |
 | `/containerization` | Docker & Compose — multi-stage builds, small non-root images, layer caching, healthchecks, size/security checklist |
 | `/kubernetes` | Kubernetes — Deployments/Services/Ingress, config/secrets, resources, probes, autoscaling, safe rollouts, Kustomize/Helm |

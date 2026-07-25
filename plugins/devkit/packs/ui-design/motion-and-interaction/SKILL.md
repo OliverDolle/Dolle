@@ -3,7 +3,9 @@ name: motion-and-interaction
 description: >-
   The craft of motion and micro-interactions — what to animate and why, easing/duration intent,
   choreography and staggered reveals, state & page transitions, gesture/pointer feedback, and
-  motion as a tokenized system. Every rule ships with prefers-reduced-motion. Load when designing
+  motion as a tokenized system, plus the named motion tells of AI-generated UI (transition-all, uniform
+  hover-scale, overshoot easing, fade-in focus rings, fade-up-on-everything) and the easing/duration
+  canon that replaces them. Every rule ships with prefers-reduced-motion. Load when designing
   transitions, micro-interactions, loading choreography, or a motion system. Triggers: 'animation',
   'motion', 'micro-interaction', 'transition', 'easing', 'page transition', 'hover effect', 'stagger'.
 ---
@@ -151,6 +153,55 @@ product shares a vocabulary (this is `design-systems` §2's motion tier, applied
   essential meaning (and even then, minimal). Build it as the token layer's alternate mapping so it's
   automatic, and test the interface with it on — it must stay fully usable and legible.
 
+## 7 — The named motion tells (and the canon that replaces them)
+
+Motion is the most reliable place to spot generated UI, because the defaults are so uniform. Each of
+these is a *named* tell — catching one in your own work is the signal to re-derive the interaction
+from §0's three jobs. (Full tell catalog across every dimension: the sibling `anti-slop` skill.)
+
+| Tell | Why it reads as generated | Do this instead |
+| --- | --- | --- |
+| `transition: all` | Animates things that must be instant (visibility, focus rings) | Name the properties explicitly |
+| Uniform `hover:scale-105` everywhere | Every card lifting identically, no easing, no purpose | **One** signal per element: a 1px translate *or* a color shift *or* a thickening underline |
+| Several hover effects at once | translate + scale + shadow + color + rotate on one element | Pick one; the rest is noise |
+| Overshoot/elastic easing on UI | `cubic-bezier(0.34, 1.56, …)` on buttons, modals, tooltips reads as a decade-old template | Exponential ease-out; reserve overshoot for genuinely physical gestures (drag release) |
+| Focus rings that fade in | The keyboard user has no indicator for the first ~200ms | Focus appears **instantly** — never transition `outline`/ring on focus |
+| Fade-up on every section | The page never settles; reading isn't cinematic | One orchestrated entrance on load; after that content is simply there |
+| Animated hover gradients · cursor-follower dots · parallax | Decoration with no job | Cut |
+| Celebratory success toast | "Done!" for an effect the user can already see | Silent success; toasts for failures and invisible effects |
+| Confirm dialog for a reversible action | Friction where Undo belongs | Do it, then offer Undo for 5–10s; keep modals for irreversible destruction (type-the-name) |
+| Equal tooltip delays | Hover and focus are different intents | Hover 800–1000ms; focus 0ms |
+| Toasts that shift layout | Content jumps as toasts arrive/leave | Fixed viewport corner; existing toasts don't move |
+| Spinners that flash | A spinner for a 50ms action | Delay-show ~150ms, or enforce ~300ms minimum once shown; skeletons where layout is known |
+| Auto-rotating carousel with no pause | WCAG 2.2.2 failure | Manual advance, or pause on hover **and** focus |
+| Animating `width`/`height`/`top`/`left`/`margin`/`padding` | Layout thrash, dropped frames | `transform` / `opacity` only (§6) |
+
+**The canon, as tokens.** Don't freestyle curves or durations — three easings and three durations
+cover ~90% of UI motion:
+
+```css
+:root {
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);   /* entering — decelerate into place */
+  --ease-in:     cubic-bezier(0.7, 0, 0.84, 0);   /* exiting — accelerate away        */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);  /* symmetrical state toggles        */
+
+  --dur-micro: 120ms;   /* press, toggle tick, color shift          */
+  --dur-short: 220ms;   /* hover, tooltip, menu open                */
+  --dur-long:  420ms;   /* modal, drawer, accordion, page reveal    */
+}
+```
+
+Exits run at ~60–75% of the enter, never the reverse. `ease` (the browser default) and `linear` (for
+anything but progress bars and continuous loaders) both read as uncrafted. **Cap the animation
+vocabulary at ~three primitives per page** — a counter, a hover lift, and a marquee is three; the pull
+to add "just one more" is exactly the default. Also: 0ms is the right answer more often than it looks
+(focus, keyboard navigation, error appearance).
+
+**Which pages want motion at all.** Grid-led, stat-led, product-tour and marquee pages feel
+screenshot-stiff with zero motion — ship two or three purposeful micro-interactions. Editorial,
+manifesto, letter, quote-led and long-document pages are the opposite: **stillness is the design**, and
+motion there is opt-in only.
+
 ## Review checklist (run before calling motion done)
 
 - [ ] Every animation has a job — orient, feedback, or continuity; nothing decorative/looping/autoplay.
@@ -166,11 +217,16 @@ product shares a vocabulary (this is `design-systems` §2's motion tier, applied
       at 60fps; space reserved so nothing shifts (CLS); no main-thread jank (INP).
 - [ ] `prefers-reduced-motion` is a real mapping — movement replaced by instant/fade, essential
       meaning preserved, tested with it on.
+- [ ] None of §7's named tells present: no `transition: all`, no uniform hover-scale, no overshoot on
+      UI, no fade-in focus ring, no fade-up-on-every-section, no celebratory toast, no confirm dialog
+      for a reversible action; ≤3 animation primitives on the page.
 
 ## Related
 
 - **`fundamentals` §8 (sibling)** — the baseline motion rules this skill deepens (fast, eased,
   `transform`/`opacity`, gated); also §5/§6 for the states and skeletons motion animates between.
+- **`anti-slop` (sibling)** — §7's tells in the wider catalog of AI-default giveaways, plus the gate
+  sweep that checks them before you ship.
 - **`design-systems` (sibling)** — put duration/easing/spring in the **motion tokens** (§2) and expose
   the reduced-motion alternate as part of the token contract, so every component animates consistently.
 - `devkit:web-performance` — the CLS (reserve space) and INP (compositor-only, off the main thread)

@@ -17,6 +17,13 @@ Read `${CLAUDE_PLUGIN_ROOT}/packs/ui-ux-design/SKILL.md` first and follow it, an
 typography, structure-as-information, restraint, one signature element). This agent is the tool-driven
 execution of that skill.
 
+Also read `${CLAUDE_PLUGIN_ROOT}/packs/ui-design/anti-slop/SKILL.md` before you build,
+`structural-variety/SKILL.md` + `type-and-color/SKILL.md` when the spec leaves shape, typeface or
+palette to you, and `surfaces-and-details/SKILL.md` when the page uses cards/panels or you're choosing
+radius, borders and elevation. Before returning, run anti-slop's gate sweep against your own screenshot and report the
+result (and the six pre-emit scores) in your rationale — an output that reads as AI-generated is a
+failed run even if it matches the spec.
+
 If your prompt did **not** include a settled spec, do not guess the open axes and do not try to
 interview the user (you can't run the interactive brief well from here) — state exactly which
 decisions are missing and stop, so the main thread can resolve them and re-dispatch you.
