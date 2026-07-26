@@ -132,6 +132,13 @@ Claude can load the right guidance on its own without a manual loader command.
 - `scripts/session-start.mjs` — injects the "run /devkit" reminder.
 - `scripts/suggest-pack.mjs` — suggests a section when a prompt matches its topics.
 
+## Repo checks
+
+- `/scripts/check-agent-tools.mjs` — run with `npm run check`. Fails if an agent's `tools:`
+  frontmatter allow-lists MCP tool names (they differ per host, so such a list resolves to zero
+  MCP tools elsewhere), or if a Markdown file ends with a stray `</content>` line. See the
+  conventions in `AGENTS.md`.
+
 ## Docs tooling (this documentation system)
 
 - `/scripts/generate-doc-index.mjs` — scans `docs/`, reads each doc's `description`
