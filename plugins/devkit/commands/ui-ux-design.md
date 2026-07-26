@@ -28,4 +28,3 @@ Then:
    whatever they left open before writing any code.
 
 User task (optional): $ARGUMENTS
-</content>
