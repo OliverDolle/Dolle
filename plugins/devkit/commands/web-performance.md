@@ -18,4 +18,3 @@ Then:
    proposing changes, and attribute each win to a specific change.
 
 User task (optional): $ARGUMENTS
-</content>

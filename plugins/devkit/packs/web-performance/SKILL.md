@@ -102,4 +102,3 @@ gate). Sensible mobile starting points — tighten per project:
 - `devkit:ui-ux-design` — design workflow driven by the Dolle-MCP server (its motion rules —
   `transform`/`opacity`, reduced-motion — are the same ones that protect CLS/INP here).
 - `web-vitals` library and Chrome UX Report / PageSpeed Insights for field data.
-</content>

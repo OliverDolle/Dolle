@@ -104,6 +104,22 @@ Load a skill only when the current task matches it — don't read everything up 
   section's `INDEX.md`; new sections also get a loader command and a `/devkit` menu row. See
   `docs/extending.md`.
 - Hooks are Node scripts under `plugins/devkit/hooks/scripts/` for cross-platform behavior.
+- **Never allow-list MCP tools in an agent's `tools:` frontmatter.** `tools` is an exact-match
+  allow-list with no wildcard syntax, and plugin MCP tool names are not stable across hosts: bare
+  `claude` exposes the bundled server as `mcp__dolle-mcp__<tool>`, while Claude Code desktop and
+  the Agent SDK namespace plugin servers per-plugin and expose the same tools as
+  `mcp__plugin_devkit_dolle-mcp__<tool>`. A list written for one host resolves to **zero** MCP
+  tools on the other, with no error — and the agent then quietly substitutes whatever it can
+  reach (a local Dolle-MCP checkout, its own memory) and returns work that looks verified but
+  isn't. Omit `tools:` instead: the docs specify it "Inherits every tool available to subagents if
+  omitted", which also means a tool added to Dolle-MCP is callable the day it ships with no edit
+  here. To subtract a capability use `disallowedTools:` (a denylist over the inherited pool).
+  `web-designer.md` carries the full rationale as a maintainer comment and enforces a hard stop
+  when the tools are missing; `scripts/check-agent-tools.mjs` fails the check if the pattern comes
+  back.
+- Agent, command and skill Markdown must not end with a stray `</content>` line — an artifact of
+  generated writes that otherwise leaks into the agent's system prompt.
+  `scripts/check-agent-tools.mjs` also checks this.
 
 ## Human docs
 
