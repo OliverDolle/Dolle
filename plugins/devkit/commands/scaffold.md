@@ -3,15 +3,13 @@ description: "Use when starting a new project or component from a template — B
 argument-hint: "[template name] [target dir] — or leave blank to list templates"
 ---
 
-Templates are bundled with devkit at
-`${CLAUDE_PLUGIN_ROOT}/packs/<section>/templates/<template>/`, each with a `TEMPLATE.md`
-manifest describing its files, placeholders, and post-copy steps.
+Templates are bundled with devkit at `${CLAUDE_PLUGIN_ROOT}/templates/<template>/`, each with a
+`TEMPLATE.md` manifest describing its files, placeholders, and post-copy steps.
 
 Follow this process:
 
-1. **Discover templates.** Find every directory matching
-   `${CLAUDE_PLUGIN_ROOT}/packs/*/templates/*/` and read the `name` + `description` from each
-   `TEMPLATE.md` frontmatter.
+1. **Discover templates.** Find every directory matching `${CLAUDE_PLUGIN_ROOT}/templates/*/` and
+   read the `name` + `description` from each `TEMPLATE.md` frontmatter.
 2. **If the user did not name a template** (check the arguments below), show the list of
    templates with their descriptions and ask which to use. Copy nothing yet.
 3. **Once a template is chosen:**
@@ -28,5 +26,6 @@ Rules:
 - Never overwrite an existing file without confirming first.
 - Keep the copy in a working state as you adapt it.
 - If no templates are found, say so and point the user to `docs/templates.md`.
+- For the guidance behind the LangChain/LangGraph starters, load `devkit:agent-development`.
 
 Arguments: $ARGUMENTS

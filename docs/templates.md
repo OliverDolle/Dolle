@@ -32,11 +32,12 @@ The command discovers every bundled template, and once you choose one it:
 4. summarizes what changed and tells you how to run it.
 
 It won't overwrite existing files without asking. You can also just say *"scaffold a LangGraph
-workflow that does X"* and the `agent-developer` subagent will use the same templates.
+workflow that does X"* and the `agent-developer` subagent will use the same templates, loading
+`devkit:agent-development` for the guidance behind them.
 
 ## Templates that ship today
 
-Both live under `plugins/devkit/packs/agent-development/templates/`:
+Both live under `plugins/devkit/templates/`:
 
 | Template | What you get |
 | --- | --- |
@@ -53,7 +54,7 @@ Templates are ordinary files stored inside the plugin. The agent reaches them th
 command works no matter where the plugin is installed:
 
 ```
-${CLAUDE_PLUGIN_ROOT}/packs/<section>/templates/<template>/
+${CLAUDE_PLUGIN_ROOT}/templates/<template>/
 ```
 
 Keeping templates as **literal, valid files** means they double as reference examples and copy
@@ -62,7 +63,7 @@ step.
 
 ## Adding your own template
 
-1. Create `plugins/devkit/packs/<section>/templates/<name>/`.
+1. Create `plugins/devkit/templates/<name>/`.
 2. Add a `TEMPLATE.md` with frontmatter (`name`, `description`) and a body listing the files,
    the placeholder tokens, and the post-copy adaptation steps.
 3. Add the template's files, using `{{TOKENS}}` for values the agent should fill in.
@@ -73,11 +74,11 @@ step.
 
 `${CLAUDE_PLUGIN_ROOT}` and `/scaffold` are Claude Code features. With other agents (Codex,
 Cursor), point them at the template by its repo-relative path instead, e.g. *"Copy
-`plugins/devkit/packs/agent-development/templates/langgraph-workflow/` into ./svc and adapt
+`plugins/devkit/templates/langgraph-workflow/` into ./svc and adapt
 it."* The templates themselves are plain files and port fine.
 
 ## Related
 
-- [Skill sections](skill-packs.md) — the agent-development skills behind these templates.
+- [Skill hubs](skill-packs.md) — the `agent-development` references behind these templates.
 - [Extending](extending.md) — add templates, skills, sections, agents, and hooks.
 - [Code map](code-map.md) — where templates and the scaffold command live.

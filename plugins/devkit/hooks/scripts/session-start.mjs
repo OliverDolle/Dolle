@@ -1,17 +1,18 @@
 #!/usr/bin/env node
 // devkit SessionStart hook.
-// Injects a one-line reminder so the on-demand skill-pack system is discoverable,
-// without loading any pack content into context.
+// Injects a one-line reminder so the on-demand skills are discoverable, without
+// loading any skill body into context.
 //
 // Written in Node (guaranteed present wherever Claude Code runs) so it behaves
 // identically on Windows, macOS, and Linux, avoiding shell-quoting differences.
 
 const context =
-  "devkit is available. Run /devkit to list the on-demand skill sections " +
-  "(agent-development, subagent-driven development, documentation, ui-ux-design, " +
-  "web-performance, ui-design, gui-design, containerization, kubernetes, " +
-  "cloud-infrastructure, prompt-enhancement, app-prompt). " +
-  "Each section loads only when you call its command, so startup context stays minimal.";
+  "devkit is available as four skill hubs: devkit:agent-development (LangChain/LangGraph), " +
+  "devkit:design (web, desktop, UI craft, design systems, Core Web Vitals), devkit:shipping " +
+  "(Docker, Kubernetes, CI/CD & IaC), devkit:process (prompt sharpening, app specs, subagents, " +
+  "docs). Invoke a hub with the Skill tool — its body is a short router listing references and " +
+  "when to read each; read only the reference the task needs. Never read a devkit SKILL.md off " +
+  "disk. Run /devkit for the menu. Only the four descriptions sit in startup context.";
 
 process.stdout.write(
   JSON.stringify({

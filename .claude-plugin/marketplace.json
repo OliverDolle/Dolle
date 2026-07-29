@@ -4,15 +4,15 @@
     "name": "OliverDolle"
   },
   "metadata": {
-    "description": "Dolle developer toolkit — command-gated skill packs, agents, and hooks for AI-assisted development.",
-    "version": "0.12.0"
+    "description": "Dolle developer toolkit — four on-demand skill hubs, subagents, and hooks for AI-assisted development.",
+    "version": "0.14.0"
   },
   "plugins": [
     {
       "name": "devkit",
       "source": "./plugins/devkit",
-      "description": "Command-gated skill packs for subagent-driven development, LangChain agents, LangGraph workflows, documentation, UI/UX design (via the bundled Dolle-MCP server), web performance, UI design craft (fundamentals + design systems), native/desktop GUI design (Qt/GTK), prompt enhancement (clarify with AskUserQuestion, then sharpen), app prompt engineering (idea → build-ready spec), and shipping to platforms — Docker, Kubernetes, and cloud infrastructure (CI/CD & IaC). Packs load only when you call their command, keeping startup context minimal.",
-      "version": "0.12.0",
+      "description": "Four on-demand skill hubs for AI-assisted development. Each hub is a short router: invoke it and it lists references plus when to read each, so only the depth a task needs enters context. agent-development (LangChain + LangGraph agents and workflows), design (web pages via the bundled Dolle-MCP server, native/desktop GUIs, UI craft, design systems, Core Web Vitals), shipping (Docker, Kubernetes, CI/CD and Terraform), and process (turning a vague ask into a precise prompt, an app idea into a build-ready spec, decomposing work across subagents, and a documentation method). Only the four descriptions sit in startup context; 92% of the content is deferred to references read on demand.",
+      "version": "0.14.0",
       "author": {
         "name": "OliverDolle"
       },

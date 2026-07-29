@@ -1,9 +1,9 @@
 ---
 title: Usage
 description: >-
-  Day-to-day use of devkit: the /devkit menu, loading skill sections on demand, dispatching the
-  bundled subagents, and what the two hooks do. Explains why loading is command-gated and how it
-  works identically in the CLI and the desktop app.
+  Day-to-day use of devkit: the /devkit menu, invoking one of the four hubs, how a hub's router picks
+  a reference, dispatching the bundled subagents, and what the two hooks do. Includes the one
+  permission rule that stops reference reads from prompting.
 order: 20
 ---
 <!-- BACK-TO-README:START -->
@@ -12,14 +12,20 @@ order: 20
 
 # Usage
 
-> Day-to-day use of devkit: the menu, loading sections, dispatching subagents, and the hooks —
-> in both the CLI and the desktop app.
+> The menu, invoking a hub, how references get picked, subagents, and the hooks.
 
 ## Overview
 
-devkit's defining behavior: **skill sections are not loaded until you ask for them.** At startup
-you only get lightweight command names. When you run a loader command, that section's guidance
-is read into the current session and applied. This keeps context small and relevant.
+devkit is **four hubs**. Invoking one loads a short router — one row per reference saying when to
+read it — and Claude then reads only the reference the task needs.
+
+```
+startup            4 descriptions (~568 tokens). Nothing else.
+/devkit:shipping   router arrives (1.4 KB, no file read, no prompt)
+   └─ reads references/kubernetes.md   (9.6 KB — only this one)
+```
+
+Two levels, two costs. You never pay for `cloud-infrastructure` while debugging a pod.
 
 ## The menu
 
@@ -27,106 +33,90 @@ is read into the current session and applied. This keeps context small and relev
 /devkit
 ```
 
-Shows every section and the command that loads it. Showing the menu loads *no* section content.
-You can also jump straight in: `/devkit agent-development`.
+Lists the four hubs and the references inside each. Loads nothing. Jump straight in with
+`/devkit design` or `/devkit kubernetes` — a topic name resolves to its owning hub.
 
-## Loading a section
+## Invoking a hub
 
-Each section has a loader command. Run it alone to load the guidance, or pass a task to load and
-start immediately:
+| Invoke | Covers | References |
+| --- | --- | --- |
+| `/devkit:agent-development` | LangChain + LangGraph agents and workflows | `langchain-agents`, `langgraph-workflows`, `combining-langchain-and-langgraph`, `workflow-design`, `troubleshooting` |
+| `/devkit:design` | Any interface — web, desktop, UI craft, design systems, page speed | `ui-fundamentals`, `design-systems`, `web-dolle-mcp`, `desktop-native`, `web-performance` |
+| `/devkit:shipping` | Packaging & deploying | `containerization`, `kubernetes`, `cloud-infrastructure` |
+| `/devkit:process` | How to run the work | `prompt-enhancement`, `app-prompt`, `subagents`, `documentation` |
 
-| Command | Loads |
-| --- | --- |
-| `/agent-development` | Agent development — LangChain + LangGraph, combining them, workflow design, troubleshooting |
-| `/subagents` | Subagent-driven development methodology |
-| `/docs` | The documentation method |
-| `/ui-ux-design` | UI/UX design via the Dolle-MCP server (templates, palettes, contrast, SVG, screenshots) |
-| `/web-performance` | Web performance — Core Web Vitals (LCP, CLS, INP), measuring, fixes, budgets |
-| `/ui-design` | UI design craft (2 skills) — *fundamentals* (hierarchy, spacing/type scales, semantic color & contrast, component/content states, forms, a11y, checklist) and *design-systems* (tokens, theming, component library, dev handoff) |
-| `/gui-design` | GUI design (native/desktop) — platform HIG, window/menu/toolbar structure, keyboard model, resizable layout, HiDPI, native feel & OS dark mode, responsive UI thread, desktop a11y; Qt as the worked example |
-| `/containerization` | Docker & Compose — multi-stage builds, small non-root images, layer caching, healthchecks, size/security checklist |
-| `/kubernetes` | Kubernetes — Deployments/Services/Ingress, config/secrets, resources, probes, autoscaling, safe rollouts, Kustomize/Helm |
-| `/cloud-infrastructure` | CI/CD, Terraform/IaC, cloud compute targets, OIDC auth, secrets, observability |
-| `/prompt-enhancement` | Turn a vague request into a precise prompt — diagnose gaps, clarify with AskUserQuestion, sharpen and restate |
-| `/app-prompt` | Turn a rough app idea into a build-ready spec — an AskUserQuestion brief across the app's axes, compiled into a sectioned spec with a phased build order and handoff |
-
-Examples:
+Pass a task to load and start immediately:
 
 ```
-/agent-development                                   # load the section (index + core skills)
-/agent-development build an agent that queries Postgres
-/agent-development workflow-design                   # focus one skill in the section
-/docs document this project
+/devkit:design                                  # router only — pick a reference after
+/devkit:design redesign the pricing page        # router, then web-dolle-mcp + ui-fundamentals
+/devkit:shipping my pod is crashing             # router, then kubernetes
+/devkit:process this request is vague           # router, then prompt-enhancement
 ```
 
-`/agent-development` is deliberately broad: LangChain and LangGraph are used together, so the
-loader pulls in both (plus how to combine them) rather than forcing you to pick. It reads the
-section index first, then the skills relevant to your task.
+You usually don't need to name a hub at all. Each description carries its domain's trigger phrases,
+so "my pod is crashing", "review my UI", "write a Dockerfile", or "build a LangGraph workflow" match
+a hub on their own and Claude invokes it. The slash forms are the manual override.
 
-If a command name collides with another plugin, use the namespaced form, e.g.
-`/devkit:agent-development`.
+The `devkit:` prefix is optional when nothing else claims the name; keep it when in doubt.
+
+## Stop reference reads from prompting
+
+A reference is a real file read. Outside auto-accept mode that prompts, and a declined prompt means
+the depth silently doesn't load. One rule fixes it for good:
+
+```bash
+claude config add permissions.allow 'Read(//C:/Users/Oliver/.claude/plugins/cache/dolle/**)'
+```
+
+Routers are unaffected either way — invoking a hub never reads a file.
 
 ## Other commands
 
-Beyond the section loaders and `/devkit` menu:
+Three commands remain, for behavior a skill can't provide:
 
 | Command | Does |
 | --- | --- |
+| `/devkit` | The menu — lists the hubs and their references without loading one. |
 | `/scaffold` | Start a project/component from a bundled template (e.g. a LangGraph or LangChain starter) and adapt it to your task. |
-| `/mcp-preview-server` | Start the bundled Dolle-MCP live preview server (if it isn't running) and print its gallery URL — so you don't have to remember it or ask each time. Optionally pass a template id (e.g. `/mcp-preview-server charts`) to open it in the browser. |
+| `/mcp-preview-server` | Start the bundled Dolle-MCP live preview server (if it isn't running) and print its gallery URL. Optionally pass a template id (e.g. `/mcp-preview-server charts`) to open it in the browser. |
 
 `/mcp-preview-server` relies on the **Dolle-MCP** server, which devkit bundles and registers
 automatically (see [Installation](installation.md#bundled-mcp-server-dolle-mcp)).
 
-## Automatic loading (the catalog skill)
-
-You don't have to load a section by hand. devkit ships one lightweight, always-available skill —
-`devkit:catalog` — whose description sits in context at startup (the pack content does not). It
-is a map of every section and the exact skill file to read for a given task. When your request
-matches, Claude consults it and reads the relevant `SKILL.md`(s) on its own — e.g. ask to
-"build a LangGraph workflow" and it can pull the agent-development guidance without you running
-`/devkit:agent-development`.
-
-The loader commands remain the **manual** override: use them to force a specific section into
-context regardless of what Claude infers. Both paths keep heavy content out of startup — only
-the catalog's one-line description is ever loaded up front.
-
 ## Subagents
 
-Four subagents ship with devkit and can be dispatched for larger jobs:
+Four subagents ship with devkit and can be dispatched for larger jobs. Each has the **Skill** tool
+and loads its own hub, so you don't have to load anything first.
 
-- **`agent-developer`** — designs and builds LangChain + LangGraph agents/workflows, and
-  debugs them against the troubleshooting log.
+- **`agent-developer`** — designs and builds LangChain + LangGraph agents/workflows, and debugs them
+  against the troubleshooting log.
 - **`doc-writer`** — creates/updates documentation following the documentation method.
-- **`web-designer`** — takes a settled design spec and runs the Dolle-MCP-driven build/verify
-  loop (templates, palettes, screenshots) off the main thread.
-- **`app-prompt-engineer`** — takes a settled app brief and compiles it into a build-ready spec
-  (or audits an existing spec) off the main thread, following the `app-prompt` template.
+- **`web-designer`** — takes a settled design spec and runs the Dolle-MCP-driven build/verify loop
+  (templates, palettes, screenshots) off the main thread.
+- **`app-prompt-engineer`** — takes a settled app brief and compiles it into a build-ready spec (or
+  audits an existing one) off the main thread.
 
-Ask naturally ("use the agent-developer subagent to build the ingestion workflow") or let
-Claude pick them based on their descriptions. They read their section automatically, so you
-don't have to load it first.
+Ask naturally ("use the agent-developer subagent to build the ingestion workflow") or let Claude pick
+them from their descriptions. The interactive **AskUserQuestion** interviews stay in the main thread.
 
 ## Hooks
 
-Two hooks make the lazy-loading system discoverable without adding noise:
+- **SessionStart** — one line naming the four hubs and the router-plus-references shape.
+- **UserPromptSubmit** — if your prompt hits a topic keyword, it names the hub **and the exact
+  reference** (e.g. `devkit:shipping (references/kubernetes.md)`), so Claude skips scanning the
+  router. Silent on unrelated prompts.
 
-- **SessionStart** — injects a one-line reminder that `/devkit` exists and sections load on
-  demand.
-- **UserPromptSubmit** — if your prompt mentions a section's topic (e.g. "langgraph"), it adds
-  a short hint suggesting the matching loader. It stays silent on unrelated prompts.
-
-Both are Node scripts under `plugins/devkit/hooks/scripts/`, so they behave the same on
-Windows, macOS, and Linux. To disable them, remove the entries from
-`plugins/devkit/hooks/hooks.json`.
+Both are Node scripts under `plugins/devkit/hooks/scripts/`, so they behave the same on Windows,
+macOS, and Linux. To disable them, remove the entries from `plugins/devkit/hooks/hooks.json`.
 
 ## Desktop vs. CLI
 
-There is no functional difference. Commands, subagents, and hooks work identically; the desktop
-app just gives you a graphical command menu instead of typing `/`-commands into a terminal.
+No functional difference. Hubs, commands, subagents, and hooks work identically; the desktop app
+gives you a graphical command menu instead of typing `/`-commands into a terminal.
 
 ## Related
 
-- [Skill sections](skill-packs.md) — what each section teaches.
-- [Architecture](architecture.md) — why loading is command-gated.
-- [Extending](extending.md) — add your own skills and sections.
+- [Skill hubs](skill-packs.md) — what each reference covers.
+- [Architecture](architecture.md) — why hubs and references.
+- [Extending](extending.md) — add a reference or a hub.

@@ -51,8 +51,8 @@ Here `dolle` is the marketplace `name` and `devkit` is the plugin `name`.
 Verify the install:
 
 ```
-/help                # devkit commands (/devkit, /agent-development, ...) appear in the list
-/devkit              # shows the section menu
+/help                # devkit entries (/devkit, /devkit:design, /devkit:shipping, ...) appear
+/devkit              # shows the hub menu
 ```
 
 ## Desktop app
@@ -62,14 +62,14 @@ The desktop app (macOS/Windows) uses the same plugin system:
 1. Open the command menu and type `/plugin`.
 2. Choose **marketplace add** and enter `OliverDolle/Dolle` (or browse to a local folder).
 3. Choose **install**, pick `devkit`, and confirm.
-4. Type `/devkit` in the chat to confirm the menu appears.
+4. Type `/devkit` in the chat to confirm the hub menu appears.
 
 Everything after installation — commands, subagents, hooks — behaves identically in the CLI
 and the desktop app.
 
 ## Bundled MCP server (Dolle-MCP)
 
-The UI/UX design section is driven by the **[Dolle-MCP](https://github.com/OliverDolle/Dolle-MCP)**
+The `design` hub's `web-dolle-mcp` reference is driven by the **[Dolle-MCP](https://github.com/OliverDolle/Dolle-MCP)**
 server. devkit **bundles** it — `plugins/devkit/.mcp.json` registers `dolle-mcp` automatically
 when the plugin is enabled, so there is **no manual `claude mcp add` step and no separate
 approval prompt**. Confirm it with:

@@ -1,44 +1,35 @@
 ---
-description: List the devkit skill sections and how to load each one on demand.
-argument-hint: "[optional: a section name to load directly, e.g. agent-development]"
+description: List the devkit skill hubs and what each one covers.
+argument-hint: "[optional: a hub to load directly, e.g. design]"
 ---
 
-You are the devkit menu. Your job is to help the user pick and load a skill **section**. A
-section is a group of related skills exposed by one command.
-**Do not read or load any pack/skill file as part of showing this menu** — sections stay out of
-context until the user explicitly loads one.
+You are the devkit menu. Your job is to help the user pick and load a **hub**.
+**Do not load any hub or read any reference as part of showing this menu.**
 
-If the user passed an argument that clearly names a section (`agent-development`, `subagents`,
-`docs`, `ui-ux-design`, `web-performance`, `ui-design`, `gui-design`, `containerization`,
-`kubernetes`, `cloud-infrastructure`, `prompt-enhancement`, or `app-prompt`), skip the menu and run
-that section's loader
-(follow the behavior in the corresponding loader command: read the section's `INDEX.md` if it has
-one, then the relevant `SKILL.md` files under `${CLAUDE_PLUGIN_ROOT}/packs/`).
+If the user passed an argument naming a hub (`agent-development`, `design`, `shipping`, `process`),
+skip the menu and invoke it with the **Skill** tool as `devkit:<name>`, passing any remaining text as
+its arguments. If the argument names a *topic* instead (e.g. `kubernetes`, `web-performance`,
+`docs`), invoke the hub that owns it and go straight to that reference.
 
-Otherwise, present this menu to the user verbatim (adjust formatting only):
+Otherwise, present this menu verbatim (adjust formatting only):
 
 ---
 
-**devkit skill sections** — each loads only when you call its command:
+**devkit — four skill hubs.** Invoking one loads a short router; it names references and when to read
+each, so only the depth your task needs enters context.
 
-| Command | Section | What it gives you |
+| Hub | Covers | References |
 | --- | --- | --- |
-| `/agent-development` | Agent development | Building agents & workflows with LangChain + LangGraph together — plus combining them, workflow design, and a troubleshooting log. (5 skills) |
-| `/subagents` | Subagent-driven development | A methodology for decomposing work and orchestrating subagents (explore → plan → implement → verify). |
-| `/docs` | Documentation | A method for writing a short README that links to per-section docs so the project is easy to navigate. |
-| `/ui-ux-design` | UI/UX design | Distinctive web design driven by the Dolle-MCP server (templates, color palettes, WCAG contrast, SVG, screenshots), starting with a short design brief. Builds on the `frontend-design` skill. |
-| `/web-performance` | Web performance | Making pages fast against Core Web Vitals (LCP, CLS, INP) — measure-first workflow, per-metric fix playbook, and budgets. |
-| `/ui-design` | UI design (craft) | Tool-agnostic craft of great UI in two skills — **fundamentals** (hierarchy, spacing/type scales, semantic color & WCAG contrast, component & content states, forms, accessibility) and **design-systems** (tokens, theming, a component library, dev handoff). |
-| `/gui-design` | GUI design (native/desktop) | Designing desktop apps (Qt, GTK, WinUI) — platform HIG, window/menu/toolbar structure, the desktop keyboard model, resizable layouts, HiDPI, native feel & OS dark mode, a responsive UI thread, and desktop accessibility. Builds on `/ui-design`. |
-| `/containerization` | Containerization | Docker & Compose done right — multi-stage builds, small non-root images, layer caching, `.dockerignore`, healthchecks, and an image size/security checklist. |
-| `/kubernetes` | Kubernetes | Deploying & configuring on K8s — Deployments/Services/Ingress, config/secrets, resources, probes, autoscaling, safe rollouts, Kustomize/Helm, and pod debugging. |
-| `/cloud-infrastructure` | Cloud infrastructure | CI/CD pipelines, Terraform/IaC, choosing a cloud compute target, OIDC auth, secrets across environments, and observability. |
-| `/prompt-enhancement` | Prompt enhancement | Turning a vague request into a precise prompt — diagnose the gaps, clarify with **AskUserQuestion**, then sharpen and restate before doing the work. |
-| `/app-prompt` | App prompt engineering | Turning a rough app idea into a build-ready spec — an **AskUserQuestion** interview across the app's axes (type/platform, users/auth, features & MVP scope, data, integrations, stack, deployment), compiled into a clean, sectioned spec with a phased build order and handoff. |
+| `/devkit:agent-development` | Building agents & workflows with LangChain + LangGraph | `langchain-agents`, `langgraph-workflows`, `combining-langchain-and-langgraph`, `workflow-design`, `troubleshooting` |
+| `/devkit:design` | Any interface — web, desktop, UI craft, design systems, page speed | `ui-fundamentals`, `design-systems`, `web-dolle-mcp`, `desktop-native`, `web-performance` |
+| `/devkit:shipping` | Packaging & deploying | `containerization`, `kubernetes`, `cloud-infrastructure` |
+| `/devkit:process` | How to run the work | `prompt-enhancement`, `app-prompt`, `subagents`, `documentation` |
 
-Each loader also accepts an optional task, e.g.
-`/agent-development build an agent that queries Postgres`. `/agent-development` also accepts a
-skill to focus, e.g. `/agent-development workflow-design`.
+Each hub accepts a task, e.g. `/devkit:design redesign the pricing page` or
+`/devkit:shipping my pod is crashing` — it loads the router and goes to the right reference.
+
+You can also name a topic and let Claude find the hub: "my pod is crashing", "review my UI",
+"write a Dockerfile", "this request is vague" all match a hub description on their own.
 
 Other commands:
 - `/scaffold` — start a project/component from a bundled template (e.g. a LangGraph or LangChain
@@ -46,16 +37,12 @@ Other commands:
 - `/mcp-preview-server` — start the bundled Dolle-MCP live preview server (if needed) and print
   its gallery URL, so you don't have to remember or ask for it.
 
-Automatic loading: you don't have to load a section by hand — Claude can find and read the
-right one itself via the always-available `devkit:catalog` skill. The commands above are the
-manual way to force a specific section into context.
-
-Related subagents you can dispatch: `agent-developer`, `doc-writer`, `web-designer` (runs the
-Dolle-MCP-driven build/verify loop from a settled design spec), `app-prompt-engineer` (compiles a
-settled app brief into a build-ready spec, or audits an existing one, off the main thread).
+Subagents you can dispatch: `agent-developer`, `doc-writer`, `web-designer` (runs the Dolle-MCP
+build/verify loop from a settled design spec), `app-prompt-engineer` (compiles a settled app brief
+into a build-ready spec, or audits an existing one, off the main thread).
 
 ---
 
-Then stop and wait for the user to choose. Do not load a section unless asked.
+Then stop and wait for the user to choose. Do not load a hub unless asked.
 
 Argument (optional): $ARGUMENTS

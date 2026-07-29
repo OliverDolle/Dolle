@@ -1,41 +1,23 @@
 # Dolle devkit
 
-**devkit** is a Claude Code plugin of *command-gated skill sections* for AI-assisted
-development. Instead of loading every skill into context at startup, a **section** (a group of
-related skills) stays dormant until you run its command — so your context stays lean and you
-pull in focused guidance only when you need it. It ships with skill sections, subagents, hooks,
-and a **bundled [Dolle-MCP](https://github.com/OliverDolle/Dolle-MCP) server**, and is
-distributed as a plugin marketplace so a whole team can install it.
+**devkit** is a Claude Code plugin of *on-demand guidance* for AI-assisted development, built so it
+costs almost nothing to have installed. It registers **four skill hubs**; only their four
+descriptions sit in startup context (~568 tokens). Invoking a hub loads a short **router** (1.4–1.8 KB)
+listing its references and when to read each; Claude then reads only the one the task needs. **95.7 %
+of the content never enters context unless it's relevant.** It ships with hubs, subagents, hooks, and
+a **bundled [Dolle-MCP](https://github.com/OliverDolle/Dolle-MCP) server**, distributed as a plugin
+marketplace so a whole team can install it.
 
-Sections today:
+The four hubs:
 
-- **Agent development** — building agents & workflows with **LangChain + LangGraph** together,
-  how to combine them, workflow design, and a troubleshooting log (5 skills).
-- **Subagent-driven development** — a methodology for decomposing work across subagents.
-- **Documentation** — a short-README-plus-linked-docs method.
-- **UI/UX design** — distinctive web design driven by the [Dolle-MCP](https://github.com/OliverDolle/Dolle-MCP)
-  server (templates, curated color palettes, WCAG contrast, SVG, screenshots), starting with a
-  design brief and building on the `frontend-design` skill.
-- **Web performance** — making pages fast against Core Web Vitals (LCP, CLS, INP): measure-first,
-  a per-metric fix playbook, and budgets.
-- **UI design (craft)** — the tool-agnostic craft of great UI in two skills: *fundamentals*
-  (hierarchy, spacing/type scales, semantic color + WCAG contrast, component & content states,
-  forms, feedback, accessibility, a review checklist) and *design-systems* (design tokens, theming,
-  a component library, and the design-to-dev handoff to make it repeatable).
-- **GUI design (native/desktop)** — designing desktop apps (Qt, GTK, WinUI): the platform HIG,
-  window/menu/toolbar structure, the desktop keyboard model, resizable layout via layout managers,
-  HiDPI, native feel + OS dark mode, a responsive UI thread, and desktop accessibility. Builds on
-  the UI-design craft skills.
-- **Containerization** — Docker & Compose done right: multi-stage builds, small non-root images,
-  layer caching, `.dockerignore`, healthchecks, and an image size/security checklist.
-- **Kubernetes** — deploying & configuring on K8s: Deployments/Services/Ingress, config/secrets,
-  resources, probes, autoscaling, safe rollouts, Kustomize/Helm, and pod debugging.
-- **Cloud infrastructure** — CI/CD pipelines, Terraform/IaC, choosing a cloud compute target, OIDC
-  auth, secrets across environments, and observability.
-- **App prompt engineering** — turning a rough app idea into a build-ready spec: an
-  **AskUserQuestion** interview across the app's axes (type/platform, users/auth, features & MVP
-  scope, data, integrations, stack, deployment), compiled into a clean, sectioned spec with a phased
-  build order and an explicit handoff for the implementing agent.
+| Hub | Covers | References |
+| --- | --- | --- |
+| **agent-development** | Building agents & workflows with **LangChain + LangGraph** together | `langchain-agents`, `langgraph-workflows`, `combining-langchain-and-langgraph`, `workflow-design`, `troubleshooting` |
+| **design** | Any interface — web pages via the bundled [Dolle-MCP](https://github.com/OliverDolle/Dolle-MCP) server, native/desktop GUIs (Qt, GTK, WinUI), the UI craft under both, design systems, and Core Web Vitals | `ui-fundamentals`, `design-systems`, `web-dolle-mcp`, `desktop-native`, `web-performance` |
+| **shipping** | Packaging & deploying — Docker & Compose, Kubernetes, CI/CD and Terraform | `containerization`, `kubernetes`, `cloud-infrastructure` |
+| **process** | How to run the work — sharpening a vague ask, turning an app idea into a build-ready spec, decomposing across subagents, and a documentation method | `prompt-enhancement`, `app-prompt`, `subagents`, `documentation` |
+
+Full detail on every reference: [Skill hubs](docs/skill-packs.md).
 
 ## Quickstart (Claude Code)
 
@@ -46,13 +28,20 @@ Sections today:
 # 2. Install the plugin
 /plugin install devkit@dolle
 
-# 3. See the sections, then load one on demand
+# 3. See the hubs, then load one on demand
 /devkit
-/agent-development build an agent that queries Postgres
+/devkit:agent-development build an agent that queries Postgres
 ```
 
-Nothing from a section is in context until you call its command. Run `/devkit` any time for the
-menu.
+Nothing but the four descriptions is in context until a hub is invoked — by you, or by Claude matching
+your request against a hub description ("my pod is crashing", "review my UI", "write a Dockerfile" all
+match on their own). Run `/devkit` any time for the menu.
+
+**One-time setup worth doing:** allowlist the plugin directory so reading a reference never prompts.
+
+```bash
+claude config add permissions.allow 'Read(//C:/Users/Oliver/.claude/plugins/cache/dolle/**)'
+```
 
 Installing the plugin also **registers the bundled Dolle-MCP server automatically** — confirm
 with `/mcp` (look for `dolle-mcp`, connected) and run `/mcp-preview-server` to open its live
@@ -63,7 +52,7 @@ preview. This needs [`uv`](https://docs.astral.sh/uv/) on your PATH (see below).
 devkit bundles the **[Dolle-MCP](https://github.com/OliverDolle/Dolle-MCP)** server — an MCP
 server that serves a library of UI themes/templates (components, charts, parallax/scroll, CSS &
 WebGL 3D, motion, SVG animation) plus color-palette, WCAG-contrast, SVG-tracing, and screenshot
-tools. It powers the **UI/UX design** section and the `web-designer` subagent.
+tools. It powers the `design` hub's `web-dolle-mcp` reference and the `web-designer` subagent.
 
 Because it's bundled (`plugins/devkit/.mcp.json`), it **registers automatically when the plugin
 is enabled** — no separate `claude mcp add`, and no extra approval prompt. Verify with `/mcp`
@@ -91,33 +80,32 @@ The table below is generated from each doc's `description` frontmatter by
 | Doc | What it covers |
 | --- | --- |
 | [Installation](docs/installation.md) | How to add the devkit marketplace and install the plugin, in both the Claude Code CLI and the desktop app. Covers prerequisites, verifying the install, updating, uninstalling, and enabling it for a whole team. |
-| [Usage](docs/usage.md) | Day-to-day use of devkit: the /devkit menu, loading skill sections on demand, dispatching the bundled subagents, and what the two hooks do. Explains why loading is command-gated and how it works identically in the CLI and the desktop app. |
-| [Skill sections](docs/skill-packs.md) | Describes each skill section, the individual skills inside it, and the command that loads it. Explains the difference between multi-skill sections (with an index) and single-skill sections, and how the sections relate. |
+| [Usage](docs/usage.md) | Day-to-day use of devkit: the /devkit menu, invoking one of the four hubs, how a hub's router picks a reference, dispatching the bundled subagents, and what the two hooks do. Includes the one permission rule that stops reference reads from prompting. |
+| [Skill hubs](docs/skill-packs.md) | The four devkit hubs, the references inside each, and what every reference covers. Explains the router-plus-references shape that keeps startup context to four descriptions and loads only the depth a task needs. |
 | [Templates & scaffolding](docs/templates.md) | How devkit bundles runnable starter templates that an agent copies into your project and adapts to the task. Covers the /scaffold command, the templates that ship today, how the copy-and-adapt flow works, and how to add your own. |
-| [Code map](docs/code-map.md) | A map of where the major parts of the project live in the repository — commands, skill sections, subagents, hooks, and the docs tooling. Points to large entities and their paths, not line-level details. |
-| [Architecture](docs/architecture.md) | The repository layout and how command-gated (lazy) loading of skill sections works under the hood. Covers the packs-vs-skills distinction, the request flow from command to loaded guidance, and why the hooks are Node scripts. |
-| [Cross-platform](docs/cross-platform.md) | How to use the skills with agents other than Claude Code, such as Codex and Cursor. Explains that the skills are portable Markdown you can reference directly, and which plugin features (commands, marketplace, hooks) do not carry over. |
-| [Extending](docs/extending.md) | How to add your own skills, sections, commands, subagents, and hooks to devkit. Includes the file templates and the conventions that keep everything consistent, portable, and out of startup context. |
+| [Code map](docs/code-map.md) | A map of where the major parts of the project live in the repository — the four skill hubs and their references, commands, subagents, templates, hooks, and the docs tooling. Points to large entities and their paths, not line-level details. |
+| [Architecture](docs/architecture.md) | The repository layout and how two-level lazy loading works — four hub descriptions at startup, a router body on invoke, and references read on demand. Covers why the count of registered skills is the only cost you cannot defer, the request flow, and why the hooks are Node scripts. |
+| [Cross-platform](docs/cross-platform.md) | How to use devkit's references with agents other than Claude Code, such as Codex and Cursor. Explains that every reference is portable plain Markdown you can point at directly, and which plugin features (skills, commands, marketplace, hooks) do not carry over. |
+| [Extending](docs/extending.md) | How to add a reference to an existing hub, add a whole new hub, and add commands, subagents, templates, and hooks. Includes the file templates and the conventions that keep startup context to four descriptions. |
 
 <!-- DOC-INDEX:END -->
 
 ## What's in the box
 
-- **12 skill sections** (`plugins/devkit/packs/`) holding **17 skills** — loaded only via their
-  command.
-- **15 commands** (`plugins/devkit/commands/`) — `/devkit` (menu), one loader per section,
-  `/scaffold`, and `/mcp-preview-server`.
+- **4 skill hubs** (`plugins/devkit/skills/`) holding **17 references** — 2,273 B of descriptions at
+  startup, 1.4–1.8 KB per router on invoke, and 95.7 % of the 153 KB of content deferred to
+  references read only when a task needs them.
+- **3 commands** (`plugins/devkit/commands/`) — `/devkit` (menu), `/scaffold`, and
+  `/mcp-preview-server`. Commands are reserved for behavior a skill can't provide.
 - **1 bundled MCP server** (`plugins/devkit/.mcp.json`) — [Dolle-MCP](https://github.com/OliverDolle/Dolle-MCP)
   registers automatically when the plugin is enabled (no manual `claude mcp add`); it powers the
-  UI/UX design section and `/mcp-preview-server`.
-- **1 index skill** (`plugins/devkit/skills/catalog/`) — auto-loaded so Claude can find and read
-  the right section itself, without you running a loader command.
+  `design` hub's `web-dolle-mcp` reference and `/mcp-preview-server`.
 - **4 subagents** (`plugins/devkit/agents/`) — `agent-developer`, `doc-writer`, `web-designer`,
-  `app-prompt-engineer`.
-- **2 hooks** (`plugins/devkit/hooks/`) — a session-start reminder and a topic-aware section
-  suggester.
-- **Starter templates** (`plugins/devkit/packs/agent-development/templates/`) — runnable
-  LangGraph and LangChain skeletons that `/scaffold` copies in and adapts.
+  `app-prompt-engineer`, each granted the `Skill` tool so it loads its own hub.
+- **2 hooks** (`plugins/devkit/hooks/`) — a session-start reminder, and a topic-aware suggester that
+  names the hub **and the exact reference** so Claude skips the router scan.
+- **Starter templates** (`plugins/devkit/templates/`) — runnable LangGraph and LangChain
+  skeletons that `/scaffold` copies in and adapts.
 - **Self-maintaining docs** — the README index above is generated from each doc's `description`
   by `scripts/generate-doc-index.mjs`, kept in sync by a GitHub Action.
 
@@ -128,7 +116,7 @@ The table below is generated from each doc's `description` frontmatter by
 - **[`uv`](https://docs.astral.sh/uv/)** on your PATH for the bundled Dolle-MCP server (and
   `uvx playwright install chromium` once, for its screenshot tools). See
   [Installation](docs/installation.md#bundled-mcp-server-dolle-mcp).
-- Other agents (Codex, Cursor, …) can use the skills as portable Markdown — see
+- Other agents (Codex, Cursor, …) can use the references as portable Markdown — see
   [Cross-platform](docs/cross-platform.md).
 
 ## License
