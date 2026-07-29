@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Dolle developer toolkit — command-gated skill packs, agents, and hooks for AI-assisted development.",
-    "version": "0.13.1"
+    "version": "0.13.2"
   },
   "plugins": [
     {
