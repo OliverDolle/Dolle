@@ -1,0 +1,56 @@
+trigger:
+  batch: true
+  branches:
+    include: [main]
+
+variables:
+  # Library variable group; link it to Key Vault if it holds secrets, and authorize this pipeline.
+  - group: "{{ VARIABLE_GROUP }}"
+  - name: vmImage
+    value: ubuntu-latest
+
+stages:
+  - stage: Build
+    jobs:
+      - job: build
+        pool:
+          vmImage: $(vmImage)
+        steps:
+          - script: npm ci && npm test && npm run build
+            displayName: Install, test, build
+          # Build ONCE, tag by the immutable commit; this artifact is promoted to prod.
+          - task: Docker@2
+            displayName: Build and push image
+            inputs:
+              command: buildAndPush
+              repository: app
+              tags: $(Build.SourceVersion)
+          - publish: $(Build.ArtifactStagingDirectory)
+            artifact: drop
+
+  - stage: DeployProd
+    dependsOn: Build
+    condition: succeeded()
+    jobs:
+      - deployment: deployProd
+        displayName: Deploy to production
+        pool:
+          vmImage: $(vmImage)
+        # Approvals + Checks are configured ON this environment in the Azure DevOps UI, not here.
+        environment: production
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: current
+                  artifact: drop
+                # Keyless: the service connection uses workload identity federation (no secret).
+                - task: AzureCLI@2
+                  displayName: Deploy
+                  inputs:
+                    azureSubscription: "{{ SERVICE_CONNECTION }}"
+                    scriptType: bash
+                    scriptLocation: inlineScript
+                    inlineScript: |
+                      az group show --name {{ RESOURCE_GROUP }} --output none
+                      {{ DEPLOY_COMMAND }}

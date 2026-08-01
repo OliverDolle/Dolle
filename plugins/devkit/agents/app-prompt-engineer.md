@@ -56,3 +56,4 @@ path if you wrote one, the key assumptions you took, the blocking gaps (if any) 
 still resolve with the user, and the recommended next step (build directly, or dispatch a builder
 pointed at the devkit sections named in the handoff). Do not paste back raw codebase dumps — you
 consumed those so the main context doesn't have to.
+Content should be structured for easy readability for an AI agent, do NOT prioritize human structued text, but structurized text for AI agents.

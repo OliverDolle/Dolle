@@ -1,0 +1,53 @@
+name: deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# Cancel superseded runs on the same ref (never scoped to cancel an in-flight prod deploy).
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# Least privilege by default; jobs widen only what they need.
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write        # push image to GHCR; drop if you push elsewhere
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262   # v4.4.0
+      - uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a   # v4.2.0
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      # Build ONCE and tag by the immutable commit SHA; this exact image is promoted to prod.
+      - run: |
+          docker build -t "{{ IMAGE_NAME }}:${{ github.sha }}" .
+          echo "IMAGE=${{ IMAGE_NAME }}:${{ github.sha }}" >> "$GITHUB_ENV"
+
+  deploy-prod:
+    needs: build
+    runs-on: ubuntu-latest
+    # Required reviewers / wait timer are configured ON this environment in repo settings, not here.
+    environment: production
+    permissions:
+      id-token: write        # OIDC: mint a short-lived token, no long-lived cloud keys
+      contents: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262   # v4.4.0
+      # Keyless cloud auth via OIDC. Swap for azure/login or google-github-actions/auth as needed.
+      - uses: aws-actions/configure-aws-credentials@7474bc4690e29a8392af63c5b98e7449536d5c3a   # v4.3.1
+        with:
+          role-to-assume: "{{ AWS_DEPLOY_ROLE_ARN }}"
+          aws-region: "{{ AWS_REGION }}"
+      # Deploy the exact digest built above.
+      - run: "{{ DEPLOY_COMMAND }}"

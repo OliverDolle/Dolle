@@ -1,3 +1,11 @@
+<<<<<<<< HEAD:plugins/devkit/skills/process/references/subagents.md
+========
+---
+name: orchestration
+description: Methodology for building software by decomposing work and orchestrating subagents (explore, plan, implement, verify) instead of doing everything in one context. Load when a task is large, benefits from parallel investigation, or needs independent verification. Pair with writing-subagent-instructions to write the briefs.
+---
+
+>>>>>>>> 345a3659b22c6b0713179f004926ff4d461bf819:plugins/devkit/skills/process/references/orchestration/SKILL.md
 # Subagent-Driven Development
 
 Build software the way a tech lead runs a team: break the work into well-scoped units,
@@ -46,17 +54,17 @@ Decompose  ->  Delegate  ->  Verify  ->  Integrate
 
 ## Writing a good subagent brief
 
-A subagent starts blind. Its brief must be self-contained:
+A subagent starts blind. Its brief must be self-contained: **Goal** (one sentence — what to
+produce), **Context** (the specific files, symbols, constraints, and prior conclusions it needs),
+**Output contract** (the exact shape to return — ask for the *conclusion*, not a narration), and
+**Boundaries** (what it must not touch; when to stop and report a blocker instead of guessing).
 
-- **Goal** — one sentence: what to produce.
-- **Context** — the specific files, symbols, constraints, and prior conclusions it needs.
-- **Output contract** — the exact shape to return (a list, a table, a JSON object, a patch).
-  Ask for the *conclusion*, not a narration of the search.
-- **Boundaries** — what it must not touch; when to stop and report a blocker instead of
-  guessing.
+Prefer structured output for anything you will process programmatically or aggregate — it removes
+parsing ambiguity and lets you fan results back in cleanly.
 
-Prefer structured output for anything you will process programmatically or aggregate — it
-removes parsing ambiguity and lets you fan results back in cleanly.
+> This is the summary. For the full craft — pinning the decisions you don't want delegated, tool
+> grants, effort scaling, stop conditions, requiring a deviations report, and the copy-paste brief
+> template — read the **`writing-subagent-instructions`** skill in this section.
 
 ## Parallel vs. sequential
 
@@ -102,3 +110,7 @@ removes parsing ambiguity and lets you fan results back in cleanly.
 - [ ] Conflicts between subagent outputs were reconciled, not averaged.
 - [ ] Any coverage limits (skipped areas, sampling) are stated explicitly.
 - [ ] The integrated result was re-checked against the original goal.
+
+## Related
+
+- `writing-subagent-instructions` — how to write the brief each delegated unit runs on.

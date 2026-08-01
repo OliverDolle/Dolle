@@ -1,3 +1,16 @@
+<<<<<<<< HEAD:plugins/devkit/skills/shipping/references/kubernetes.md
+========
+---
+name: workloads
+description: >-
+  Method for defining and configuring Kubernetes workloads correctly. Load when writing or
+  fixing manifests, wiring config/secrets, exposing a service, setting resources/probes/autoscaling,
+  or debugging a pod that won't run. Covers Deployments/Services/Ingress, ConfigMaps & Secrets,
+  requests/limits, liveness/readiness/startup probes, HPA, rollouts, security context, and
+  Kustomize/Helm. Pairs with the containerization and cloud-infrastructure sections.
+---
+
+>>>>>>>> 345a3659b22c6b0713179f004926ff4d461bf819:plugins/devkit/skills/shipping/references/workloads/SKILL.md
 # Kubernetes (deploy & configure)
 
 Kubernetes runs the images the `containerization` section builds. The job here is a **declarative,

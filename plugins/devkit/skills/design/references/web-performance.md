@@ -93,4 +93,3 @@ gate). Sensible mobile starting points — tighten per project:
 - `web-dolle-mcp.md` — design workflow driven by the Dolle-MCP server (its motion rules —
   `transform`/`opacity`, reduced-motion — are the same ones that protect CLS/INP here).
 - `web-vitals` library and Chrome UX Report / PageSpeed Insights for field data.
-</content>
