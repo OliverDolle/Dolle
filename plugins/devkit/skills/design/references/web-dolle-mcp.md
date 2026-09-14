@@ -38,6 +38,33 @@ Everything in Step 1's brief below feeds those decisions.
 
 Both stay in sync with the library automatically, so prefer them over any snapshot in this file.
 
+## How to ask this library for a part (the step that decides everything)
+
+The observed failure mode is not that the library is missing the part — it is that the
+agent asks for it in words the catalog does not use, gets something irrelevant back,
+tries twice more, and then writes the thing it was trained on. Three habits fix it:
+
+1. **Describe the PROBLEM, not the component you already imagined.** `suggest_segments`
+   matches the words a caller uses for the problem — "something to separate two
+   sections", "a panel to hold some stats", "the page looks flat and boring" — as well
+   as the words the library names the answer with. You do not need to know that the part
+   is called a hairline rule or a spec grid.
+2. **Say what you do NOT want.** A negated noun is demoted, not matched: "a container
+   **instead of** a card", "group these **without** a box", "a list of dates with **no**
+   card per row". This is the fastest way out of the default container.
+3. **Read a rule's `parts`.** Every rule from `golden_rules` carries `parts` — the exact
+   `template` + `id` pairs that execute it. That is a `get_segment` call away, with no
+   browsing in between. A rule you cannot act on in one more call will not get acted on.
+
+**The hard gate: the moment you are about to write a container, stop and call
+`golden_rules(topic="containment")`.** It returns the containment ladder (nothing →
+whitespace → hairline → tinted surface → border → elevation), the rule that the
+container's *edge, fill or structure* is what should be chosen — never "one step
+lighter" — and the parts that do it. A page of grey boxes with slightly-lighter borders
+is the single most recognisable machine-made result, and it is produced by skipping this
+one call. `surfaces` is the catalog of what to do instead; `line-art` is the stroke layer
+that keeps a page from being nothing but filled rectangles.
+
 ## Step 0b — Use the library before inventing
 
 The design library is served by the **`dolle-mcp`** MCP server (sibling repo `Dolle-MCP`,
