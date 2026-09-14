@@ -15,7 +15,7 @@ Steps:
    - It ships bundled with the **devkit** plugin. If devkit is installed,
      run `/mcp` and reconnect `dolle-mcp`; if not, `/plugin install devkit@dolle` (then approve
      the plugin) registers it automatically — no manual `claude mcp add` needed.
-   - Standalone alternative: `claude mcp add dolle-mcp -s user -- uvx --from git+https://github.com/OliverDolle/Dolle-MCP dolle-mcp`.
+   - Standalone alternative: `claude mcp add dolle-mcp -s user -- uvx --refresh --from git+https://github.com/OliverDolle/Dolle-MCP dolle-mcp`.
    - The server needs [`uv`](https://docs.astral.sh/uv/) on the user's `PATH` to launch.
 
 2. **Start / locate the preview.**

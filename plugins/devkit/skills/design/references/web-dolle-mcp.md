@@ -24,11 +24,19 @@ Everything in Step 1's brief below feeds those decisions.
 
 ## Step 0 — Confirm the Dolle-MCP server is available, then call `golden_rules` first
 
-**Before anything else in this workflow, call `mcp__dolle-mcp__golden_rules()`.** It returns this
-server's own ordered workflow plus the golden rules of UI design, each wired to the templates that
-demonstrate it — it is the fastest way to get the craft *and* the tool sequence in one call, and it
-stays in sync with the library automatically. Use `golden_rules(topic="…")` when you need one area
-in full (colour, containment, motion, content, accessibility, …).
+**Open with two calls, in this order:**
+
+1. **`mcp__dolle-mcp__start_here(task="…")`** — describe the job in a sentence ("restyle a pricing
+   page", "build a landing page for a coffee roaster", "audit this stylesheet's contrast"). It
+   returns the ordered call plan for *that* kind of work, the calls to skip, the gates that decide
+   when it is done, and candidate parts. It is the server's own entry point and it saves you
+   guessing which of the tools below apply.
+2. **`mcp__dolle-mcp__golden_rules()`** — the golden rules of UI design (50 of them across process,
+   structure, type, colour, containment, states, motion, content, accessibility, responsiveness and
+   performance), each wired to the templates that demonstrate it and the tool that does the work.
+   Use `golden_rules(topic="…")` when you need one area in full.
+
+Both stay in sync with the library automatically, so prefer them over any snapshot in this file.
 
 ## Step 0b — Use the library before inventing
 
@@ -41,7 +49,7 @@ If the server is not connected, say so and tell the user how to add it, then sto
 call on whether to proceed without it:
 
 ```
-claude mcp add dolle-mcp -s user -- uvx --from git+https://github.com/OliverDolle/Dolle-MCP dolle-mcp
+claude mcp add dolle-mcp -s user -- uvx --refresh --from git+https://github.com/OliverDolle/Dolle-MCP dolle-mcp
 # then: /mcp  → dolle-mcp should be "connected"
 ```
 
@@ -51,7 +59,7 @@ The surface you will actually use (call `list_templates` and read the server's o
 | Tool (`mcp__dolle-mcp__…`) | Use it to |
 | --- | --- |
 | **`golden_rules(topic?, detail?)`** | **Call this first on any design work.** ~48 golden rules of UI design across process, structure, type, colour, containment, states, motion, content, accessibility, responsiveness and performance — each naming *the templates that demonstrate it* (resolved live, with what each one is), *the tool* that does the work, and *the tell* (what the failure looks like). Also returns the ordered workflow for this server and a pre-ship checklist. Compact by default; `topic="color"` for one area in full. Same content as the `guide://golden-rules` resource. |
-| `list_templates(category?, theme?, component?, q?, detail?)` | **Then here.** Returns compact rows `{id, name, category, theme, summary}` for the ~50 offline templates. **Narrow instead of scanning:** filter by `category` / `theme` / `component`, or `q` (substring). `detail=True` gives full metadata. Read `guide://templates` for a grouped one-line pick map. |
+| `list_templates(category?, theme?, component?, q?, detail?)` | **Then here.** Returns compact rows `{id, name, category, theme, summary}` for the 79 offline templates. **Narrow instead of scanning:** filter by `category` / `theme` / `component`, or `q` (substring). `detail=True` gives full metadata. Read `guide://templates` for a grouped one-line pick map. |
 | `get_template_source(id)` | Pull the real HTML/CSS/JS for a template to adapt — buttons, navbars, typography, charts, business pages, effects. |
 | `list_segments(id)` | List a catalog template's **individually-copyable pieces** (id/title/group only) — grab one button/nav/chart/shape/grid/text-effect instead of a whole page. |
 | `get_segment(id, seg)` | Return **one** self-contained snippet (`html`/`css`/`js` + a combined `code`) — far less to read than the full page. |
@@ -73,28 +81,54 @@ The surface you will actually use (call `list_templates` and read the server's o
 | `segment_svg(svg, name?)` | Split an SVG into independently-animatable `.seg` groups + an animated preview. |
 | `trace_image_to_svg(image_path, max_colors?, name?)` | Trace a raster logo/image to a segmented, animatable SVG. |
 | `screenshot_preview(url, …)` | Screenshot any live preview URL (e.g. a generated SVG) so you can see the animated result. |
+| **`start_here(task, limit?)`** | **The actual first call.** Describe the task; get back the ordered plan for that kind of work (restyle / new page / component / chart / type / theme / asset / audit), the calls to skip, the done-gates, and candidate parts. |
+| **`suggest_segments(need, kind?, limit?)`** | **When you can't name the part.** Describe the need in your own words ("something to separate two sections", "a panel that isn't a card") and get ranked components back — the counterpart to `search_segments`, which needs the right word. |
+| **`chart_svg(kind, values, labels?, title?, unit?, highlight?, empty_reason?)`** | **Charts are generated, not pasted.** A chart is a function of its data, so segments can only teach style. This emits one honest chart with the rules baked in: zero baseline, human ticks, a six-series cap, a hidden data table, and an explanation instead of empty axes. Read `guide://chart-libraries` first (default ECharts). |
+| **`contrast_audit(target, pairs?, verbose?)`** | **Gate the whole stylesheet, not one pair.** Every rendered foreground/background pair in a file or token block at once, **per theme block** — a second `:root[data-theme=…]` otherwise overwrites the first and goes unchecked. Use this where you would otherwise call `color_contrast` repeatedly. |
+| `tokenize_file(target, prefix?)` | Report the hardcoded colours in an **existing** stylesheet as semantic roles plus a paste-ready token block — the first move when restyling something that has no tokens. |
+| **`font_pairing(tone?)`** | A display + body (+ mono) pairing **with its `npm install`, `@import` lines and tokens**, because self-hosting is the step that gets skipped and a default UI sans as the display face is a named tell. |
+| `screenshot_matrix(url, widths?, height?, dark?)` | One contact sheet of a URL at several viewport widths — the responsive check in a single call, instead of three screenshots. |
 
-**Four reference sheets exist specifically to break the sameness — read them before you invent:**
+**Read `kind` on every segment you pull.** `component` is paste-ready, `pattern` is a page
+skeleton to adapt, and `specimen` is a **teaching demo** — use its `context.lesson` and the numbers
+in `context.spec`, do not paste it. Segments also return `context` (the chapter, the lesson and the
+spec chip harvested from the page a human reads), `tokens_required` (every colour literal with its
+semantic role — `get_segment(..., tokenize=True)` rewrites them to `var()` so a pasted piece does
+not import a second palette), and `strip_before_use` (a tell inside that snippet, present when the
+specimen deliberately demonstrates one).
+
+**Six reference sheets exist specifically to break the sameness — read them before you invent:**
 **`themes`** (12 bundles rendering one module like-for-like, each printing its measured contrast),
 **`page-shapes`** (12 whole-page shapes in 6 families as copyable skeletons — the fix for pages that
 are visually distinct but structurally identical), **`details`** (19 before/after specimens of the
-1px layer: focus geometry, `text-wrap`, reserved slots, OS preferences), and **`cards`**, whose
+1px layer: focus geometry, `text-wrap`, reserved slots, OS preferences), **`cards`**, whose
 *first* row is the containment ladder — the alternatives that come before reaching for a rounded
-bordered box.
+bordered box, **`surfaces`** (26 containers past the grey card, sorted by whether the **edge**, the
+**fill**, the **structure** or **nothing at all** does the work — it opens with the default panel
+reproduced beside its replacement), and **`line-art`** (27 decorative stroke specimens in
+`currentColor`: rules broken for a mark or a section number, dot leaders, drawn underlines and
+circled words, corner brackets, an outline that traces itself, crosshairs, dimension lines,
+annotation arrows — the second texture a page of filled rectangles is missing).
 
-The catalog is ~75 templates across ten categories (call `list_templates(category=…)` or read
+The catalog is **79 templates across 15 categories** (call `list_templates(category=…)` or read
 `guide://templates` for the authoritative, current list — don't rely on this snapshot):
 **Buttons & text** (`buttons`, `text-effects`, `kinetic-text`, `typography`), **Navigation**
 (`navbars`, `nav-patterns`), **Data & charts** (`charts`, `charts-lab`, `diagrams`,
-`data-relations`, `data-geo`), **3D** (`threed-css`, `threed-webgl`, `scroll-3d`, `gallery-wheel`,
-`containers-3d`), **Motion & SVG** (`svg-segments`, `scroll-effects`, `gallery-scroll`,
-`gallery-swipe`), **Effects & backgrounds** (`glitch`, `bg-transitions`, `mechanics`, `shapes`,
-`interactive`, `bg-live`, `light-shadow`, `light-craft`, `visual-fx`), **Layout & grids** (`grids`,
-`image-layouts`, `hierarchy`), **Components & sections** (`content-sections`, `cards`, `forms`,
-`loaders`, `notifications`, `social-proof`, `time-counters`, `audio-players`), **Design styles**
-(`design-styles` — 14 aesthetics on one module), and **Business pages** (`biz-saas`, `biz-agency`,
-`biz-corporate`, `biz-luxury`, `biz-launch`, `biz-restaurant`, `biz-capital`, `biz-counsel`,
-`biz-consult`). Read the source of the ones that fit — and for the **component-catalog** templates
+`data-relations`, `data-geo`), **App & dashboards** (`app-shell`, `data-table`, `overlays`,
+`states`, `auth`, `onboarding`), **TypeScript** (`ts-components`, `ts-dashboard`, `ts-widgets` —
+`.ts`/`.tsx` compiled in-browser, still offline), **3D** (`threed-css`, `threed-webgl`, `scroll-3d`,
+`gallery-wheel`, `containers-3d`, `helix-scenes`), **Motion & SVG** (`svg-segments`,
+`scroll-effects`, `gallery-scroll`, `gallery-swipe`, `platform-lab`, `line-art`),
+**Effects & backgrounds** (`glitch`, `bg-transitions`, `mechanics`, `shapes`, `interactive`,
+`bg-live`, `light-shadow`, `light-craft`, `visual-fx`), **Layout & grids** (`grids`,
+`image-layouts`, `hierarchy`, `page-shapes`, `editorial`), **Components & sections**
+(`content-sections`, `cards`, `surfaces`, `forms`, `loaders`, `notifications`, `social-proof`,
+`time-counters`, `audio-players`, `heroes`, `footers`, `timeline`, `details`), **Design styles**
+(`design-styles` — 14 aesthetics on one module — and `themes`), **E-commerce** (`ecom-grid`,
+`ecom-pdp`, `ecom-checkout`, `pricing`), **Blog & docs** (`blog-index`, `blog-article`,
+`docs-site`), and **Business pages** (`biz-saas`, `biz-agency`, `biz-corporate`, `biz-luxury`,
+`biz-launch`, `biz-restaurant`, `biz-capital`, `biz-counsel`, `biz-consult`, `biz-kiln`, `lumina`).
+Read the source of the ones that fit — and for the **component-catalog** templates
 (the Buttons & text, Navigation, Components & sections, `shapes`, `grids`, `image-layouts`,
 `design-styles`, catalog charts) prefer `list_segments` + `get_segment` to pull one piece rather
 than reinventing it, then adapt to the brief's palette and voice.
