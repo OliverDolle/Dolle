@@ -1,12 +1,6 @@
 ---
 name: shipping
-description: >-
-  Packaging and deploying an app — BEFORE hand-writing container config, Kubernetes manifests, a
-  pipeline, or IaC. Docker & Compose, Kubernetes workloads, and CI/CD + Terraform on AWS/GCP/Azure.
-  Triggers: 'write a Dockerfile', 'dockerize this', 'docker compose', 'image too big', 'deploy to
-  kubernetes', 'k8s manifest', 'my pod is crashing', 'CrashLoopBackOff', 'set up an ingress', 'helm
-  chart', 'set up CI/CD', 'github actions pipeline', 'write terraform', 'infrastructure as code',
-  'deploy to cloud run', 'serverless'.
+description: Call before writing a Dockerfile, Kubernetes manifest, CI/CD pipeline, or Terraform — or when a build, deploy, or pod fails.
 ---
 
 # Shipping — router
@@ -16,11 +10,14 @@ description: >-
 | Reference | Read it when |
 | --- | --- |
 | `containerization` | Writing or fixing a Dockerfile or Compose stack; shrinking or securing an image; a broken build. |
-| `kubernetes` | Deploying or configuring on K8s, or a pod that won't run. |
-| `cloud-infrastructure` | A CI/CD pipeline, Terraform/IaC, choosing a cloud compute target, or observability. |
+| `kubernetes` | Writing or fixing manifests, config/secrets, probes, autoscaling — or a pod that won't run. |
+| `kubernetes-gitops` | Rolling out on K8s safely — canary/blue-green (Argo Rollouts, Flagger), GitOps (Argo CD, Flux). |
+| `cloud-infrastructure` | CI/CD concepts, Terraform/IaC, choosing a compute target, OIDC, observability. **Read before** the two below. |
+| `github-actions` | Writing `.github/workflows` — OIDC, environments, reusable workflows, SHA-pinning. |
+| `azure-devops` | Writing `azure-pipelines.yml` — templates, deployment jobs, service connections. |
 
 Paths: `references/<name>.md`. They chain — image → cluster → pipeline. Read the one you're in; add
-the next only when the task crosses that line.
+the next only when the task crosses that line. Pipeline starters: `/scaffold cicd-starters`.
 
 **Binds regardless:** no secrets in an image, repo, or manifest — inject at runtime from a managed
 store, and base64 in a K8s Secret is encoding, not encryption. No long-lived cloud keys in CI — use

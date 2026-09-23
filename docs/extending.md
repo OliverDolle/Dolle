@@ -2,8 +2,8 @@
 title: Extending
 description: >-
   How to add a reference to an existing hub, add a whole new hub, and add commands, subagents,
-  templates, and hooks. Includes the file templates and the conventions that keep startup context to
-  four descriptions.
+  templates, and hooks. Includes the file templates, how to write a hub description, and the
+  conventions that keep startup context to five one-line descriptions.
 order: 70
 ---
 <!-- BACK-TO-README:START -->
@@ -40,23 +40,22 @@ That's it. No new registration, no startup cost, and `/devkit:agent-development`
 
 ## Add a hub (rare — think first)
 
-A new hub adds ~570 bytes of description to **every session**. Only justified when the domain is
-genuinely distinct from all four and its trigger phrases wouldn't fit an existing description.
+A new hub adds a description to **every session**. Only justified when the domain is genuinely
+distinct from all five and wouldn't fit an existing description without blurring it — the way
+debugging, architecture, databases, and firmware fit none of the original four and became
+`engineering`.
 
 1. Create `plugins/devkit/skills/<hub>/SKILL.md`:
 
    ```markdown
    ---
    name: <hub>
-   description: >-
-     What the domain is and when to reach for it, with the trigger phrases a user would actually
-     type. This is the only text that costs startup context — make it earn its place.
+   description: Call before <the work this domain covers> — <concrete noun>, <concrete noun>, <concrete noun>.
    ---
 
    # <Hub> — router
 
-   > **Driving this skill.** Say in one line that devkit **<hub>** is active and which reference
-   > you're reading. Then **read only the reference(s) the task needs, on demand.**
+   > Read only the reference(s) below that the task needs. Name which one in a line, then work from it.
 
    | Reference | Read it when |
    | --- | --- |
@@ -68,22 +67,41 @@ genuinely distinct from all four and its trigger phrases wouldn't fit an existin
    `name` must equal the directory name, and the directory must sit **directly** under `skills/` —
    Claude Code discovers skills one level deep, not nested.
 
+   **Writing the description.** It is the only text that costs startup context, and it is the whole
+   trigger surface — the model invokes the hub from this line alone. Rules:
+
+   - One line, **≤ ~160 characters**.
+   - Start with **"Call before…"** or **"Call when…"** — say *when to act*, not what the hub contains.
+   - Name the domain's **concrete nouns** (Dockerfile, schema, system prompt, landing page) — they
+     are what a request matches on.
+   - **No quoted trigger-phrase lists.** Per-prompt keywords go in the suggest hook, where they cost
+     nothing unless they fire.
+
 2. Add its references under `<hub>/references/`.
 
 3. Add a row to the `/devkit` menu (`plugins/devkit/commands/devkit.md`) and a keyword group to the
    suggest hook.
 
 Keep the router a **router**: the reference table plus the two or three rules that hold everywhere.
-Aim for under 2 KB. Anything longer belongs in a reference — a fat router defeats the whole design.
+Aim for under 2.5 KB. Anything longer belongs in a reference — a fat router defeats the whole design.
+Routers point at references and templates (`/scaffold <name>`), never at per-topic commands — there
+are none.
 
 ## When to write a command instead
 
 Commands are for **behavior a skill can't provide** — running something, printing something, copying
 files. `/devkit` (menu), `/scaffold`, and `/mcp-preview-server` are the three that qualify.
 
-Do **not** write a command whose body is "read this file and follow it." That costs a tool call, a
-permission prompt outside auto-accept mode, and a duplicate copy of the content. Make it a reference
-on a hub and the router points at it for free.
+Do **not** write a command whose body is "read this file and follow it." Its description costs
+startup context every session, and the body costs a tool call and a duplicate copy of the content.
+Make it a reference on a hub and the router points at it for free. (devkit once shipped eight such
+commands — ~5 KB of descriptions in every session before they were folded into hubs.)
+
+If the user types the command but the model never needs to invoke it on its own, add
+`disable-model-invocation: true` to its frontmatter. It still works as a slash command but leaves
+the model's listing, so it costs nothing at startup. `/devkit` and `/mcp-preview-server` do this;
+`/scaffold` doesn't, because routers point at it. Keep any model-visible command description to one
+short "Call to…" line.
 
 ## Add a template
 
@@ -117,7 +135,7 @@ Create `plugins/devkit/agents/<name>.md`:
 ```markdown
 ---
 name: your-agent
-description: When to invoke this subagent.
+description: One line — what it does and when to dispatch it. Paid every session; keep it short.
 tools: Read, Write, Edit, Grep, Glob, Skill
 ---
 
@@ -159,6 +177,8 @@ entry to the `plugins` array in `.claude-plugin/marketplace.json`.
 ## Conventions
 
 - **Default to a reference, not a hub.** Registration is the only cost you can't defer.
+- Every always-loaded string (hub, command, and agent descriptions, the SessionStart line) is paid
+  every session — keep each to one short line.
 - Every reference row needs a *when*, and only a *when* — that is how it gets picked without being
   read, and anything more is paid for on every invoke.
 - Cross-reference within a hub by filename; across hubs as

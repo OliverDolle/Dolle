@@ -1,11 +1,6 @@
 ---
 name: agent-development
-description: >-
-  Building or debugging an AI agent or LLM workflow with LangChain and/or LangGraph — BEFORE writing
-  agent code. Tool-using agents, stateful graph workflows, how the two compose, designing a workflow
-  before coding it, and a troubleshooting log. Triggers: 'build an agent', 'langchain', 'langgraph',
-  'stateful workflow', 'tool-calling agent', 'StateGraph', 'create_react_agent', 'add
-  memory/checkpointer', 'human-in-the-loop', 'agent error'.
+description: Call before building, prompting, evaluating, or debugging an AI agent or LLM feature — LangChain, LangGraph, system prompts, evals, voice (STT/TTS).
 ---
 
 # Agent development — router
@@ -13,7 +8,7 @@ description: >-
 > Read only the reference(s) below that the task needs. Name which one in a line, then work from it.
 
 LangChain supplies models, tools, prompts, output parsers; LangGraph supplies the stateful control
-flow. Real work usually uses both.
+flow. Real work usually uses both. Build, then measure — the eval references prove it works.
 
 | Reference | Read it when |
 | --- | --- |
@@ -21,13 +16,20 @@ flow. Real work usually uses both.
 | `langgraph-workflows` | Control flow matters — branching, loops with exit conditions, memory across turns, approval steps. |
 | `combining-langchain-and-langgraph` | Unsure which does what, or wiring both together. |
 | `workflow-design` | **Before** writing a non-trivial graph. Most workflow bugs are control-flow bugs. |
+| `prompt-engineering` | Writing or improving a system prompt — structure, few-shot, structured output, model-specific tips. (A *user's* vague request is `devkit:process` → `references/prompt-enhancement.md`.) |
+| `speech-to-text` / `text-to-speech` | Adding voice input or output. A voice agent needs both, streaming. |
+| `eval-foundations` | Deciding what "good" means — task/component/trajectory evals, the dataset. Start evals here. |
+| `llm-as-judge` | Scoring open-ended output with a model — rubric design, judge bias. |
+| `eval-harness-ci` | Gating merges on an eval pass rate. Starter: `/scaffold promptfoo-eval-ci`. |
+| `langgraph-workflow-evals` | Evaluating a `StateGraph` specifically — node, trajectory, final-response evaluators. |
+| `tracing-observability` | Tracing or monitoring an agent — OpenTelemetry GenAI, online evals, drift. |
 | `troubleshooting` | You hit an error. **Append an entry** when you fix one that isn't listed. |
 
 Paths: `references/<name>.md`. From scratch: `langchain-agents` + `langgraph-workflows`.
 
 **Binds regardless:** fast path first (`create_react_agent` before a custom `StateGraph`); a hard exit
-on every loop; verify package names and signatures against what's installed and state your version
-assumptions — these libraries break between minor releases.
+on every loop; verify package names, signatures, model names, and prices against what's installed or
+current — these move between minor releases. Design the eval dataset alongside the agent, not after.
 
 Starters at `${CLAUDE_PLUGIN_ROOT}/templates/` via `/scaffold`. Dispatch `agent-developer` for larger
 builds.

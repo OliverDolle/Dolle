@@ -1,9 +1,10 @@
 ---
 title: Architecture
 description: >-
-  The repository layout and how two-level lazy loading works — four hub descriptions at startup, a
-  router body on invoke, and references read on demand. Covers why the count of registered skills is
-  the only cost you cannot defer, the request flow, and why the hooks are Node scripts.
+  The repository layout and how two-level lazy loading works — five short hub descriptions at startup,
+  a router body on invoke, and references read on demand. Covers why the count of registered skills
+  and commands is the only cost you cannot defer, how descriptions are written, the request flow, and
+  why the hooks are Node scripts.
 order: 50
 ---
 <!-- BACK-TO-README:START -->
@@ -34,21 +35,28 @@ Dolle/
         ├── commands/            # /devkit menu + /scaffold + /mcp-preview-server
         ├── agents/              # agent-developer, doc-writer, web-designer, app-prompt-engineer
         ├── templates/           # runnable starters /scaffold copies
-        ├── skills/              # FOUR hubs — the only registered skills
+        ├── skills/              # FIVE hubs — the only registered skills
         │   ├── agent-development/
         │   │   ├── SKILL.md     # router
-        │   │   └── references/  # langchain-agents, langgraph-workflows, combining,
-        │   │                    # workflow-design, troubleshooting
+        │   │   └── references/  # 13: langchain/langgraph, workflow-design, prompt-engineering,
+        │   │                    # speech-to/text-to-speech, five eval refs, troubleshooting
         │   ├── design/
         │   │   ├── SKILL.md
-        │   │   └── references/  # ui-fundamentals, design-systems, web-dolle-mcp,
+        │   │   └── references/  # 11: ui-fundamentals, anti-slop, structural-variety, type-and-color,
+        │   │                    # surfaces, motion, data-viz, design-systems, web-dolle-mcp,
         │   │                    # desktop-native, web-performance
         │   ├── shipping/
         │   │   ├── SKILL.md
-        │   │   └── references/  # containerization, kubernetes, cloud-infrastructure
+        │   │   └── references/  # 6: containerization, kubernetes, kubernetes-gitops,
+        │   │                    # cloud-infrastructure, github-actions, azure-devops
+        │   ├── engineering/
+        │   │   ├── SKILL.md
+        │   │   └── references/  # 5: systematic-debugging, extensible-architecture,
+        │   │                    # data-modeling, database-operations, esp32
         │   └── process/
         │       ├── SKILL.md
-        │       ├── references/  # prompt-enhancement, app-prompt, subagents, documentation
+        │       ├── references/  # 5: prompt-enhancement, app-prompt, subagents,
+        │       │                # subagent-briefs, documentation
         │       └── assets/      # doc-index automation the documentation reference copies
         └── hooks/
             ├── hooks.json       # SessionStart + UserPromptSubmit
@@ -57,15 +65,21 @@ Dolle/
 
 ## The one cost you cannot defer
 
-Claude Code scans `skills/` **once, at session start**, and loads each skill's name + description.
-There is no API to register a skill mid-session. So:
+Claude Code scans `skills/` and `commands/` **once, at session start**, and lists each one's name +
+description. There is no API to register a skill mid-session. So:
 
-- **Descriptions are unavoidable.** Every registered skill costs its description every session,
-  whether you use it or not. The only lever is *how many skills are registered*.
+- **Descriptions are unavoidable.** Every registered skill — and every model-invocable command —
+  costs its description every session, whether you use it or not. The levers are *how many are
+  registered* and *how long each description is*.
 - **Bodies are free until invoked.** Any amount of content behind a registered skill costs nothing
   until something invokes it.
 
-That asymmetry sets the whole design: **few skills, deep content.**
+That asymmetry sets the whole design: **few skills, short descriptions, deep content.**
+
+Commands a user types but the model never needs to auto-invoke set `disable-model-invocation: true`.
+They still work as slash commands but drop out of the model's listing entirely — zero startup cost.
+`/devkit` (a menu) and `/mcp-preview-server` (print a URL; the model has the Dolle-MCP preview tools
+directly) are gated this way. `/scaffold` stays model-invocable because routers point at it.
 
 ## Two levels
 
@@ -76,7 +90,7 @@ skills/<hub>/
 ```
 
 A hub's `SKILL.md` is a **router**, not a mini-manual: one row per reference saying *when to read it*,
-plus the two or three rules that bind regardless. Routers are 1.4–1.8 KB; references are 5–16 KB.
+plus the two or three rules that bind regardless. Routers are 1.3–2.5 KB; references are 4–33 KB.
 
 Deliberately **no "what it covers" column.** That reads as helpful but is a table of contents for a
 file the model is about to open — it cost ~1 KB per router (34 % of the body) and changed no routing
@@ -86,24 +100,47 @@ Measured:
 
 | | bytes | tokens |
 |---|---|---|
-| startup (4 descriptions) | 2,273 | **~568** |
-| invoke a hub (router) | 1,427–1,783 | ~360–450 |
-| one reference | 5,271–15,645 | ~1,300–3,900 |
-| **deferred to references** | 146,586 of 153,216 | **95.7 %** |
+| startup — 5 hub descriptions | 672 | **~170** |
+| startup — everything devkit adds (hubs, `/scaffold`, 4 agents, SessionStart line) | 1,996 | **~500** |
+| invoke a hub (router) | 1,263–2,455 | ~320–610 |
+| one reference | 4,392–33,131 | ~1,100–8,300 |
+| **deferred to references** | 451,740 of 460,051 | **98.2 %** |
 
-For comparison, the original design was 7,743 B of command descriptions at startup (~1,936 tokens)
-and every use began with a `Read` that yielded nothing if declined.
+Before this shape settled, devkit put 9,954 B (~2,490 tokens) in every session: four hubs, eight
+pack commands whose bodies only said "read this file" (~5 KB of descriptions), long agent
+descriptions, and a 537 B SessionStart line. The original design before that was 7,743 B of command
+descriptions and every use began with a `Read` that yielded nothing if declined.
 
-## Why four hubs and not twelve
+## Descriptions are short imperatives
 
-Twelve topic-scoped skills cost 5,711 B of descriptions (~1,428 tokens) every session. Grouping them
-into four domain hubs cuts that to 568 while keeping every topic reachable — the hub description
-carries its whole domain's trigger phrases, and the router points at the exact reference.
+The skill listing *is* the trigger surface: the model decides whether to invoke a hub from its
+description alone. A hub description is one line that starts with **"Call before…"** or **"Call
+when…"** and names the concrete nouns of its domain:
 
-Going further (one hub for everything) would be cheaper still, ~400 B, but a single description would
-have to cover Docker *and* typography *and* LangChain. Broad descriptions match badly, so Claude would
-stop auto-invoking and you'd be back to typing a command every time. Four domain-scoped descriptions
-keep matching reliable. That is also the shape ui-ux-pro-max settled on (7 hubs, 82 % deferred).
+```
+Call before building, restyling, or reviewing any UI — web pages, components, desktop apps, design
+systems, color/type, charts, motion, page speed.
+```
+
+A short imperative with the right nouns matches as reliably as a long list of quoted trigger phrases,
+at a fraction of the bytes — and it tells the model *when* to act, not just what the hub contains.
+The per-prompt keyword matching lives in the UserPromptSubmit hook instead, where it costs nothing
+unless it fires.
+
+## Why five hubs and not forty
+
+Forty topic-scoped skills would cost a description each, every session. Grouping them into five
+domain hubs keeps the listing at ~170 tokens while keeping every topic reachable — the hub
+description names its domain, and the router points at the exact reference.
+
+Going further (one hub for everything) would be cheaper still, but a single description would have to
+cover Docker *and* typography *and* LangChain. Broad descriptions match badly, so Claude would stop
+auto-invoking and you'd be back to typing a command every time. Domain-scoped descriptions keep
+matching reliable.
+
+The fifth hub, **engineering**, exists because debugging, code architecture, databases, and firmware
+fit none of the other four descriptions — folding them into `process` or `shipping` would have
+blurred those descriptions for every session. That is the bar for a new hub.
 
 ## Reference reads are ordinary file reads
 
@@ -121,15 +158,15 @@ claude config add permissions.allow 'Read(//C:/Users/Oliver/.claude/plugins/cach
 ## Request flow
 
 ```
-startup ─▶ 4 hub descriptions + 3 command descriptions + agent descriptions (~568 tok)
+startup ─▶ 5 hub descriptions + /scaffold + 4 agent descriptions + 1 hook line (~500 tok)
    │
    ▼
-/devkit ─▶ prints the hub menu (loads nothing)
+/devkit ─▶ prints the hub menu (loads nothing; user-only command)
    │
    ▼
 "my pod is crashing"
    ├─▶ UserPromptSubmit hook: "devkit:shipping (references/kubernetes.md)"
-   ├─▶ Skill: devkit:shipping        router injected, 1.4 KB, no prompt
+   ├─▶ Skill: devkit:shipping        router injected, 1.5 KB, no prompt
    ├─▶ Read: references/kubernetes.md   9.6 KB — only this one
    └─▶ debugs the pod
 ```
@@ -144,6 +181,10 @@ Claude Code substitutes it with the plugin's absolute directory. Routers use it 
 Hook `command`s run through the OS shell, and inline `echo`/quoting differs across cmd.exe,
 PowerShell, and bash. Because Claude Code already requires Node.js, the hooks call small `.mjs`
 scripts instead — identical behavior on every platform, emitting proper `hookSpecificOutput` JSON.
+
+The SessionStart hook is one ~170 B line (it runs every session, so it stays tiny). The
+UserPromptSubmit hook matches keywords on word boundaries — a trailing `s`/`es` allowed, so `inp`
+doesn't fire on "input" nor `pod` on "podcast" — and covers all 40 references.
 
 ## Design choices
 

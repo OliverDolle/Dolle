@@ -1,39 +1,41 @@
 ---
-description: List the devkit skill hubs and what each one covers.
+description: List the devkit skill hubs and what each covers.
+disable-model-invocation: true
 argument-hint: "[optional: a hub to load directly, e.g. design]"
 ---
 
 You are the devkit menu. Your job is to help the user pick and load a **hub**.
 **Do not load any hub or read any reference as part of showing this menu.**
 
-If the user passed an argument naming a hub (`agent-development`, `design`, `shipping`, `process`),
+If the user passed an argument naming a hub (`agent-development`, `design`, `shipping`, `engineering`, `process`),
 skip the menu and invoke it with the **Skill** tool as `devkit:<name>`, passing any remaining text as
 its arguments. If the argument names a *topic* instead (e.g. `kubernetes`, `web-performance`,
-`docs`), invoke the hub that owns it and go straight to that reference.
+`esp32`, `docs`), invoke the hub that owns it and go straight to that reference.
 
 Otherwise, present this menu verbatim (adjust formatting only):
 
 ---
 
-**devkit — four skill hubs.** Invoking one loads a short router; it names references and when to read
+**devkit — five skill hubs.** Invoking one loads a short router; it names references and when to read
 each, so only the depth your task needs enters context.
 
 | Hub | Covers | References |
 | --- | --- | --- |
-| `/devkit:agent-development` | Building agents & workflows with LangChain + LangGraph | `langchain-agents`, `langgraph-workflows`, `combining-langchain-and-langgraph`, `workflow-design`, `troubleshooting` |
-| `/devkit:design` | Any interface — web, desktop, UI craft, design systems, page speed | `ui-fundamentals`, `design-systems`, `web-dolle-mcp`, `desktop-native`, `web-performance` |
-| `/devkit:shipping` | Packaging & deploying | `containerization`, `kubernetes`, `cloud-infrastructure` |
-| `/devkit:process` | How to run the work | `prompt-enhancement`, `app-prompt`, `subagents`, `documentation` |
+| `/devkit:agent-development` | AI agents & LLM features — build, prompt, evaluate, voice | `langchain-agents`, `langgraph-workflows`, `combining-langchain-and-langgraph`, `workflow-design`, `prompt-engineering`, `speech-to-text`, `text-to-speech`, `eval-foundations`, `llm-as-judge`, `eval-harness-ci`, `langgraph-workflow-evals`, `tracing-observability`, `troubleshooting` |
+| `/devkit:design` | Any UI — web, desktop, craft, design systems, page speed | `ui-fundamentals`, `anti-slop`, `structural-variety`, `type-and-color`, `surfaces-and-details`, `motion-and-interaction`, `data-visualization`, `design-systems`, `web-dolle-mcp`, `desktop-native`, `web-performance` |
+| `/devkit:shipping` | Packaging & deploying | `containerization`, `kubernetes`, `kubernetes-gitops`, `cloud-infrastructure`, `github-actions`, `azure-devops` |
+| `/devkit:engineering` | Debugging, architecture, databases, firmware | `systematic-debugging`, `extensible-architecture`, `data-modeling`, `database-operations`, `esp32` |
+| `/devkit:process` | How to run the work | `prompt-enhancement`, `app-prompt`, `subagents`, `subagent-briefs`, `documentation` |
 
 Each hub accepts a task, e.g. `/devkit:design redesign the pricing page` or
 `/devkit:shipping my pod is crashing` — it loads the router and goes to the right reference.
 
 You can also name a topic and let Claude find the hub: "my pod is crashing", "review my UI",
-"write a Dockerfile", "this request is vague" all match a hub description on their own.
+"write a Dockerfile", "why is this test flaky", "this request is vague" all match a hub description on their own.
 
 Other commands:
-- `/scaffold` — start a project/component from a bundled template (e.g. a LangGraph or LangChain
-  starter) and adapt it to your task.
+- `/scaffold` — start a project/component from a bundled template (LangChain, LangGraph, promptfoo
+  eval CI, CI/CD pipelines) and adapt it to your task.
 - `/mcp-preview-server` — start the bundled Dolle-MCP live preview server (if needed) and print
   its gallery URL, so you don't have to remember or ask for it.
 

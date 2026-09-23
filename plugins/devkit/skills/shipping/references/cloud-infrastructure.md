@@ -32,7 +32,7 @@ Match the platform to the workload; don't reach for Kubernetes reflexively.
 | Static site / SPA + edge functions | **Static host + CDN** (CloudFront/S3, Cloud CDN, Vercel/Netlify) |
 
 Bias to the **most managed option that fits** — a cluster you don't need is ongoing toil. Cloud Run
-/ Fargate / App Runner run the same OCI image the `containerization` section builds, with far less
+/ Fargate / App Runner run the same OCI image the `containerization.md` section builds, with far less
 to operate than K8s.
 
 ## Step 2 — Infrastructure as Code (Terraform / OpenTofu)

@@ -1,6 +1,6 @@
 ---
 name: doc-writer
-description: Use to create or update project documentation following the devkit documentation method — a short README whose index is auto-generated from each doc's description frontmatter, one linked doc per major section, and a code map of where large subsystems live. Invoke when docs are missing, stale, or a new subsystem needs documenting.
+description: Creates or updates project docs with the devkit method (short README, generated index, one doc per section, code map). Dispatch when docs are missing or stale.
 tools: Read, Write, Edit, Grep, Glob, Bash, Skill
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: app-prompt-engineer
-description: Use to compile a settled app brief into a clean, build-ready specification (or to audit an existing spec for gaps) — off the main thread, following the devkit app-prompt template. Invoke once the interactive brief is gathered (app type/platform, users/auth, features + MVP scope, data, integrations, stack, non-functional, deployment, success criteria); it structures the answers into the fixed spec template, fills and labels sensible defaults, scans an existing codebase for context when the app extends one, flags blocking gaps, and returns the finished spec. Do NOT invoke it to run the interactive AskUserQuestion interview — that stays in the main thread (the app-prompt skill).
+description: Compiles a settled app brief into a build-ready spec, or audits a spec for gaps. Dispatch after the interview — the AskUserQuestion interview stays in the main thread.
 tools: Read, Write, Edit, Grep, Glob, Bash, Skill
 ---
 
@@ -35,8 +35,8 @@ with the user.
    non-goals, Users & roles, Features (MVP vs later, each with a testable acceptance condition), Data
    model, Architecture & stack, Integrations, UI/interface, Non-functional, **phased Build order**,
    Deployment & ops, Assumptions & open questions, and the **Handoff** section naming the exact
-   devkit sections the builder should load (ui-ux-design/gui-design for UI, agent-development for an
-   AI agent, containerization/kubernetes/cloud-infrastructure for shipping) and the scope boundaries.
+   devkit hubs and references the builder should load (`devkit:design` for UI, `devkit:agent-development`
+   for an AI agent, `devkit:shipping` for deployment, `devkit:engineering` for the database) and the scope boundaries.
 5. **Self-audit against the skill's checklist** before returning: MVP explicit, non-goals stated,
    every feature testable, stack + data concrete, build order verifiable phase by phase, assumptions
    visible, handoff complete. Fix what fails.

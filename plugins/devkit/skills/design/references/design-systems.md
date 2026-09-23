@@ -1,6 +1,6 @@
 # Design systems (the professional setup)
 
-`fundamentals.md` gets *one* screen right. A design system is what makes that decision
+`ui-fundamentals.md` gets *one* screen right. A design system is what makes that decision
 **once and reusable** — so the tenth screen, the second engineer, and the dark theme all come out
 consistent without anyone re-deciding. This reference is the *setup*: the token architecture, the
 component library, the theming model, the governance, and the handoff that a professional stands
@@ -9,7 +9,7 @@ up before building at scale.
 **When you actually need one.** A system is infrastructure, not decoration — it earns its cost
 when the work is *repeated*: a product (not a one-off page), more than one designer or engineer, a
 component reused across screens, or a foreseeable rebrand / dark mode / new platform. For a single
-landing page, don't build a system — apply `fundamentals` and ship. **Grow the system out of real
+landing page, don't build a system — apply `ui-fundamentals.md` and ship. **Grow the system out of real
 components; never boil the ocean up front.** An unused token is a liability.
 
 ## 1 — Tokens: three tiers, one source of truth
@@ -53,14 +53,14 @@ Rules that make the tiers pay off:
 
 ## 2 — Build the scales into tokens (not one value at a time)
 
-`fundamentals` says *use a scale*; the system's job is to **define each scale once as primitives**
+`ui-fundamentals.md` says *use a scale*; the system's job is to **define each scale once as primitives**
 so no one free-hands a value again.
 
 - **Color ramps.** For each hue, generate a full **perceptual ramp** (e.g. 50→950) so you have
   tints and shades to map semantics onto; work in **OKLCH** for even lightness steps. Then map
   semantic roles (`bg`, `surface`, `text`, `text-muted`, `border`, `action`, `success`/`warning`/
   `danger`/`info`) onto ramp stops. **Bake contrast into the mapping:** every text-on-surface and
-  control pair a theme produces must clear WCAG **AA** (4.5:1 text, 3:1 large/UI) — verify the
+  control pair a theme produces must clear WCAG **2.2 AA** (4.5:1 text, 3:1 large/UI) — verify the
   pairs the *semantic* tier can produce, in every theme.
 - **Type scale.** Families, a modular size ramp (1.2–1.25 ratio), weight tokens, line-height and
   measure tokens, and named **roles** (`display`, `heading`, `body`, `caption`). Prefer **fluid
@@ -71,6 +71,10 @@ so no one free-hands a value again.
 - **The rest of the taxonomy** — don't stop at color/type/space. Tokenize **radii**, **border
   widths**, **elevation** (shadow ramp), **z-index** layers, **motion** (duration + easing tokens),
   **breakpoints**, and **opacity**. Anything a component hardcodes today is a token you're missing.
+- **Accessibility primitives are tokens too (WCAG 2.2).** A **focus-ring** token set (color, width,
+  offset — so Focus Appearance is consistent and always ≥3:1 against its backdrop) and a
+  **minimum target-size** token (24px floor / 44px comfortable, per 2.5.8) belong in the system, not
+  re-decided per component — they're what makes every consumer pass a11y by default.
 
 ## 3 — Theming: a swap, not a rewrite
 
@@ -96,11 +100,11 @@ place.**
 
 - **Separate variants from states.** *Variants* are intentional flavors chosen by the author
   (`primary` / `secondary` / `ghost`; `sm` / `md` / `lg`). *States* are runtime conditions
-  (hover / focus / active / disabled / loading / error / selected — the set from `fundamentals`).
+  (hover / focus / active / disabled / loading / error / selected — the set from `ui-fundamentals.md`).
   A component's spec is the **matrix of variants × states**, all designed and all tokenized.
 - **Build accessibility into the component, once.** Focus ring, ARIA roles/labels, keyboard
   behavior, and touch-target size live *in the component* so every use inherits them — that's the
-  whole point of a shared build (see `fundamentals` §5/§11).
+  whole point of a shared build (see `ui-fundamentals.md` §5/§11).
 - **Compose, don't multiply.** Prefer slots/children and a few props over a new component per
   layout. A `Card` with a slot beats `CardWithImage`, `CardWithImageAndButton`, …
 - **Tier the library:** primitives/atoms (Button, Input, Icon) → composites (Field = Label + Input
@@ -172,8 +176,9 @@ when **the same token source feeds both sides**:
 - [ ] Components/screens reference **semantic** tokens only — no primitive or raw values in the UI.
 - [ ] Every scale is a token set (color ramps, type, spacing, **radii, elevation, z-index, motion,
       breakpoints, opacity**) — nothing routinely hardcoded.
-- [ ] Theming is a semantic-mapping swap: light **and** dark defined, contract names stable; AA
-      contrast holds on every pair each theme can produce.
+- [ ] Theming is a semantic-mapping swap: light **and** dark defined, contract names stable; WCAG
+      2.2 AA contrast holds on every pair each theme can produce.
+- [ ] Focus-ring and minimum target-size (24/44px) are tokenized system-level, not per-component.
 - [ ] Each component has a variants × states matrix, one canonical accessible build, and composes
       rather than multiplies.
 - [ ] Foundations (icons, grid, elevation) and content/voice rules are decided once, not per-screen.
@@ -185,10 +190,12 @@ when **the same token source feeds both sides**:
 
 ## Related
 
-- **`fundamentals.md` (sibling reference)** — the per-screen craft this one makes repeatable.
+- **`ui-fundamentals.md`** — the per-screen craft this reference makes repeatable.
   Get one screen right there first; the system just stops you from re-deciding on the next screen.
-- `frontend-design:frontend-design` — aesthetic *direction*; a system encodes a direction into
-  tokens, it doesn't choose one. Decide the feel there, then tokenize it here.
+- **`ui-fundamentals.md` §0** — aesthetic *direction*; a system encodes a direction into tokens, it
+  doesn't choose one. Decide the feel there, then tokenize it here. `type-and-color.md` is the
+  palette and pairing depth behind the color/type primitives. (The external `frontend-design` skill
+  covers the same ground, optionally.)
 - `web-dolle-mcp.md` — on the web, the **Dolle-MCP** server is a ready component/token source:
   theme its templates via CSS custom properties and gate pairs through `color_contrast` instead of
   building a library from scratch.

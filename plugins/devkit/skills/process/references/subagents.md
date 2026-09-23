@@ -1,11 +1,3 @@
-<<<<<<<< HEAD:plugins/devkit/skills/process/references/subagents.md
-========
----
-name: orchestration
-description: Methodology for building software by decomposing work and orchestrating subagents (explore, plan, implement, verify) instead of doing everything in one context. Load when a task is large, benefits from parallel investigation, or needs independent verification. Pair with writing-subagent-instructions to write the briefs.
----
-
->>>>>>>> 345a3659b22c6b0713179f004926ff4d461bf819:plugins/devkit/skills/process/references/orchestration/SKILL.md
 # Subagent-Driven Development
 
 Build software the way a tech lead runs a team: break the work into well-scoped units,
@@ -64,7 +56,7 @@ parsing ambiguity and lets you fan results back in cleanly.
 
 > This is the summary. For the full craft — pinning the decisions you don't want delegated, tool
 > grants, effort scaling, stop conditions, requiring a deviations report, and the copy-paste brief
-> template — read the **`writing-subagent-instructions`** skill in this section.
+> template — read `subagent-briefs.md`.
 
 ## Parallel vs. sequential
 
@@ -113,4 +105,4 @@ parsing ambiguity and lets you fan results back in cleanly.
 
 ## Related
 
-- `writing-subagent-instructions` — how to write the brief each delegated unit runs on.
+- `subagent-briefs.md` — how to write the brief each delegated unit runs on.

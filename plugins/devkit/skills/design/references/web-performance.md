@@ -85,7 +85,7 @@ gate). Sensible mobile starting points — tighten per project:
   (`loading="lazy"`) and offscreen work (`content-visibility: auto`).
 - Cache aggressively with correct headers (immutable hashed assets, revalidated HTML).
 - Performance and accessibility reinforce each other — reserving layout space, not blocking
-  input, and less JS all help both. Coordinate with the `ui-ux-design` section (reduced-motion,
+  input, and less JS all help both. Coordinate with the `web-dolle-mcp.md` section (reduced-motion,
   compositor-only animation) rather than fighting it.
 
 ## Related
