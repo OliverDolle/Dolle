@@ -48,11 +48,10 @@ Sizes: routers 1.3–2.5 KB, references 4–33 KB, 98.2 % of content deferred to
 
 `/plugins/devkit/commands/` — one Markdown file per slash command. Guidance is never here.
 
-- `devkit.md` — the menu listing the five hubs and their references without loading one. User-only
-  (`disable-model-invocation: true`), so it costs nothing at startup.
+- `devkit.md` — the menu listing the five hubs and their references without loading one.
 - `scaffold.md` — copies a bundled template into the workspace and adapts it. Model-invocable —
   routers point at it.
-- `mcp-preview-server.md` — starts the bundled Dolle-MCP preview server and prints its URL. User-only.
+- `mcp-preview-server.md` — starts the bundled Dolle-MCP preview server and prints its URL.
 
 ## Templates
 

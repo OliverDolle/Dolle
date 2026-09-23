@@ -20,7 +20,7 @@ devkit is **five hubs**. Invoking one loads a short router — one row per refer
 read it — and Claude then reads only the reference the task needs.
 
 ```
-startup            5 one-line descriptions (~170 tokens; ~500 for all of devkit). Nothing else.
+startup            5 one-line descriptions (~170 tokens; ~560 for all of devkit). Nothing else.
 /devkit:shipping   router arrives (1.5 KB, no file read, no prompt)
    └─ reads references/kubernetes.md   (9.6 KB — only this one)
 ```
@@ -34,8 +34,7 @@ Two levels, two costs. You never pay for `cloud-infrastructure` while debugging 
 ```
 
 Lists the five hubs and the references inside each. Loads nothing. Jump straight in with
-`/devkit design` or `/devkit kubernetes` — a topic name resolves to its owning hub. `/devkit` is
-user-only, so it never appears in Claude's startup listing.
+`/devkit design` or `/devkit kubernetes` — a topic name resolves to its owning hub.
 
 ## Invoking a hub
 
@@ -85,8 +84,8 @@ Three commands remain, for behavior a skill can't provide:
 | `/scaffold` | Start a project/component from a bundled template (LangChain, LangGraph, promptfoo eval CI, CI/CD pipelines) and adapt it to your task. |
 | `/mcp-preview-server` | Start the bundled Dolle-MCP live preview server (if it isn't running) and print its gallery URL. Optionally pass a template id (e.g. `/mcp-preview-server charts`) to open it in the browser. |
 
-`/devkit` and `/mcp-preview-server` are user-only (`disable-model-invocation: true`) — they cost
-nothing at startup. `/scaffold` stays model-invocable so routers can point at it.
+All three commands are model-invocable, each with a one-line description, so Claude can run them
+when a task calls for it — e.g. `/mcp-preview-server` when you ask to see the templates.
 
 `/mcp-preview-server` relies on the **Dolle-MCP** server, which devkit bundles and registers
 automatically (see [Installation](installation.md#bundled-mcp-server-dolle-mcp)).

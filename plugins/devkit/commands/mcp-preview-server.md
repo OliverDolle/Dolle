@@ -1,6 +1,5 @@
 ---
-description: Start the Dolle-MCP preview server if needed and print its gallery URL.
-disable-model-invocation: true
+description: Call when the user wants to browse Dolle-MCP templates or palettes — starts the preview server and prints its gallery URL.
 argument-hint: "[optional: a template id to open in the browser, e.g. 'charts' or 'charts#candlestick', or 'open' for the gallery]"
 ---
 
