@@ -22,6 +22,7 @@ a library into its own runtime — it works with the files, exactly like a devel
 ```
 /scaffold                          # list available templates and pick one
 /scaffold langgraph-workflow ./svc # copy that template into ./svc and adapt it
+/scaffold promptfoo-eval-ci        # add an eval merge gate to the current repo
 ```
 
 The command discovers every bundled template, and once you choose one it:
@@ -33,16 +34,20 @@ The command discovers every bundled template, and once you choose one it:
 
 It won't overwrite existing files without asking. You can also just say *"scaffold a LangGraph
 workflow that does X"* and the `agent-developer` subagent will use the same templates, loading
-`devkit:agent-development` for the guidance behind them.
+`devkit:agent-development` for the guidance behind them. Hub routers name the template that goes
+with a reference (`/scaffold promptfoo-eval-ci` from `eval-harness-ci`, `/scaffold cicd-starters`
+from the shipping hub), so Claude reaches for them on its own.
 
 ## Templates that ship today
 
-Both live under `plugins/devkit/templates/`:
+All live under `plugins/devkit/templates/`:
 
-| Template | What you get |
-| --- | --- |
-| `langgraph-workflow` | A custom `StateGraph` app: typed state, a model node, a tool node, conditional routing with a loop, and a checkpointer — plus `main.py`, `requirements.txt`, and a README. |
-| `langchain-agent` | A compact tool-calling agent: model, example tools, a prompt with the required `agent_scratchpad`, and an `AgentExecutor` in a single runnable `agent.py`. |
+| Template | What you get | Guidance behind it |
+| --- | --- | --- |
+| `langgraph-workflow` | A custom `StateGraph` app: typed state, a model node, a tool node, conditional routing with a loop, and a checkpointer — plus `main.py`, `requirements.txt`, and a README. | `devkit:agent-development` → `langgraph-workflows`, `workflow-design` |
+| `langchain-agent` | A compact tool-calling agent: model, example tools, a prompt with the required `agent_scratchpad`, and an `AgentExecutor` in a single runnable `agent.py`. | `devkit:agent-development` → `langchain-agents` |
+| `promptfoo-eval-ci` | An eval merge gate: `promptfooconfig.yaml` with a deterministic and an `llm-rubric` assertion, a seed `tests.yaml`, and a GitHub Actions workflow that runs on PRs and fails below a pass-rate threshold. | `devkit:agent-development` → `eval-harness-ci`, `llm-as-judge` |
+| `cicd-starters` | Keyless-OIDC pipeline starters — `.github/workflows/deploy.yml` (GitHub Actions) and `azure-pipelines.yml` (Azure DevOps) — each with a build stage and a gated production deploy. Copy the one for your platform. | `devkit:shipping` → `cloud-infrastructure`, `github-actions`, `azure-devops` |
 
 Each template folder contains a `TEMPLATE.md` manifest (its `name`, `description`, placeholder
 tokens, and post-copy steps). `TEMPLATE.md` itself is never copied into your project.
@@ -79,6 +84,6 @@ it."* The templates themselves are plain files and port fine.
 
 ## Related
 
-- [Skill hubs](skill-packs.md) — the `agent-development` references behind these templates.
-- [Extending](extending.md) — add templates, skills, sections, agents, and hooks.
+- [Skill hubs](skill-packs.md) — the references behind these templates.
+- [Extending](extending.md) — add templates, references, hubs, agents, and hooks.
 - [Code map](code-map.md) — where templates and the scaffold command live.

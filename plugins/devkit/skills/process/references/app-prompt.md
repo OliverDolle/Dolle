@@ -157,7 +157,7 @@ OR the interface contract for a headless app: CLI commands/flags, API endpoints,
 - **Then hand off.** Either build it yourself following the phased order, or **dispatch the
   `app-prompt-engineer` agent** to compile/normalize a large spec off the main thread, or pass the
   spec straight to a builder. Point the builder at the devkit sections named in §13.
-- If the app has a UI, the UI work runs through its own brief (`ui-ux-design` / `gui-design`) — this
+- If the app has a UI, the UI work runs through its own brief (`devkit:design` → `references/web-dolle-mcp.md` / `devkit:design` → `references/desktop-native.md`) — this
   spec feeds it the goal, users, and structure; it doesn't replace that design step.
 
 ## The standing bar

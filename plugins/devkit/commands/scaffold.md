@@ -1,5 +1,5 @@
 ---
-description: "Use when starting a new project or component from a template — BEFORE hand-rolling boilerplate. Copies a bundled devkit starter (e.g. a LangGraph or LangChain project) and adapts it to your task. Triggers: 'scaffold a project', 'start a new langgraph app', 'bootstrap from a template', 'new project skeleton', 'generate boilerplate'."
+description: Call to start a project from a bundled template (LangChain, LangGraph, promptfoo eval CI, CI/CD pipelines) instead of hand-rolling boilerplate.
 argument-hint: "[template name] [target dir] — or leave blank to list templates"
 ---
 

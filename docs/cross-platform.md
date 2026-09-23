@@ -23,7 +23,7 @@ file can use it. This page shows how to wire them into other tools.
 
 ## Claude Code (native)
 
-Full experience: marketplace install, four hubs whose routers load on invoke with no file read,
+Full experience: marketplace install, five hubs whose routers load on invoke with no file read,
 references read on demand, subagents, and hooks. See [Installation](installation.md) and
 [Usage](usage.md).
 

@@ -2,17 +2,17 @@
 
 You are the design lead. The client is paying for a point of view they could not get from a
 template — so every color, type, and layout choice is made *for this brief*, and you have a
-real, offline design library to pull from: the **Dolle-MCP** server. This skill layers a
-concrete tool workflow on top of the general design craft in **`devkit:ui-design`**.
+real, offline design library to pull from: the **Dolle-MCP** server. This reference layers a
+concrete tool workflow on top of the general design craft in **`ui-fundamentals.md`**.
 
-**Keep the design-craft base in mind — `devkit:ui-design` `fundamentals`, especially its §0
+**Keep the design-craft base in mind — `ui-fundamentals.md`, especially its §0
 (aesthetic direction): ground the design in the subject, the hero-as-thesis, deliberate typography,
-structure-as-information, restraint, and self-critique.** This skill does not repeat that craft; it
+structure-as-information, restraint, and self-critique.** This reference does not repeat that craft; it
 adds *how to execute it against Dolle-MCP* and *what to settle with the user before building*. (The
 external `frontend-design` skill covers the same aesthetic ground if you happen to have it —
 optional, never required.)
 
-**Before you build a page here, read three ui-design skills — they decide the things this workflow
+**Before you build a page here, read three references — they decide the things this workflow
 then executes:** `anti-slop` (the named AI-default tells, the escape moves, and the gate sweep to run
 on the finished screenshot), `structural-variety` (pick and *state* a named page shape, a nav
 archetype and a footer archetype before markup — and make them differ from the last build), and
@@ -215,7 +215,7 @@ Cover these axes:
      reads as "AI-generated." Unless the brand *is* purple, seed the palette from the subject or
      the curated catalog (blue, teal, emerald, amber, rose, sunset, lime, cyan, …) — the library
      is deliberately varied for exactly this reason. Also steer clear of the other AI defaults
-     called out in `devkit:ui-design` §0 (cream + serif + terracotta; near-black + one acid accent).
+     called out in `ui-fundamentals.md` §0 (cream + serif + terracotta; near-black + one acid accent).
 
 6. **Animation.** Do they want motion, and how much? Offer concrete, existing options rather
    than "some animations": advanced scroll mechanics — variable speed, horizontal, motion-blur,
@@ -269,7 +269,7 @@ Cover these axes:
    propose a concrete section skeleton (hero → … → footer) before writing code. Whichever it is,
    give the page **rhythm**: alternate section treatments (light/dark, full-bleed image, split,
    oversized type) and use asymmetry / an editorial grid instead of a stack of identical centered
-   bands — see `devkit:ui-design` §0 (*compose, don't stack*). Every section should earn its place
+   bands — see `ui-fundamentals.md` §0 (*compose, don't stack*). Every section should earn its place
    and look different from its neighbors.
 
 If content/charts are involved, also read `guide://chart-libraries` (default: **ECharts**,
@@ -278,7 +278,7 @@ vendored, colors resolved from CSS custom properties) before picking a charting 
 ## Step 2 — Plan (brief → token system), then build
 
 Once the axes are settled, plan in two passes (the aesthetic-direction discipline from
-`devkit:ui-design` §0): first a compact token system (4–6 named hex values, 2+ type roles, a layout
+`ui-fundamentals.md` §0): first a compact token system (4–6 named hex values, 2+ type roles, a layout
 concept with an ASCII wireframe, and one **signature** element), then critique it against the brief
 to strip anything generic, then build —
 adapting real template source where it fits and deriving every color/type decision from the
@@ -308,7 +308,7 @@ change — never hardcode).
   minimum** (AAA for body text where you can). WCAG 2.2 is the current W3C Recommendation — also
   check its AA additions: targets ≥24×24px (44 comfortable), the focus ring never obscured by a
   sticky nav, any drag interaction has a single-pointer alternative, and login fields allow paste /
-  password managers (see `devkit:ui-design` `fundamentals` §11).
+  password managers (see `ui-fundamentals.md` §11).
 - Check it responsive down to mobile, keyboard focus visible, and reduced-motion honored
   (motion freezes to a rich static state; loops never start; reveal content is never left
   hidden).
@@ -331,13 +331,13 @@ change — never hardcode).
   Choose from the subject or the curated catalog. Avoid the other AI defaults too — a default UI
   sans (Inter/Roboto/Open Sans) as the *display* face, the blue-grey "SaaS" palette, pure black on
   pure white, the dead-centered hero, and the identical three-up icon-card grid (the full catalog is
-  `devkit:ui-design` `anti-slop`; direction is `fundamentals` §0).
+  `anti-slop.md`; direction is `ui-fundamentals.md` §0).
 - **State the page shape, nav and footer before markup**, and make them differ from the last page you
   built for this user — structural sameness survives every palette swap, so it's the fingerprint that
-  matters most (`devkit:ui-design` `structural-variety`). Leave a stamp comment recording the picks.
+  matters most (`structural-variety.md`). Leave a stamp comment recording the picks.
 - **One accent, under ~5% of any viewport; every neutral tinted toward the anchor hue; author color in
   OKLCH.** Define an accent-text token for any surface the accent fills, and make every rule that flips
-  a background also state its `color` (`devkit:ui-design` `type-and-color`).
+  a background also state its `color` (`type-and-color.md`).
 - **Never invent a metric, testimonial, logo or customer count.** Use a labelled placeholder or drop
   the section; fabricated proof discredits the real claims next to it.
 - **Real copy, never lorem ipsum.** Write specific, confident text in the brand's voice; placeholder
@@ -357,13 +357,12 @@ change — never hardcode).
 
 ## Related
 
-- `devkit:ui-design` — the design-craft base this skill layers on: `anti-slop` (tells, escape moves,
-  gate sweep), `structural-variety` (page shape, nav/footer archetypes, hero fit), `type-and-color`
-  (pairings, OKLCH palettes, contrast pairs), `fundamentals` (§0 aesthetic direction + the craft),
-  `motion-and-interaction`, `data-visualization`, `design-systems`. The external `frontend-design`
+- The design-craft base this reference layers on: `anti-slop.md` (tells, escape moves, gate sweep),
+  `structural-variety.md` (page shape, nav/footer archetypes, hero fit), `type-and-color.md`
+  (pairings, OKLCH palettes, contrast pairs), `ui-fundamentals.md` (§0 aesthetic direction + the
+  craft), `surfaces-and-details.md`, `motion-and-interaction.md`, `data-visualization.md`,
+  `design-systems.md`. The external `frontend-design`
   skill is an optional complement, not required.
 - Dolle-MCP docs (sibling repo): `docs/templates.md`, `docs/color-tools.md`, `docs/svg-tools.md`,
   `docs/web-mechanics.md`, `docs/backgrounds-and-transitions.md`, `docs/chart-libraries.md`,
   `docs/mcp-tools.md`.
-</content>
-</invoke>

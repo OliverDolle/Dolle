@@ -1,7 +1,7 @@
 {
   "name": "devkit",
-  "description": "Four on-demand skill hubs for AI-assisted development. Each hub is a short router: invoke it and it lists references plus when to read each, so only the depth a task needs enters context. agent-development (LangChain + LangGraph agents and workflows), design (web pages via the bundled Dolle-MCP server, native/desktop GUIs, UI craft, design systems, Core Web Vitals), shipping (Docker, Kubernetes, CI/CD and Terraform), and process (turning a vague ask into a precise prompt, an app idea into a build-ready spec, decomposing work across subagents, and a documentation method). Only the four descriptions sit in startup context; 92% of the content is deferred to references read on demand.",
-  "version": "0.15.0",
+  "description": "Five on-demand skill hubs for AI-assisted development. Each hub is a short router: call it and it names the one reference the task needs, so only that depth enters context. agent-development (LangChain/LangGraph agents, system prompts, evals, voice), design (web pages via the bundled Dolle-MCP server, desktop GUIs, UI craft, design systems, Core Web Vitals), shipping (Docker, Kubernetes, GitOps, CI/CD, Terraform), engineering (debugging, extensible architecture, databases, ESP32 firmware), and process (sharpening a vague ask, app specs, subagents, docs). About 2 KB of startup context; 98% of the content is deferred to references.",
+  "version": "0.16.0",
   "author": {
     "name": "OliverDolle"
   },
@@ -39,6 +39,19 @@
     "clarification",
     "app-spec",
     "app-creation",
-    "requirements"
+    "requirements",
+    "engineering",
+    "debugging",
+    "architecture",
+    "database",
+    "postgres",
+    "esp32",
+    "firmware",
+    "evals",
+    "llm-as-judge",
+    "speech",
+    "gitops",
+    "github-actions",
+    "azure-devops"
   ]
 }

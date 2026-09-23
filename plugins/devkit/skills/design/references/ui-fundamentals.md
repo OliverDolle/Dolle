@@ -1,13 +1,80 @@
 # Designing great UI (fundamentals)
 
 Great UI is **clear, consistent, forgiving, and quiet** — it lets people do the thing without
-noticing the interface. This section is the *craft*: the rules that separate a UI that feels
+noticing the interface. This reference is the *craft*: the rules that separate a UI that feels
 designed from one that feels assembled. It is tool-agnostic — it applies whether you're in Figma,
 hand-writing CSS, or driving the Dolle-MCP library.
 
-Where the neighbors fit: **`frontend-design`** owns aesthetic *direction* and distinctiveness (not
-looking templated); **`ui-ux-design`** owns the *build workflow* on the Dolle-MCP server. This
-section owns the *interface craft* underneath both — apply it regardless of look or tooling.
+This reference covers **both halves of the craft**: §0 sets the aesthetic *direction* (making it
+distinctive, not templated) and §1–§12 make the interface *work* (hierarchy, spacing, type, color,
+states, forms, accessibility). Where the neighbors fit: **`anti-slop.md`** is §0 at full depth — the
+named tells of AI-default UI, the escape moves, and the gate sweep to run before shipping;
+**`structural-variety.md`** and **`type-and-color.md`** are the page-shape and surface decisions §0
+asks for; **`design-systems.md`** makes all of it repeatable; **`web-dolle-mcp.md`** owns the *build
+workflow* on the Dolle-MCP server; **`desktop-native.md`** applies the same craft to native apps.
+The external **`frontend-design`** skill, if you have it, covers similar aesthetic-direction ground —
+a useful complement, never a dependency: devkit is self-contained here.
+
+## 0 — Aesthetic direction: distinctive, not templated
+
+Before the rules below make a UI *work*, this decides what it should *feel* like — the difference
+between a design made **for this subject** and one that could be pasted onto anything. Settle the
+direction first; the rest of this reference executes it.
+
+- **Ground it in the subject.** Derive palette, type, and imagery from what the thing actually is —
+  its domain, its content, its personality — not from a generic starter. A law firm, a synthwave
+  album, and a children's clinic must not share a look. When stuck, pull a color or a shape from the
+  subject's own world.
+- **The hero is the thesis.** The first screen states one clear idea in one strong move. Choose that
+  move deliberately, make it the thing people remember, and keep everything else subordinate to it.
+- **Type is a primary tool, not an afterthought.** Choose typefaces with intent — a deliberate
+  pairing, a real scale, a point of view — not the framework default. Type carries most of a
+  design's personality before color does (mechanics in §3).
+- **Structure carries meaning.** The shape of the layout should mirror the shape of the content: the
+  order, grouping, and rhythm of sections *is* information, not just arrangement (see §1, §9).
+- **Compose, don't stack.** Reach for asymmetry and an editorial grid — offset images, full-bleed
+  moments, overlapping elements, deliberate negative space — and give the page *rhythm* by
+  alternating section treatments (light/dark, full-bleed, split, oversized type). A stack of
+  identical centered bands is the surest tell of an assembled, not designed, page.
+- **Spend boldness once.** Pick **one** signature element — a color, a type moment, a motion, a
+  layout break — and let it be loud; keep everything around it quiet. Bold everywhere reads as noisy;
+  restraint is what makes the one move land.
+- **Avoid the AI-default looks.** These read as "machine-generated" because models overproduce them;
+  catching one in your own draft is the signal to re-seed from the subject. **The full catalog —
+  ~60 named tells with the fix for each, plus the audit gates — is `anti-slop.md`;
+  read it before generating anything visual.** The headline offenders:
+  - **Palette:** purple / violet / indigo as the default accent; a purple→pink or cyan→magenta
+    gradient (especially as a `background-clip: text` headline); the blue-and-grey "SaaS default";
+    pure `#000` on pure `#fff` (use a near-black and a tinted paper instead); untinted greys. Seed
+    from the subject or a curated set (blue, teal, emerald, amber, rose, sunset, lime, cyan…), keep
+    to **one** accent, and hold it under ~5% of any viewport.
+  - **Type:** a default UI sans (Inter, Roboto, Open Sans, Helvetica) used as the *display/brand*
+    face. They're fine for body and UI, but headlines are where personality lives — pick a
+    distinctive display face with a point of view (candidates in `type-and-color.md` §3). Headings are
+    **roman**: an italicized emphasis word inside a heading is one of the most reliable tells.
+  - **Layout:** the dead-centered `100vh` hero (headline + subhead + two grey buttons) and the
+    identical three-up feature-card grid with tiny icons in circles; cards nested inside cards;
+    an eyebrow label on every section. Break the everything-centered habit (see *compose, don't
+    stack* above), and pick the page's **shape** deliberately (`structural-variety.md`).
+  - **Chrome:** the wordmark-left / four-links / button-right sticky nav and the four-column
+    link-farm footer with a social row. Both are genre-blind — they land identically on a bakery and
+    a B2B platform.
+  - **Cream + serif + terracotta** ("tasteful editorial") and **near-black + one acid/neon accent**
+    ("sleek tech") — each was once distinctive and is now its own cliché.
+- **Never invent facts to fill a layout.** No metric, testimonial, logo, or customer count the user
+  didn't give you — "10× faster" and "trusted by 50,000+ teams" read as generated and poison every
+  real claim beside them. A labelled gap ("metric to confirm") is honest; if a stat-led section has no
+  stats, it's the wrong section.
+- **Decoration needs an anchor.** A shape, badge, numeral, or caret earns its place only when the
+  content motivates it (a caret inside a typed command, a numeral that names a version or issue, a
+  stamp that names a date). "Something needed to go here" is not a reason.
+- **Write real copy, never lorem ipsum.** Specific, confident words in the brand's voice are part of
+  the design — they set tone and prove the layout works at real lengths. Placeholder text hides
+  whether the design holds up and always ships looking unfinished.
+- **Self-critique against "templated."** Step back from the result (screenshot it if you can) and
+  ask: does this look made *for this*, or could it be anyone's — would it look at home in an award
+  gallery, or like a template? Name the single most generic thing and fix it. Repeat until the
+  design is unmistakably about the subject.
 
 ## 1 — Hierarchy: guide the eye, one thing at a time
 
@@ -82,7 +149,9 @@ element, design the full set up front:
   trigger to prevent double-submit, and keep layout stable (reserve space — no jump when content
   arrives). Prefer **skeletons over spinners** for content areas; they preview structure and reduce
   perceived wait.
-- **Touch targets ≥ 44×44px**; don't place interactive elements so close they're mis-tapped.
+- **Target size:** WCAG 2.2 (§11) sets a hard floor of **24×24 CSS px** (2.5.8 Target Size (Minimum), AA);
+  **44×44px remains the comfortable target** (the AAA/touch bar). Don't place interactive elements so
+  close they're mis-tapped; if a control is under 24px it needs adequate spacing around it to pass.
 
 ## 6 — The four content states of any data view
 
@@ -146,7 +215,8 @@ A list/table/card/dashboard is not done until all four are designed:
 
 ## 11 — Accessibility is table stakes
 
-Not a phase — a constraint you design within from the start:
+Not a phase — a constraint you design within from the start. Target **WCAG 2.2**, the current W3C
+Recommendation (it supersedes 2.1 and is backward-compatible):
 
 - **Semantic HTML** (real `<button>`, `<nav>`, `<label>`, headings in order) so assistive tech and
   keyboards work for free.
@@ -154,6 +224,16 @@ Not a phase — a constraint you design within from the start:
 - Contrast AA (see §4); don't rely on color alone (§4); label icon-only controls
   (`aria-label`); associate errors with fields (`aria-describedby`).
 - Respect user settings: reduced motion, text zoom to 200%, dark mode.
+- **The WCAG 2.2 AA additions most relevant to UI craft:**
+  - **Target Size (Minimum) 2.5.8** — 24×24 CSS px floor (44px comfortable); see §5.
+  - **Focus Not Obscured 2.4.11** — the focused control must not be *entirely* hidden by sticky
+    headers, cookie bars, or other author content; keep the focus ring in view when scrolling.
+  - **Dragging Movements 2.5.7** — any drag interaction (sliders, reorder, drag-to-dismiss) needs a
+    **single-pointer alternative** (tap/click, arrow buttons) — don't make dragging the only way.
+  - **Redundant Entry 3.3.7** — don't ask for the same information twice in one flow; auto-populate
+    or let the user pick previously entered data.
+  - **Accessible Authentication (Minimum) 3.3.8** — no cognitive-function test (no memorizing/
+    transcribing puzzles) as the only factor; **allow paste and password managers** on login fields.
 
 ## 12 — Icons: SVG, never system emoji
 
@@ -177,6 +257,11 @@ status, or headings.
 
 ## Review checklist (run before calling a UI done)
 
+- [ ] Direction is grounded in the subject — distinctive, not templated; none of the AI-default
+      looks (purple-by-default, cream/serif/terracotta, black/acid-accent); one deliberate signature move.
+- [ ] `anti-slop.md`'s gate sweep run and clean — no gradient hero/headline, no `100vh` centered hero, no
+      three-up icon-card grid, no AI nav/footer, no italic heading, no invented metrics or fabricated
+      proof, one accent under ~5%.
 - [ ] One clear primary action per view; hierarchy guides the eye.
 - [ ] All spacing on the scale; consistent rhythm, generous breathing room.
 - [ ] Type: ≤6 sizes, body ≥16px, line length 45–75ch, left-aligned body.
@@ -189,16 +274,25 @@ status, or headings.
 - [ ] Icons are SVG from one consistent set — **no system emoji** in chrome/buttons/status; icon-only
       controls have an accessible label, decorative icons are `aria-hidden`.
 - [ ] Keyboard-operable, semantic HTML, screen-reader labels, no layout shift on load.
+- [ ] **WCAG 2.2 AA:** targets ≥24×24px (44 comfortable); focus never fully obscured; drag actions
+      have a single-pointer alternative; no redundant entry; login allows paste / password managers.
 - [ ] Looks right at mobile width and at 200% zoom; light and dark both checked.
 
 ## Related
 
-- **`design-systems.md` (sibling reference)** — once these rules are settled for one screen, that
-  one makes them *repeatable*: design tokens, a component library, theming, and dev handoff so the
-  whole product stays consistent. Use this reference to get one screen right; that one to scale it.
-- `frontend-design:frontend-design` — aesthetic direction and distinctiveness (avoiding the
-  templated/AI-default look). Use it for *what it should feel like*; use this for *how to make it
-  work*.
+- **`anti-slop.md`** — §0 at full depth: the named tells of AI-default UI with a fix for each, the
+  escape moves, an audit report format, the six-axis pre-emit self-critique, and a gate sweep. Read it
+  before generating or reviewing anything visual.
+- **`structural-variety.md`** — the *page shape* §0's "structure carries meaning" and "compose, don't
+  stack" ask for: named shapes, nav/footer archetypes, hero fit, section rhythm.
+- **`type-and-color.md`** — §3 and §4 at full depth: real type pairings (and the faces to avoid),
+  OKLCH palette construction, accent discipline, dark-mode recipe, and the contrast pairs that fail.
+- **`design-systems.md`** — once these rules are settled for one screen, that reference makes them
+  *repeatable*: design tokens, a component library, theming, and dev handoff so the whole product
+  stays consistent. Use this reference to get one screen right; use that one to scale it.
+- `frontend-design:frontend-design` *(optional external skill)* — covers the same aesthetic-direction
+  ground as **§0** above. A useful complement if it happens to be installed, but **not required** —
+  devkit is self-contained here.
 - `web-dolle-mcp.md` — executes this craft on the **Dolle-MCP** server (templates, curated
   palettes, `color_contrast`, SVG, screenshots) and runs a design brief first.
 - `desktop-native.md` — the same craft for **native/desktop GUIs** (Qt, GTK, platform HIG): window

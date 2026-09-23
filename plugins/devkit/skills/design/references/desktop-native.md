@@ -2,11 +2,12 @@
 
 Designing a desktop app is the shared UI craft **plus a platform layer the web doesn't have**.
 Hierarchy, a spacing/type scale, semantic color, component states, forms, and accessibility all
-still apply — **read `ui-fundamentals.md` alongside this (and `design-systems.md` for more than one
-screen); this reference does not repeat them.** What's different on the desktop is the *shell*: windows and their chrome, a menu &
-command model, a richer keyboard contract, resizable layouts, HiDPI, native widgets, an OS theme to
-follow, and a UI thread you must not block. This skill covers that layer, with **Qt** as the worked
-example — but the concepts port to GTK, WinUI, wxWidgets, and native toolkits.
+still apply — **read `ui-fundamentals.md` first (and `design-systems.md` for more than one
+screen); this reference does not repeat them.** What's different on the desktop is the *shell*:
+windows and their chrome, a menu & command model, a richer keyboard contract, resizable layouts,
+HiDPI, native widgets, an OS theme to follow, and a UI thread you must not block. This reference
+covers that layer, with **Qt** as the worked example — but the concepts port to GTK, WinUI,
+wxWidgets, and native toolkits.
 
 ## 1 — Follow the platform's Human Interface Guidelines
 
@@ -79,7 +80,7 @@ should be reachable there, even commands that also live on a toolbar or shortcut
 Desktop apps are expected to be **fully operable without a mouse** — more strictly than the web.
 
 - **Logical tab order** through controls; a **visible focus indicator** always (same rule as
-  `ui-fundamentals.md` → `references/fundamentals.md` §5). Group radio buttons for arrow-key navigation.
+  `ui-fundamentals.md` §5). Group radio buttons for arrow-key navigation.
 - **Default and cancel buttons:** **Enter** triggers the default (primary) button, **Esc** cancels
   the dialog/closes the popup. Mark them so keyboard users get them for free (Qt:
   `button->setDefault(true)`; `QDialog` maps Esc to reject).
@@ -104,7 +105,7 @@ different lengths. Fixed pixel positions break all three.
 - **Save and restore window geometry and panel layout** between sessions (`QSettings` +
   `saveState`/`saveGeometry`) — reopening where you left off is a baseline desktop expectation.
 - Density is higher than the web and pointers are precise, but **still keep comfortable spacing**
-  (the `ui-fundamentals.md` `fundamentals.md` scale) and adequate click targets — toolbar icons ~24–32px with padding, not
+  (the `ui-fundamentals.md` scale) and adequate click targets — toolbar icons ~24–32px with padding, not
   crammed.
 
 ## 6 — HiDPI, scaling, and system fonts
@@ -117,8 +118,8 @@ exactly one machine.
 - **Icons and images:** prefer **vector/SVG icons** (scale crisply at any factor) or provide
   `@2x`/`@3x` raster variants. A single 16px PNG is blurry at 200 %. **Never use system/OS emoji as
   toolbar/menu/status icons** — they render differently per platform, ignore the app palette, and
-  are announced by name to screen readers; ship a real SVG icon set instead (see `ui-fundamentals.md`
-  §12).
+  are announced by name to screen readers; ship a real SVG icon set instead (see
+  `ui-fundamentals.md` §12).
 - **Use the system font and system metrics**, not a hardcoded family/size — it's what makes the app
   look native and respects the user's font-size setting. Theme *relative* to it.
 - Test on a HiDPI display and a scaled display, and across a multi-monitor drag between them.
@@ -132,8 +133,7 @@ Even a custom-styled app should honor the environment it runs in:
   file picker is a red flag.
 - **Follow the OS theme, including dark mode.** Read system colors from the platform palette
   (Qt `QPalette` / `QStyleHints::colorScheme`) rather than hardcoding — an app that stays white when
-  the OS goes dark looks broken. This is the same semantic-token discipline as `ui-fundamentals.md`
-  `references/design-systems.md` §3,
+  the OS goes dark looks broken. This is the same semantic-token discipline as `design-systems.md` §3,
   applied to the system palette.
 - **Platform button order in dialogs** differs and matters: Windows is typically
   `[ OK ] [ Cancel ]`; macOS and GNOME put the confirming action on the **right**,
@@ -173,6 +173,12 @@ Desktop a11y goes through **platform accessibility APIs** — UI Automation (Win
   web.
 - **Don't encode meaning in color alone; honor high-contrast themes**; ensure text contrast meets
   AA against the *actual* system palette in both light and dark.
+- **WCAG 2.2 is the reference where it applies** (it's authored for the web, but its intent ports):
+  keep **click/tap targets** comfortable (the 24px floor / 44px comfortable target-size guidance —
+  don't cram toolbar buttons, see §5); keep the **focused control fully visible** — auto-scroll it
+  into view so a docked panel, status bar, or floating inspector never covers the focus ring (the
+  desktop analogue of Focus Not Obscured); and give any **drag-only** interaction a keyboard/click
+  alternative (the Dragging Movements analogue).
 
 ## 10 — Qt specifics (and how they generalize)
 
@@ -182,7 +188,7 @@ Desktop a11y goes through **platform accessibility APIs** — UI Automation (Win
   without reason.
 - **Theming as tokens:** style with **QSS** (Qt Style Sheets — CSS-like) and/or a customized
   `QPalette`. Centralize colors/metrics as a single stylesheet/palette so themes swap in one place —
-  the `ui-fundamentals.md` `design-systems.md` token model, expressed in Qt. (GTK is literally CSS; WinUI uses XAML resource
+  the `design-systems.md` token model, expressed in Qt. (GTK is literally CSS; WinUI uses XAML resource
   dictionaries — same idea.)
 - **Model/View for data:** show lists/tables/trees through a model (`QAbstractItemModel` +
   `QTableView`/`QTreeView`), not by hand-syncing widgets to data — it scales, sorts, and stays
@@ -212,17 +218,25 @@ Desktop a11y goes through **platform accessibility APIs** — UI Automation (Win
 - [ ] UI thread never blocks — long work is off-thread with progress + cancel; unsaved-changes
       prompt on close; undo/redo for edits.
 - [ ] Accessible via the platform API: named controls, standard widgets (or a custom a11y bridge),
-      keyboard + focus, no color-only meaning, AA contrast on the real palette.
-- [ ] The `ui-design` fundamentals (hierarchy, spacing/type scale, states, forms) and token
+      keyboard + focus, no color-only meaning, AA contrast on the real palette. **WCAG 2.2 analogues:**
+      comfortable target sizes (24/44px), focused control auto-scrolled into view (not obscured),
+      drag-only actions have a keyboard/click alternative.
+- [ ] The `ui-fundamentals.md` craft (hierarchy, spacing/type scale, states, forms) and token
       discipline still hold — the platform layer is *on top of* them, not instead.
 
 ## Related
 
-- `ui-fundamentals.md` — **load first.** Its `fundamentals.md`: hierarchy, spacing/type, component &
-  content states, forms, feedback, accessibility. Its `design-systems.md`: tokens, theming,
-  component library. Together the base craft; this skill only adds the desktop platform layer.
-- `frontend-design:frontend-design` — aesthetic direction; applies to a custom-styled desktop app
-  just as to the web (and the same AI-default looks to avoid).
+- `ui-fundamentals.md` and `design-systems.md` — **read first.** Fundamentals (hierarchy,
+  spacing/type, component & content states, forms, feedback, accessibility) and design systems
+  (tokens, theming, component library) are the base craft; this reference only adds the
+  native/desktop platform layer.
+- `ui-fundamentals.md` §0 and **`anti-slop.md`** — aesthetic direction and the named AI-default
+  tells (untinted greys, a default UI sans as display, one violet accent, decoration without purpose,
+  invented metrics, emoji as icons, `transition: all`-style motion). Most of them apply to a
+  custom-styled desktop app exactly as to the web; the web-only ones (nav/footer archetypes, `100vh`
+  heroes) simply don't fire. `type-and-color.md` is the palette and pairing depth — but respect the
+  platform's system font and system accent first (§7 here). The external `frontend-design` skill
+  covers similar ground, optionally — not required.
 - `web-dolle-mcp.md` — the web counterpart (Dolle-MCP build workflow). Use it for browser UIs;
   use this for native ones. The design-brief discipline (settle direction before building) is worth
   borrowing either way.

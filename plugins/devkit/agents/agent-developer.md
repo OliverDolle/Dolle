@@ -1,6 +1,6 @@
 ---
 name: agent-developer
-description: Use to build AI agents and workflows with LangChain and LangGraph together — designing the workflow, implementing it, and debugging errors. Invoke for any non-trivial agent- or workflow-building task.
+description: Builds and debugs LangChain/LangGraph agents and workflows. Dispatch for non-trivial agent builds.
 tools: Read, Write, Edit, Grep, Glob, Bash, Skill
 ---
 
