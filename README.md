@@ -80,14 +80,14 @@ The table below is generated from each doc's `description` frontmatter by
 
 | Doc | What it covers |
 | --- | --- |
+| [Installation](docs/installation.md) | How to add the devkit marketplace and install the plugin, in both the Claude Code CLI and the desktop app. Covers prerequisites, verifying the install, updating, uninstalling, and enabling it for a whole team. |
 | [Usage](docs/usage.md) | Day-to-day use of devkit: the /devkit menu, invoking one of the five hubs, how a hub's router picks a reference, dispatching the bundled subagents, and what the two hooks do. Includes the one permission rule that stops reference reads from prompting. |
 | [Skill hubs](docs/skill-packs.md) | The five devkit hubs, the references inside each, and what every reference covers. Explains the router-plus-references shape that keeps startup context to five short descriptions and loads only the depth a task needs. |
 | [Templates & scaffolding](docs/templates.md) | How devkit bundles runnable starter templates that an agent copies into your project and adapts to the task. Covers the /scaffold command, the templates that ship today, how the copy-and-adapt flow works, and how to add your own. |
 | [Code map](docs/code-map.md) | A map of where the major parts of the project live in the repository — the five skill hubs and their references, commands, subagents, templates, hooks, and the docs tooling. Points to large entities and their paths, not line-level details. |
 | [Architecture](docs/architecture.md) | The repository layout and how two-level lazy loading works — five short hub descriptions at startup, a router body on invoke, and references read on demand. Covers why the count of registered skills and commands is the only cost you cannot defer, how descriptions are written, the request flow, and why the hooks are Node scripts. |
-| [Extending](docs/extending.md) | How to add a reference to an existing hub, add a whole new hub, and add commands, subagents, templates, and hooks. Includes the file templates, how to write a hub description, and the conventions that keep startup context to five one-line descriptions. |
 | [Cross-platform](docs/cross-platform.md) | How to use devkit's references with agents other than Claude Code, such as Codex and Cursor. Explains that every reference is portable plain Markdown you can point at directly, and which plugin features (skills, commands, marketplace, hooks) do not carry over. |
-| [Installation](docs/installation.md) | How to add the devkit marketplace and install the plugin, in both the Claude Code CLI and the desktop app. Covers prerequisites, verifying the install, updating, uninstalling, and enabling it for a whole team. |
+| [Extending](docs/extending.md) | How to add a reference to an existing hub, add a whole new hub, and add commands, subagents, templates, and hooks. Includes the file templates, how to write a hub description, and the conventions that keep startup context to five one-line descriptions. |
 
 <!-- DOC-INDEX:END -->
 
