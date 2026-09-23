@@ -76,10 +76,10 @@ description. There is no API to register a skill mid-session. So:
 
 That asymmetry sets the whole design: **few skills, short descriptions, deep content.**
 
-Commands a user types but the model never needs to auto-invoke set `disable-model-invocation: true`.
-They still work as slash commands but drop out of the model's listing entirely — zero startup cost.
-`/devkit` (a menu) and `/mcp-preview-server` (print a URL; the model has the Dolle-MCP preview tools
-directly) are gated this way. `/scaffold` stays model-invocable because routers point at it.
+Every command stays model-invocable with a one-line "Call…" description (~80–160 B each), so Claude
+can run `/devkit`, `/scaffold`, or `/mcp-preview-server` when a task calls for it. The lever for a
+command the model should never run is `disable-model-invocation: true` — still a slash command, zero
+startup cost — but devkit's three commands all earn their line.
 
 ## Two levels
 
@@ -101,7 +101,7 @@ Measured:
 | | bytes | tokens |
 |---|---|---|
 | startup — 5 hub descriptions | 672 | **~170** |
-| startup — everything devkit adds (hubs, `/scaffold`, 4 agents, SessionStart line) | 1,996 | **~500** |
+| startup — everything devkit adds (hubs, 3 commands, 4 agents, SessionStart line) | 2,233 | **~560** |
 | invoke a hub (router) | 1,263–2,455 | ~320–610 |
 | one reference | 4,392–33,131 | ~1,100–8,300 |
 | **deferred to references** | 451,740 of 460,051 | **98.2 %** |
@@ -158,10 +158,10 @@ claude config add permissions.allow 'Read(//C:/Users/Oliver/.claude/plugins/cach
 ## Request flow
 
 ```
-startup ─▶ 5 hub descriptions + /scaffold + 4 agent descriptions + 1 hook line (~500 tok)
+startup ─▶ 5 hub descriptions + 3 command lines + 4 agent descriptions + 1 hook line (~560 tok)
    │
    ▼
-/devkit ─▶ prints the hub menu (loads nothing; user-only command)
+/devkit ─▶ prints the hub menu (loads nothing)
    │
    ▼
 "my pod is crashing"

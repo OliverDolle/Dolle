@@ -2,7 +2,7 @@
 
 **devkit** is a Claude Code plugin of *on-demand guidance* for AI-assisted development, built so it
 costs almost nothing to have installed. It registers **five skill hubs**, each with a one-line
-*"Call before…"* description; everything devkit adds to a session totals ~500 tokens. Invoking a hub
+*"Call before…"* description; everything devkit adds to a session totals ~560 tokens. Invoking a hub
 loads a short **router** (1.3–2.5 KB) listing its references and when to read each; Claude then reads
 only the one the task needs. **98.2 % of the content never enters context unless it's relevant.** It ships with hubs, subagents, hooks, and
 a **bundled [Dolle-MCP](https://github.com/OliverDolle/Dolle-MCP) server**, distributed as a plugin
@@ -80,26 +80,26 @@ The table below is generated from each doc's `description` frontmatter by
 
 | Doc | What it covers |
 | --- | --- |
-| [Installation](docs/installation.md) | How to add the devkit marketplace and install the plugin, in both the Claude Code CLI and the desktop app. Covers prerequisites, verifying the install, updating, uninstalling, and enabling it for a whole team. |
 | [Usage](docs/usage.md) | Day-to-day use of devkit: the /devkit menu, invoking one of the five hubs, how a hub's router picks a reference, dispatching the bundled subagents, and what the two hooks do. Includes the one permission rule that stops reference reads from prompting. |
 | [Skill hubs](docs/skill-packs.md) | The five devkit hubs, the references inside each, and what every reference covers. Explains the router-plus-references shape that keeps startup context to five short descriptions and loads only the depth a task needs. |
 | [Templates & scaffolding](docs/templates.md) | How devkit bundles runnable starter templates that an agent copies into your project and adapts to the task. Covers the /scaffold command, the templates that ship today, how the copy-and-adapt flow works, and how to add your own. |
 | [Code map](docs/code-map.md) | A map of where the major parts of the project live in the repository — the five skill hubs and their references, commands, subagents, templates, hooks, and the docs tooling. Points to large entities and their paths, not line-level details. |
 | [Architecture](docs/architecture.md) | The repository layout and how two-level lazy loading works — five short hub descriptions at startup, a router body on invoke, and references read on demand. Covers why the count of registered skills and commands is the only cost you cannot defer, how descriptions are written, the request flow, and why the hooks are Node scripts. |
-| [Cross-platform](docs/cross-platform.md) | How to use devkit's references with agents other than Claude Code, such as Codex and Cursor. Explains that every reference is portable plain Markdown you can point at directly, and which plugin features (skills, commands, marketplace, hooks) do not carry over. |
 | [Extending](docs/extending.md) | How to add a reference to an existing hub, add a whole new hub, and add commands, subagents, templates, and hooks. Includes the file templates, how to write a hub description, and the conventions that keep startup context to five one-line descriptions. |
+| [Cross-platform](docs/cross-platform.md) | How to use devkit's references with agents other than Claude Code, such as Codex and Cursor. Explains that every reference is portable plain Markdown you can point at directly, and which plugin features (skills, commands, marketplace, hooks) do not carry over. |
+| [Installation](docs/installation.md) | How to add the devkit marketplace and install the plugin, in both the Claude Code CLI and the desktop app. Covers prerequisites, verifying the install, updating, uninstalling, and enabling it for a whole team. |
 
 <!-- DOC-INDEX:END -->
 
 ## What's in the box
 
 - **5 skill hubs** (`plugins/devkit/skills/`) holding **40 references** — 672 B of hub descriptions
-  at startup (1,996 B for everything devkit loads per session, down from 9,954 B), 1.3–2.5 KB per
+  at startup (2,233 B for everything devkit loads per session, down from 9,954 B), 1.3–2.5 KB per
   router on invoke, and 98.2 % of the ~452 KB of content deferred to references read only when a task
   needs them.
 - **3 commands** (`plugins/devkit/commands/`) — `/devkit` (menu), `/scaffold`, and
-  `/mcp-preview-server`. Commands are reserved for behavior a skill can't provide; the menu and the
-  preview server are user-only (`disable-model-invocation`), so they cost nothing at startup.
+  `/mcp-preview-server`. Commands are reserved for behavior a skill can't provide; each carries a one-line
+  "Call…" description so Claude can run it when needed.
 - **1 bundled MCP server** (`plugins/devkit/.mcp.json`) — [Dolle-MCP](https://github.com/OliverDolle/Dolle-MCP)
   registers automatically when the plugin is enabled (no manual `claude mcp add`); it powers the
   `design` hub's `web-dolle-mcp` reference and `/mcp-preview-server`.

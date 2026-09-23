@@ -1,6 +1,5 @@
 ---
-description: List the devkit skill hubs and what each covers.
-disable-model-invocation: true
+description: Call to show the devkit hub menu when unsure which hub fits a task.
 argument-hint: "[optional: a hub to load directly, e.g. design]"
 ---
 

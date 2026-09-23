@@ -97,11 +97,10 @@ startup context every session, and the body costs a tool call and a duplicate co
 Make it a reference on a hub and the router points at it for free. (devkit once shipped eight such
 commands — ~5 KB of descriptions in every session before they were folded into hubs.)
 
-If the user types the command but the model never needs to invoke it on its own, add
-`disable-model-invocation: true` to its frontmatter. It still works as a slash command but leaves
-the model's listing, so it costs nothing at startup. `/devkit` and `/mcp-preview-server` do this;
-`/scaffold` doesn't, because routers point at it. Keep any model-visible command description to one
-short "Call to…" line.
+Keep the command description to one short "Call to…" / "Call when…" line — it sits in every
+session's listing so Claude can run the command when needed. Only if the model should *never* run it
+on its own, add `disable-model-invocation: true`: it stays a slash command but leaves the listing.
+devkit's three commands all stay invocable.
 
 ## Add a template
 

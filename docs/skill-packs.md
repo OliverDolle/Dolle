@@ -29,8 +29,8 @@ skills/<hub>/
 
 Each description is a short imperative — *"Call before building, restyling, or reviewing any UI — …"*
 — so Claude knows exactly when to reach for it. The five total **672 bytes (~170 tokens)**; everything
-devkit puts in context every session (hub descriptions, `/scaffold`, four subagent descriptions, a
-one-line hook) is **1,996 bytes (~500 tokens)**. **98.2 %** of the content — 40 references, ~452 KB —
+devkit puts in context every session (hub descriptions, three commands, four subagent descriptions, a
+one-line hook) is **2,233 bytes (~560 tokens)**. **98.2 %** of the content — 40 references, ~452 KB —
 is behind references. See [Architecture](architecture.md) for why.
 
 **Never read a devkit `SKILL.md` off disk.** Invoke the hub; the router arrives free. References are
