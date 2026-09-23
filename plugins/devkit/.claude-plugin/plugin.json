@@ -1,7 +1,7 @@
 {
   "name": "devkit",
   "description": "Five on-demand skill hubs for AI-assisted development. Each hub is a short router: call it and it names the one reference the task needs, so only that depth enters context. agent-development (LangChain/LangGraph agents, system prompts, evals, voice), design (web pages via the bundled Dolle-MCP server, desktop GUIs, UI craft, design systems, Core Web Vitals), shipping (Docker, Kubernetes, GitOps, CI/CD, Terraform), engineering (debugging, extensible architecture, databases, ESP32 firmware), and process (sharpening a vague ask, app specs, subagents, docs). About 2 KB of startup context; 98% of the content is deferred to references.",
-  "version": "0.16.0",
+  "version": "0.16.1",
   "author": {
     "name": "OliverDolle"
   },
