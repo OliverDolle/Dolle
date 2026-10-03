@@ -53,6 +53,7 @@ function main() {
         { hint: "references/langgraph-workflows.md", keys: ["langgraph", "stategraph", "state graph", "create_react_agent", "react agent", "checkpointer", "human-in-the-loop", "human in the loop"] },
         { hint: "references/workflow-design.md", keys: ["agent workflow", "workflow design", "design a workflow"] },
         { hint: "references/prompt-engineering.md", keys: ["system prompt", "few-shot", "few shot", "prompt template", "prompt pattern", "structured output"] },
+        { hint: "references/decision-models.md", keys: ["decision model", "system one", "systemone", "typed decision", "confidence gate", "classify with an llm", "llm vs classifier", "escalate to an llm", "jev"] },
         { hint: "references/speech-to-text.md", keys: ["speech to text", "speech-to-text", "stt", "speech recognition", "transcribe", "transcription", "whisper", "voice input", "dictation"] },
         { hint: "references/text-to-speech.md", keys: ["text to speech", "text-to-speech", "tts", "speech synthesis", "elevenlabs", "voice output", "ssml"] },
         { hint: "references/eval-foundations.md", keys: ["evaluate my agent", "evaluate the agent", "agent evaluation", "llm eval", "eval dataset", "golden dataset"] },

@@ -17,6 +17,7 @@ All references live at `plugins/devkit/skills/<hub>/references/<name>.md`.
 | How LangChain + LangGraph fit together | `agent-development` | `combining-langchain-and-langgraph.md` |
 | Designing a workflow before coding it | `agent-development` | `workflow-design.md` |
 | Writing or improving a system prompt / LLM prompt (structure, few-shot, structured output) | `agent-development` | `prompt-engineering.md` |
+| Choosing a decision model vs an LLM (Opus, Qwen); confidence gates; escalation and what to forward | `agent-development` | `decision-models.md` |
 | Adding voice input — speech recognition / STT | `agent-development` | `speech-to-text.md` |
 | Adding voice output — speech synthesis / TTS | `agent-development` | `text-to-speech.md` |
 | Deciding what to measure for an LLM agent; building an eval dataset | `agent-development` | `eval-foundations.md` |

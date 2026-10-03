@@ -17,6 +17,7 @@ flow. Real work usually uses both. Build, then measure — the eval references p
 | `combining-langchain-and-langgraph` | Unsure which does what, or wiring both together. |
 | `workflow-design` | **Before** writing a non-trivial graph. Most workflow bugs are control-flow bugs. |
 | `prompt-engineering` | Writing or improving a system prompt — structure, few-shot, structured output, model-specific tips. (A *user's* vague request is `devkit:process` → `references/prompt-enhancement.md`.) |
+| `decision-models` | Choosing a decision (System One) model vs an LLM such as Claude Opus or Qwen — confidence gates, the cascade, what to forward when a gate fails. |
 | `speech-to-text` / `text-to-speech` | Adding voice input or output. A voice agent needs both, streaming. |
 | `eval-foundations` | Deciding what "good" means — task/component/trajectory evals, the dataset. Start evals here. |
 | `llm-as-judge` | Scoring open-ended output with a model — rubric design, judge bias. |
