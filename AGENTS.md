@@ -17,6 +17,7 @@ All references live at `plugins/devkit/skills/<hub>/references/<name>.md`.
 | How LangChain + LangGraph fit together | `agent-development` | `combining-langchain-and-langgraph.md` |
 | Designing a workflow before coding it | `agent-development` | `workflow-design.md` |
 | Writing or improving a system prompt / LLM prompt (structure, few-shot, structured output) | `agent-development` | `prompt-engineering.md` |
+| Choosing a decision model vs an LLM (Opus, Qwen); confidence gates; escalation and what to forward | `agent-development` | `decision-models.md` |
 | Adding voice input — speech recognition / STT | `agent-development` | `speech-to-text.md` |
 | Adding voice output — speech synthesis / TTS | `agent-development` | `text-to-speech.md` |
 | Deciding what to measure for an LLM agent; building an eval dataset | `agent-development` | `eval-foundations.md` |
@@ -33,6 +34,7 @@ All references live at `plugins/devkit/skills/<hub>/references/<name>.md`.
 | Animation, transitions, micro-interactions | `design` | `motion-and-interaction.md` |
 | Charts and dashboards | `design` | `data-visualization.md` |
 | Design tokens, theming, a component library, dev handoff | `design` | `design-systems.md` |
+| Splitting UI code into small files — markup, CSS per concern, JS modules per page part (readable for people and agents) | `design` | `frontend-structure.md` |
 | Building/restyling a **web** page on the Dolle-MCP server (needs that server) | `design` | `web-dolle-mcp.md` |
 | A **native/desktop** app (Qt, GTK, WinUI) — platform HIG, windows, menus, keyboard model, HiDPI, a11y | `design` | `desktop-native.md` |
 | Core Web Vitals (LCP/CLS/INP), measuring, per-metric fixes, budgets | `design` | `web-performance.md` |
