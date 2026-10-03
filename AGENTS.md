@@ -34,6 +34,7 @@ All references live at `plugins/devkit/skills/<hub>/references/<name>.md`.
 | Animation, transitions, micro-interactions | `design` | `motion-and-interaction.md` |
 | Charts and dashboards | `design` | `data-visualization.md` |
 | Design tokens, theming, a component library, dev handoff | `design` | `design-systems.md` |
+| Splitting UI code into small files — markup, CSS per concern, JS modules per page part (readable for people and agents) | `design` | `frontend-structure.md` |
 | Building/restyling a **web** page on the Dolle-MCP server (needs that server) | `design` | `web-dolle-mcp.md` |
 | A **native/desktop** app (Qt, GTK, WinUI) — platform HIG, windows, menus, keyboard model, HiDPI, a11y | `design` | `desktop-native.md` |
 | Core Web Vitals (LCP/CLS/INP), measuring, per-metric fixes, budgets | `design` | `web-performance.md` |

@@ -17,6 +17,7 @@ description: Call before building, restyling, or reviewing any UI — web pages,
 | `motion-and-interaction` | Animation, transitions, micro-interactions. |
 | `data-visualization` | Charts and dashboards. |
 | `design-systems` | The work outlives one screen — tokens, theming, a component library, dev handoff. |
+| `frontend-structure` | Laying out a UI's files — markup, one CSS file per concern, one JS module per part of the page, so people and agents read only what they need. |
 | `web-dolle-mcp` | Actually building or restyling web UI. Drives the `dolle-mcp` tools; runs a design brief first. |
 | `desktop-native` | A desktop app — Qt, GTK, WinUI, wx. |
 | `web-performance` | A page feels slow, or before shipping one. Stands alone. |

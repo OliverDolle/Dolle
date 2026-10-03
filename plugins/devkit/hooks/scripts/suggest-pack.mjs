@@ -68,6 +68,7 @@ function main() {
     {
       label: "devkit:design",
       groups: [
+        { hint: "references/frontend-structure.md", keys: ["split the css", "separate files", "split into modules", "es modules", "file structure", "inline styles", "inline script", "one big html"] },
         { hint: "references/ui-fundamentals.md", keys: ["design great ui", "great ui", "ui fundamentals", "visual hierarchy", "spacing scale", "type scale", "component states", "empty state", "loading state", "form design", "accessible ui", "wcag contrast", "review my ui", "fix the spacing", "improve the ui", "improve my ui"] },
         { hint: "references/anti-slop.md", keys: ["anti-slop", "ai slop", "ai-generated", "ai generated", "looks generic", "less generic", "too generic"] },
         { hint: "references/structural-variety.md", keys: ["page shape", "page structure", "footer design", "nav archetype"] },
