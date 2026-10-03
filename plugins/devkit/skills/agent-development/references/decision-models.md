@@ -43,9 +43,11 @@ A gate turns a probability into an action. Use three actions, not two:
 | **REVIEW** | Get a second opinion, or confirm with the user | 0.5 to the ACT threshold |
 | **HUMAN** | Stop. A person decides | < 0.5, or any error |
 
-- **Confidence per type.** For a choice, `(p_max - 1/n) / (1 - 1/n)` (1 = all probability on one
-  label, 0 = an even spread); hosted Jev and the Decision models return it as `confidence`. For a
-  yes/no, `|2p - 1|`, where p near 0.5 means unsure. For a score (ordered levels), the confidence
+- **Confidence per type.** For a choice, use the model's `confidence` (1 = all probability on one
+  label, 0 = an even spread). Providers compute it differently: TypeSafe documents
+  `(p_max - 1/n) / (1 - 1/n)` for Jev, while the open Decision 2.0 models use `1 - H(p) / ln(n)`
+  (one minus the normalised entropy). The numbers differ for the same distribution, so thresholds
+  do not carry over between models. For a yes/no, `|2p - 1|`, where p near 0.5 means unsure. For a score (ordered levels), the confidence
   is low by design even when the answer is fine, so **do not gate on scores by default**.
 - **Gate only the questions that drive an action** (a `gate:` list). An informative question,
   such as priority or language, should not block a confident routing decision.
