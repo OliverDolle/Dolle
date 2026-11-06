@@ -244,6 +244,10 @@ function verdict(a) {
   if (a.outputTokens > LIMITS.bigOutput) levers.push(`${k(a.outputTokens)} output tokens: a big unit, split it if wall time matters`);
   if (a.peakContext > LIMITS.bigContext) levers.push(`context peaked at ${k(a.peakContext)}: point it at files instead of letting it explore; cap tool output`);
   if (a.modelCalls > LIMITS.manyCalls) levers.push(`${a.modelCalls} model calls: batch edits; give file:line pointers in the brief`);
+  const effort = Object.entries(a.efforts).sort((x, y) => y[1] - x[1])[0]?.[0];
+  if (effort === "xhigh" || effort === "max") {
+    levers.push(`effort ${effort} on most calls: medium for mechanical units, high for builds; ${effort} only for a unit that failed at high`);
+  }
   if (a.overran.length) levers.push(`${a.overran.length} command(s) ran far past their timeout: the machine was asleep or overloaded`);
   if (a.besides) levers.push(`ran beside ${a.besides} other agent(s) on the same machine: their tools share its CPU`);
   if (a.idle.some((g) => g.ended.startsWith("its own"))) levers.push("waited idle on its own background job: run it in the foreground with a timeout, or work meanwhile");

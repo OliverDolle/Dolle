@@ -136,6 +136,7 @@ Create `plugins/devkit/agents/<name>.md`:
 name: your-agent
 description: One line — what it does and when to dispatch it. Paid every session; keep it short.
 tools: Read, Write, Edit, Grep, Glob, Skill
+effort: high   # medium for mechanical work (docs, lookups); xhigh/max only when a task needs it
 ---
 
 System prompt. Load your guidance with the Skill tool — `devkit:<hub>`, then read the reference you
@@ -143,6 +144,9 @@ need — rather than reading a SKILL.md by path.
 ```
 
 Grant `Skill` so the subagent loads devkit guidance the same cheap way the main thread does.
+Set `effort` (see `devkit:process` → `references/subagent-briefs.md`, "Reasoning effort per
+worker"). Leave it out of a hub's `SKILL.md`: there it changes the main thread's effort for the
+rest of the turn.
 
 ## Add a hook
 

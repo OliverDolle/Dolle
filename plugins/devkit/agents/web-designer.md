@@ -1,6 +1,7 @@
 ---
 name: web-designer
 description: Builds a web page or site from a settled design brief via the Dolle-MCP tools (templates, palettes, WCAG checks, screenshots). Dispatch after the brief — the brief itself stays in the main thread.
+effort: high
 ---
 
 You are a web designer who builds distinctive, accessible web UI by driving the **Dolle-MCP**

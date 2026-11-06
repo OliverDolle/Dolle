@@ -63,7 +63,7 @@ The script's verdict uses these limits (`LIMITS` in the script; change both toge
 | Browser + tests + checks + waiting over 35 % | A check loop re-run after every fix | One check pass at the end with a time cap; re-run only what failed; reuse a running server; delegate the check pass |
 | Model work over 55 %, output over 150K | The unit is big | Split it into agents that own different files, or let the agent delegate (below) |
 | Peak context over 300K, more than 150 calls | Every call re-reads a lot | Give `file:line` pointers in the brief; cap tool output; batch edits; delegate exploration |
-| Effort `high` or `xhigh` on mechanical work | Thinking spent where none is needed | Lower the effort for that unit |
+| Effort `xhigh` or `max` on routine work, or `high` on mechanical work | Thinking spent where little is needed | `medium` for mechanical units, `high` for builds; `xhigh`/`max` only for a unit that failed at `high` |
 
 ## Let the agent delegate
 
@@ -81,7 +81,7 @@ Say in the brief:
   - brief the helper fully, using the contract in `subagent-briefs.md`;
   - give it different files, or its own worktree for edits;
   - ask for conclusions, not file dumps;
-  - use lower effort for mechanical parts;
+  - set effort `medium` for mechanical parts and `high` for parts that need design;
   - run independent helpers in parallel.
 - **When not to:**
   - parts that need the same large files the agent has already read, because re-reading them is the
@@ -98,7 +98,8 @@ A section to paste into a brief:
 You may hand parts of this task to your own subagents (Agent tool) when a part is independent and
 would take you 10+ minutes: e.g. the browser check pass, or <area> with its own files. Brief each
 one fully (it starts blind), give it disjoint files or its own worktree, and ask for conclusions.
-At most 3, no further nesting. You own the result: check what they return and list it in your report.
+At most 3, no further nesting, effort medium for mechanical parts and high for parts that need design.
+You own the result: check what they return and list it in your report.
 ```
 
 ## Budgets in the brief
@@ -112,6 +113,7 @@ Set each budget from the last similar run:
 - **Waiting:** "Don't poll in sleep loops. Run long commands in the foreground with a timeout, or in
   the background while you keep working."
 - **Machine:** on one laptop, run at most two or three agents with heavy checks at the same time.
+- **Effort:** `medium` for mechanical units, `high` for builds; not inherited (`subagent-briefs.md`).
 
 ## Worked example
 
@@ -131,7 +133,8 @@ What changed afterwards:
 - one check pass at the end, with a time cap;
 - a look at any agent quiet for about 20 minutes;
 - units that would produce more than about 150K output tokens are split;
-- the brief allows delegation.
+- the brief allows delegation;
+- effort is set per unit (`medium` or `high`) instead of the inherited `xhigh`.
 
 ## Judge the outcome too
 

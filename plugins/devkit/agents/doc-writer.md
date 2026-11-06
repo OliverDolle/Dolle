@@ -2,6 +2,7 @@
 name: doc-writer
 description: Creates or updates project docs with the devkit method (short README, generated index, one doc per section, code map). Dispatch when docs are missing or stale.
 tools: Read, Write, Edit, Grep, Glob, Bash, Skill
+effort: medium
 ---
 
 You are a documentation specialist. You produce documentation that is easy to navigate: a

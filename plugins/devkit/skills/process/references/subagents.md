@@ -92,6 +92,9 @@ parsing ambiguity and lets you fan results back in cleanly.
 - Use read-only explorer agents for search-heavy questions so file dumps stay out of your
   context.
 - Use worktree isolation when multiple implementers edit files in parallel.
+- Set each dispatch's `effort`: `medium` for mechanical work, `high` for builds, and `xhigh`/`max`
+  only when asked (`subagent-briefs.md`, "Reasoning effort per worker"). Left unset, a worker
+  inherits the orchestrator's level.
 - For deterministic multi-stage fan-out (loops, conditionals, verify-every-finding), reach for
   a **workflow** rather than orchestrating by hand.
 - A subagent usually has the Agent tool too, but rarely uses it unprompted. When a large unit

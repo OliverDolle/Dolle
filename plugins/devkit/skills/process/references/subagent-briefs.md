@@ -63,6 +63,23 @@ misses coverage (Anthropic):
 State the effort ceiling in the brief when it matters ("read at most the top 8 sources; say what
 you skipped").
 
+### Reasoning effort per worker
+
+Set each worker's reasoning effort when you dispatch it. Don't let it inherit the orchestrator's
+level: an orchestrator running at a high level makes every worker that expensive too.
+
+| Effort | For | Examples |
+| --- | --- | --- |
+| `medium` | Mechanical, self-checking work | Lookups, find-and-report, docs updates, renames, a browser check pass, a merge with a clear rule |
+| `high` | Builds with real design decisions | The default for implementers; debugging a failure that isn't obvious |
+| `xhigh` / `max` | Only when asked | Or for a unit that already failed at `high` for want of reasoning, not of context |
+
+Above `high`, a worker thinks much longer for little gain in outcome on benchmarks. Benchmarks are not
+your workload, so measure your own runs with `subagent-runs.md`. In one measured session every
+worker inherited `xhigh`: thinking took 8 to 23 minutes per agent, a fifth to a third of its wall time.
+
+In the brief, also say which effort a builder's own helpers should use.
+
 ## Tool grants
 
 Grant the **minimum** tools the job needs, and say how to use them. A tool description should read
@@ -107,6 +124,9 @@ The brief lands in one of two forms:
 - **A reusable subagent (`agents/<name>.md`).** Frontmatter `name`, `description` (when to invoke
   it), and `tools` (the allowlist); the body is the standing system prompt. Same contract, written
   once. Keep `tools` least-privilege and the `description` trigger-rich.
+- **Effort and model.** An agent file's frontmatter takes `effort` (`low` to `max`) and `model`. An
+  ad-hoc dispatch passes `effort` on the Agent call, which overrides the file's level. The
+  `CLAUDE_CODE_EFFORT_LEVEL` environment variable overrides both.
 
 ## Copy-paste brief template
 
@@ -135,7 +155,7 @@ Verification: one pass at the end, at most <M> min; re-run only what failed.
 ## Delegation (optional)
 You may hand independent parts that would take you 10+ min to your own subagents
 (<which parts>). Brief each fully, disjoint files, conclusions back; at most <K>, no nesting.
-You own the result.
+Effort medium for mechanical parts, high for parts that need design. You own the result.
 
 ## Deviations & assumptions
 List any assumption you made, anything ambiguous in this brief, and anything you did
@@ -202,6 +222,7 @@ A second, larger fan-out (2026-07, seven implementer workers writing real files)
 - [ ] Every decision I care about is **pinned**; every delegated one carries a decision rule.
 - [ ] Output contract is a concrete shape (schema/table/patch), with a size budget.
 - [ ] Tools are least-privilege and the brief says how to use them.
+- [ ] Each worker's reasoning effort is set: `medium` for mechanical work, `high` for builds.
 - [ ] Recency/honesty and (for load-bearing results) a separate verifier are specified.
 - [ ] The brief ends with a deviations-report requirement.
 - [ ] A long run has a budget (time, output tokens, one capped check pass), set from the last
