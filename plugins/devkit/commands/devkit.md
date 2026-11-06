@@ -24,7 +24,7 @@ each, so only the depth your task needs enters context.
 | `/devkit:design` | Any UI — web, desktop, craft, design systems, page speed | `ui-fundamentals`, `anti-slop`, `structural-variety`, `type-and-color`, `surfaces-and-details`, `motion-and-interaction`, `data-visualization`, `design-systems`, `web-dolle-mcp`, `desktop-native`, `web-performance` |
 | `/devkit:shipping` | Packaging & deploying | `containerization`, `kubernetes`, `kubernetes-gitops`, `cloud-infrastructure`, `github-actions`, `azure-devops` |
 | `/devkit:engineering` | Debugging, architecture, databases, firmware | `systematic-debugging`, `extensible-architecture`, `data-modeling`, `database-operations`, `esp32` |
-| `/devkit:process` | How to run the work | `prompt-enhancement`, `app-prompt`, `subagents`, `subagent-briefs`, `documentation` |
+| `/devkit:process` | How to run the work | `prompt-enhancement`, `app-prompt`, `subagents`, `subagent-briefs`, `subagent-runs`, `documentation` |
 
 Each hub accepts a task, e.g. `/devkit:design redesign the pricing page` or
 `/devkit:shipping my pod is crashing` — it loads the router and goes to the right reference.

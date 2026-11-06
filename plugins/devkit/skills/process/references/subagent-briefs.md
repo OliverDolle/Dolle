@@ -128,6 +128,15 @@ You are <role>. Your job: <one-sentence goal>. Do NOT <the main scope boundary>.
 ## Stop conditions
 Stop and report a blocker if <condition> instead of guessing.
 
+## Budget (long runs)
+About <N> min of work. Past <2N> min or <tokens> output tokens, stop and report what is left.
+Verification: one pass at the end, at most <M> min; re-run only what failed.
+
+## Delegation (optional)
+You may hand independent parts that would take you 10+ min to your own subagents
+(<which parts>). Brief each fully, disjoint files, conclusions back; at most <K>, no nesting.
+You own the result.
+
 ## Deviations & assumptions
 List any assumption you made, anything ambiguous in this brief, and anything you did
 differently than asked.
@@ -195,9 +204,12 @@ A second, larger fan-out (2026-07, seven implementer workers writing real files)
 - [ ] Tools are least-privilege and the brief says how to use them.
 - [ ] Recency/honesty and (for load-bearing results) a separate verifier are specified.
 - [ ] The brief ends with a deviations-report requirement.
+- [ ] A long run has a budget (time, output tokens, one capped check pass), set from the last
+      similar run, and says whether it may delegate (`subagent-runs.md`).
 
 ## Related
 
 - `subagents.md` — the decompose → delegate → verify → integrate loop this brief plugs into.
+- `subagent-runs.md` — measuring a finished run, and the delegation and budget sections in full.
 - `prompt-enhancement.md` — sharpening the *user's* request before you even decompose it.
 - `devkit:agent-development` → `references/prompt-engineering.md` — system prompts for LangChain/LangGraph agents follow the same contract.

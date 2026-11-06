@@ -110,6 +110,7 @@ function main() {
         { hint: "references/app-prompt.md", keys: ["build an app", "build me an app", "build an application", "create an app", "make an app", "spec out", "spec this app", "app spec", "app requirements", "build brief", "plan this application", "plan an app", "turn my idea into", "app idea"] },
         { hint: "references/subagents.md", keys: ["subagent", "sub-agent", "sub agent", "orchestrate agents", "fan out agents", "fan-out", "break this down", "parallelize this"] },
         { hint: "references/subagent-briefs.md", keys: ["subagent prompt", "subagent brief", "subagent instructions", "worker brief"] },
+        { hint: "references/subagent-runs.md", keys: ["took so long", "taking so long", "agents took", "agent took", "where did the time go", "wall time", "agent runtime", "evaluate the run", "evaluate the agents", "token usage"] },
         { hint: "references/documentation.md", keys: ["documentation", "document the", "write docs", "readme", "doc index", "docs are stale"] },
       ],
     },

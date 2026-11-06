@@ -184,7 +184,7 @@ scripts instead — identical behavior on every platform, emitting proper `hookS
 
 The SessionStart hook is one ~170 B line (it runs every session, so it stays tiny). The
 UserPromptSubmit hook matches keywords on word boundaries — a trailing `s`/`es` allowed, so `inp`
-doesn't fire on "input" nor `pod` on "podcast" — and covers all 40 references.
+doesn't fire on "input" nor `pod` on "podcast" — and covers 42 of the 43 references.
 
 ## Design choices
 

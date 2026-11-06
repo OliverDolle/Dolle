@@ -16,7 +16,7 @@ The five hubs:
 | **design** | Any interface — web pages via the bundled [Dolle-MCP](https://github.com/OliverDolle/Dolle-MCP) server, native/desktop GUIs (Qt, GTK, WinUI), the UI craft under both (anti-slop, page structure, type & color, surfaces, motion, charts), design systems, and Core Web Vitals | `ui-fundamentals`, `anti-slop`, `structural-variety`, `type-and-color`, `surfaces-and-details`, `motion-and-interaction`, `data-visualization`, `design-systems`, `frontend-structure`, `web-dolle-mcp`, `desktop-native`, `web-performance` |
 | **shipping** | Packaging & deploying — Docker & Compose, Kubernetes and GitOps rollouts, CI/CD (GitHub Actions, Azure DevOps) and Terraform | `containerization`, `kubernetes`, `kubernetes-gitops`, `cloud-infrastructure`, `github-actions`, `azure-devops` |
 | **engineering** | The code itself — systematic debugging, extensible architecture, database schema and operations, ESP32 firmware | `systematic-debugging`, `extensible-architecture`, `data-modeling`, `database-operations`, `esp32` |
-| **process** | How to run the work — sharpening a vague ask, turning an app idea into a build-ready spec, decomposing across subagents and writing their briefs, and a documentation method | `prompt-enhancement`, `app-prompt`, `subagents`, `subagent-briefs`, `documentation` |
+| **process** | How to run the work — sharpening a vague ask, turning an app idea into a build-ready spec, decomposing across subagents, writing their briefs and measuring their runs, and a documentation method | `prompt-enhancement`, `app-prompt`, `subagents`, `subagent-briefs`, `subagent-runs`, `documentation` |
 
 Full detail on every reference: [Skill hubs](docs/skill-packs.md).
 
@@ -93,7 +93,7 @@ The table below is generated from each doc's `description` frontmatter by
 
 ## What's in the box
 
-- **5 skill hubs** (`plugins/devkit/skills/`) holding **40 references** — 672 B of hub descriptions
+- **5 skill hubs** (`plugins/devkit/skills/`) holding **43 references** — 672 B of hub descriptions
   at startup (2,233 B for everything devkit loads per session, down from 9,954 B), 1.3–2.5 KB per
   router on invoke, and 98.2 % of the ~452 KB of content deferred to references read only when a task
   needs them.

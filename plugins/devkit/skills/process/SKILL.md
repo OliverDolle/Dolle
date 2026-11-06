@@ -13,6 +13,7 @@ description: Call when a request is vague, an app idea needs a spec, work should
 | `app-prompt` | Building an application from a rough idea — the interview, then a build-ready spec. |
 | `subagents` | A task is big enough to split, or needs independent verification. |
 | `subagent-briefs` | Writing the brief or system prompt a subagent runs on. |
+| `subagent-runs` | A delegated run took too long or cost too much, or before briefing a similar one. Measures it with `assets/agent-runs.mjs`. |
 | `documentation` | Creating or updating project docs. Copies its automation from `assets/`. |
 
 Paths: `references/<name>.md`. Front-to-back: sharpen the ask → spec it if it's an app → split it if

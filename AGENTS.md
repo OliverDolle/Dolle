@@ -53,6 +53,7 @@ All references live at `plugins/devkit/skills/<hub>/references/<name>.md`.
 | Turning a rough app idea into a build-ready spec | `process` | `app-prompt.md` |
 | Orchestrating subagents / decomposing large tasks | `process` | `subagents.md` |
 | Writing the brief or system prompt a subagent runs on | `process` | `subagent-briefs.md` |
+| Where a delegated run's time and tokens went; budgets; letting a subagent delegate | `process` | `subagent-runs.md` |
 | Writing or updating docs | `process` | `documentation.md` |
 
 Each hub's `SKILL.md` is the router — read it only if you're unsure which reference applies. Read one

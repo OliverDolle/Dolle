@@ -23,7 +23,7 @@ Where the large parts of this project live. A directory of neighborhoods, not a 
 ## Skill hubs (the knowledge — and the public API)
 
 `/plugins/devkit/skills/` — **five** directories, the only registered skills. Each holds a `SKILL.md`
-router plus a `references/` folder read on demand (40 references in all).
+router plus a `references/` folder read on demand (43 references in all).
 
 - `agent-development/` — AI agents and LLM features. References: `langchain-agents`,
   `langgraph-workflows`, `combining-langchain-and-langgraph`, `workflow-design`, `prompt-engineering`,
@@ -39,8 +39,9 @@ router plus a `references/` folder read on demand (40 references in all).
 - `engineering/` — debugging, architecture, databases, firmware. References: `systematic-debugging`,
   `extensible-architecture`, `data-modeling`, `database-operations`, `esp32`.
 - `process/` — how to run the work. References: `prompt-enhancement`, `app-prompt`, `subagents`,
-  `subagent-briefs`, `documentation`. Its `assets/` folder holds the doc-index automation other repos
-  copy.
+  `subagent-briefs`, `subagent-runs`, `documentation`. Its `assets/` folder holds the doc-index
+  automation other repos copy, and `agent-runs.mjs` (where a Claude Code run's time and tokens went,
+  per agent, from its transcripts).
 
 Sizes: routers 1.3–2.5 KB, references 4–33 KB, 98.2 % of content deferred to references.
 
@@ -80,7 +81,7 @@ reading files by path.
 - `hooks.json` — registers the `SessionStart` and `UserPromptSubmit` hooks.
 - `scripts/session-start.mjs` — one ~170 B line: call the matching hub before the work, read one
   reference. Paid every session, so kept tiny.
-- `scripts/suggest-pack.mjs` — keyword groups per hub (all 40 references), each carrying the reference
+- `scripts/suggest-pack.mjs` — keyword groups per hub (42 of the 43 references), each carrying the reference
   its keywords point at, so a hint names `devkit:<hub> (references/<file>.md)` rather than just the
   hub. Matches on word boundaries; silent when nothing matches.
 

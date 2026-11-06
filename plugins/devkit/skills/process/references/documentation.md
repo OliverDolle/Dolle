@@ -80,7 +80,7 @@ Two ways to wire up the GitHub Action; both regenerate the index on push.
 
 **Option A — reference the reusable workflow (recommended when you control several repos).**
 The repo keeps no generator script. Copy
-`${CLAUDE_PLUGIN_ROOT}/skills/docs/assets/docs-index.caller.yml` to
+`${CLAUDE_PLUGIN_ROOT}/skills/process/assets/docs-index.caller.yml` to
 `<repo>/.github/workflows/docs-index.yml`. It calls the reusable workflow in devkit
 (`OliverDolle/Dolle/.github/workflows/docs-index.reusable.yml@main`), which fetches the
 generator at run time. Pin `@main` to a tag/SHA for stability. Regenerate locally with
@@ -88,8 +88,8 @@ generator at run time. Pin `@main` to a tag/SHA for stability. Regenerate locall
 
 **Option B — copy the script + Action in (self-contained / portable).**
 For a repo that must not depend on the devkit repo. Copy:
-- `${CLAUDE_PLUGIN_ROOT}/skills/docs/assets/generate-doc-index.mjs` → `<repo>/scripts/`
-- `${CLAUDE_PLUGIN_ROOT}/skills/docs/assets/docs-index.yml` → `<repo>/.github/workflows/`
+- `${CLAUDE_PLUGIN_ROOT}/skills/process/assets/generate-doc-index.mjs` → `<repo>/scripts/`
+- `${CLAUDE_PLUGIN_ROOT}/skills/process/assets/docs-index.yml` → `<repo>/.github/workflows/`
 
 Regenerate locally with `node scripts/generate-doc-index.mjs` (`--check` in CI to fail when out
 of date).

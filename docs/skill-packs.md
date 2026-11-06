@@ -30,7 +30,7 @@ skills/<hub>/
 Each description is a short imperative — *"Call before building, restyling, or reviewing any UI — …"*
 — so Claude knows exactly when to reach for it. The five total **672 bytes (~170 tokens)**; everything
 devkit puts in context every session (hub descriptions, three commands, four subagent descriptions, a
-one-line hook) is **2,233 bytes (~560 tokens)**. **98.2 %** of the content — 40 references, ~452 KB —
+one-line hook) is **2,233 bytes (~560 tokens)**. **98.2 %** of the content — 43 references, ~452 KB —
 is behind references. See [Architecture](architecture.md) for why.
 
 **Never read a devkit `SKILL.md` off disk.** Invoke the hub; the router arrives free. References are
@@ -142,9 +142,11 @@ split it if it's large → document the result.
 | `app-prompt` | An **AskUserQuestion** interview across the axes that decide an app (type, platform, features and the MVP cut, users/auth, data, integrations, stack, non-functional, UI, deployment, success criteria & non-goals), compiled into a fixed sectioned spec with testable acceptance criteria, a phased build order, and an explicit handoff. |
 | `subagents` | The core loop (decompose → delegate → verify → integrate), roles by intent, self-contained briefs, parallel vs sequential dispatch, adversarial verification, anti-patterns, Claude Code specifics. |
 | `subagent-briefs` | Writing the brief a subagent runs on: the role/goal/context/output/boundaries contract, pinning decisions you don't want delegated, a required deviations report, effort scaling, tool grants, recency & honesty rules, verification hooks, and a copy-paste brief template. |
+| `subagent-runs` | Measuring a delegated run: wall time split into model work, tool time and idle per agent, from Claude Code's transcripts (`assets/agent-runs.mjs`), the signals that tell a big unit from a check loop or a stall, what to change in the next brief, budgets, letting a subagent delegate, and judging the outcome. |
 | `documentation` | A README that is a hub not a manual, one doc per major section, the `description` frontmatter contract, a **generated** index between `DOC-INDEX` markers, a code map, plus templates and maintenance rules. This repo's own docs follow it. |
 
-Its `assets/` folder holds the doc-index automation the `documentation` reference tells you to copy.
+Its `assets/` folder holds the doc-index automation the `documentation` reference tells you to copy,
+and `agent-runs.mjs`, which `subagent-runs` runs.
 
 Standing rule in the router: never bury a decision — ask when the answer changes what you build,
 otherwise assume and **write the assumption down**.

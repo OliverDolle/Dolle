@@ -94,6 +94,9 @@ parsing ambiguity and lets you fan results back in cleanly.
 - Use worktree isolation when multiple implementers edit files in parallel.
 - For deterministic multi-stage fan-out (loops, conditionals, verify-every-finding), reach for
   a **workflow** rather than orchestrating by hand.
+- A subagent usually has the Agent tool too, but rarely uses it unprompted. When a large unit
+  has independent long parts (a check pass, a separate area), say in its brief that it may
+  delegate them, with limits (`subagent-runs.md`, "Let the agent delegate").
 
 ## Checklist before you call it done
 
@@ -102,7 +105,10 @@ parsing ambiguity and lets you fan results back in cleanly.
 - [ ] Conflicts between subagent outputs were reconciled, not averaged.
 - [ ] Any coverage limits (skipped areas, sampling) are stated explicitly.
 - [ ] The integrated result was re-checked against the original goal.
+- [ ] A run that took long was measured, not guessed at (`subagent-runs.md`), and the next
+      brief's budget comes from it.
 
 ## Related
 
 - `subagent-briefs.md` — how to write the brief each delegated unit runs on.
+- `subagent-runs.md` — where a run's time and tokens went, and letting an agent delegate.
