@@ -1,6 +1,6 @@
 ---
 name: process
-description: Call when a request is vague, an app idea needs a spec, work should be split across subagents, or docs need writing.
+description: Call when a request is vague, an app idea needs a spec, before delegating work to subagents (split, model, brief), or docs need writing.
 ---
 
 # Process — router
@@ -11,7 +11,7 @@ description: Call when a request is vague, an app idea needs a spec, work should
 | --- | --- |
 | `prompt-enhancement` | A request is vague, underspecified, or readable several ways. Applies before the others. |
 | `app-prompt` | Building an application from a rough idea — the interview, then a build-ready spec. |
-| `subagents` | A task is big enough to split, or needs independent verification. |
+| `subagents` | Before spawning any subagent: a task big enough to split, a user asking to delegate, independent verification. Names the model and effort each one gets. |
 | `subagent-briefs` | Writing the brief or system prompt a subagent runs on. |
 | `subagent-runs` | A delegated run took too long or cost too much, or before briefing a similar one. Measures it with `assets/agent-runs.mjs`. |
 | `documentation` | Creating or updating project docs. Copies its automation from `assets/`. |
