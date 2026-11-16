@@ -7,8 +7,9 @@
 // identically on Windows, macOS, and Linux, avoiding shell-quoting differences.
 
 const context =
-  "devkit: before UI, agent/LLM, shipping, debugging/database, or planning work, call the matching " +
-  "devkit hub with the Skill tool and read only the reference its router names.";
+  "devkit: before UI, agent/LLM, shipping, debugging/database, or planning work, and before " +
+  "spawning subagents, call the matching devkit hub with the Skill tool and read only the " +
+  "reference its router names.";
 
 process.stdout.write(
   JSON.stringify({

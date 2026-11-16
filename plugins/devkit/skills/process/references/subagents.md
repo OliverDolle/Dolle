@@ -84,6 +84,7 @@ parsing ambiguity and lets you fan results back in cleanly.
 - Silent truncation (top-N, sampling, no-retry) without saying so — always report what was
   dropped, or "covered everything" reads as a lie.
 - Spawning subagents for trivial work the orchestrator could do in one step.
+- Every subagent on the orchestrator's model and effort because nothing was chosen.
 
 ## In Claude Code specifically
 
@@ -95,6 +96,10 @@ parsing ambiguity and lets you fan results back in cleanly.
 - Set each dispatch's `effort`: `medium` for mechanical work, `high` for builds, and `xhigh`/`max`
   only when asked (`subagent-briefs.md`, "Reasoning effort per worker"). Left unset, a worker
   inherits the orchestrator's level.
+- Set each dispatch's `model` too: the smallest for lookups, a mid model for read-only
+  investigation, mechanical edits and ordinary builds, the top model only for design-heavy or
+  security-sensitive units, and say so when you pick it (`subagent-briefs.md`, "Model per
+  worker"). Left unset, a worker runs on the orchestrator's model at the orchestrator's price.
 - For deterministic multi-stage fan-out (loops, conditionals, verify-every-finding), reach for
   a **workflow** rather than orchestrating by hand.
 - A subagent usually has the Agent tool too, but rarely uses it unprompted. When a large unit
@@ -103,6 +108,7 @@ parsing ambiguity and lets you fan results back in cleanly.
 
 ## Checklist before you call it done
 
+- [ ] Each dispatch had its model and effort chosen, not inherited; a top-model unit was announced.
 - [ ] Every work unit had a clear done-condition, and each is met.
 - [ ] Load-bearing results were verified by a *different* subagent.
 - [ ] Conflicts between subagent outputs were reconciled, not averaged.

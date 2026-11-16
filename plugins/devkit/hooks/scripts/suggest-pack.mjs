@@ -108,7 +108,7 @@ function main() {
       groups: [
         { hint: "references/prompt-enhancement.md", keys: ["prompt enhancement", "enhance my prompt", "enhance the prompt", "improve my prompt", "improve the prompt", "refine my prompt", "better prompt", "prompt engineering", "clarify my request", "clarifying questions", "ask me questions", "askuserquestion", "underspecified", "scope this task"] },
         { hint: "references/app-prompt.md", keys: ["build an app", "build me an app", "build an application", "create an app", "make an app", "spec out", "spec this app", "app spec", "app requirements", "build brief", "plan this application", "plan an app", "turn my idea into", "app idea"] },
-        { hint: "references/subagents.md", keys: ["subagent", "sub-agent", "sub agent", "orchestrate agents", "fan out agents", "fan-out", "break this down", "parallelize this"] },
+        { hint: "references/subagents.md", keys: ["subagent", "sub-agent", "sub agent", "orchestrate agents", "fan out agents", "fan-out", "break this down", "parallelize this", "delegate", "delegating", "delegation", "spawn agent", "background agent", "agents in parallel"] },
         { hint: "references/subagent-briefs.md", keys: ["subagent prompt", "subagent brief", "subagent instructions", "worker brief"] },
         { hint: "references/subagent-runs.md", keys: ["took so long", "taking so long", "agents took", "agent took", "where did the time go", "wall time", "agent runtime", "evaluate the run", "evaluate the agents", "token usage"] },
         { hint: "references/documentation.md", keys: ["documentation", "document the", "write docs", "readme", "doc index", "docs are stale"] },

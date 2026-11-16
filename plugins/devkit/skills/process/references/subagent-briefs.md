@@ -80,6 +80,33 @@ worker inherited `xhigh`: thinking took 8 to 23 minutes per agent, a fifth to a 
 
 In the brief, also say which effort a builder's own helpers should use.
 
+### Model per worker
+
+Choose each worker's model when you dispatch it, for the same reason: a worker that inherits the
+orchestrator's model runs at the orchestrator's price, and several large units in parallel on the
+top model can spend a large share of the user's usage in one turn.
+
+| Model tier | For | Examples |
+| --- | --- | --- |
+| Smallest | Lookups with a known shape | Grep-and-report, locating code, listing uses |
+| Mid | Read-only investigation, mechanical edits, docs | A diagnosis from code and config, renames, a docs update, an ordinary well-specified build with tests |
+| High | Builds with real design decisions | A feature across several modules |
+| Top (the orchestrator's own) | The exception | Design-heavy, ambiguous or security-sensitive work that sets the shape of what follows |
+
+- Go one tier down when the result checks itself (tests, a schema, a done-condition a script can
+  verify); one tier up when a wrong call is expensive to find later.
+- When you choose the top tier, say so and why in the line that announces the dispatch, so the
+  user can veto. Before a fan-out of several large units, say in one line how many agents and on
+  which models.
+- A running worker cannot change model: a wrong choice is paid in full or thrown away.
+- A sharp brief on a smaller model beats a vague one on the top model. The brief is the first cost
+  lever, the model the second, effort the third.
+
+In one session four workers (three builds and a read-only diagnosis) all inherited the top model
+and used about half of the user's usage allowance; only one of them needed it.
+
+In the brief, also say which model a builder's own helpers should use.
+
 ## Tool grants
 
 Grant the **minimum** tools the job needs, and say how to use them. A tool description should read
@@ -155,7 +182,7 @@ Verification: one pass at the end, at most <M> min; re-run only what failed.
 ## Delegation (optional)
 You may hand independent parts that would take you 10+ min to your own subagents
 (<which parts>). Brief each fully, disjoint files, conclusions back; at most <K>, no nesting.
-Effort medium for mechanical parts, high for parts that need design. You own the result.
+Effort medium for mechanical parts, high for parts that need design. Helpers on <model tier>. You own the result.
 
 ## Deviations & assumptions
 List any assumption you made, anything ambiguous in this brief, and anything you did
